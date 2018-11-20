@@ -730,9 +730,12 @@
                                     <button key="view" verticalHuggingPriority="750" id="JtW-bK-XmO">
                                         <rect key="frame" x="0.0" y="14" width="41" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ivt-8L-isS">
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ivt-8L-isS">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="newItemBtnClicked:" target="Oky-zY-oP4" id="NxR-5U-acK"/>
+                                            </connections>
                                         </buttonCell>
                                     </button>
                                 </toolbarItem>
@@ -758,10 +761,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="437"/>
         </scene>
-        <!--View Controller-->
+        <!--Main Window View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="MainWindowViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="540"/>
                         <autoresizingMask key="autoresizingMask"/>

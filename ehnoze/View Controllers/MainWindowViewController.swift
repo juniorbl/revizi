@@ -22,6 +22,7 @@ class MainWindowViewController: NSViewController {
         }
     }
 
-
+    @IBAction func newItemBtnClicked(_ sender: Any) {
+        print("New item clicked")
+    }
 }
-
