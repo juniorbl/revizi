@@ -19,8 +19,10 @@ class Topic: NSObject {
     static func topicList() -> [Topic] {
         let savedItems = Item.listAll()
         let topic = Topic(name: "Some topic name")
-        for item in savedItems {
-            topic.items.append(item.value)
+        for itemDictionaryEntry in savedItems {
+//            itemDictionaryEntry.value.lastReviewed.compare(other: Date())
+//            let lastReviewed = Calendar.current.dateComponents([.day], from: itemDictionaryEntry.value.lastReviewed, to: Date()).day ?? 0
+            topic.items.append(itemDictionaryEntry.value)
         }
         var topics = [Topic]()
         topics.append(topic)

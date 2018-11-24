@@ -877,6 +877,7 @@
                                                                 </tableColumn>
                                                             </tableColumns>
                                                             <connections>
+                                                                <action selector="itemClicked:" target="XfG-lQ-9wD" id="x7D-4b-0e0"/>
                                                                 <outlet property="dataSource" destination="XfG-lQ-9wD" id="25a-uj-UE0"/>
                                                                 <outlet property="delegate" destination="XfG-lQ-9wD" id="g1O-xV-aB6"/>
                                                             </connections>

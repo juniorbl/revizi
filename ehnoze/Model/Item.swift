@@ -13,11 +13,27 @@ struct Item {
     var contents: NSAttributedString
     var lastReviewed: Date
     
-    // TODO: move to file manager
-    let userDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    init() {
+        self.description = ""
+        self.contents = NSAttributedString()
+        self.lastReviewed = Date()
+    }
+    
+    init(description: String) {
+        self.description = description
+        self.contents = NSAttributedString()
+        self.lastReviewed = Date()
+    }
+
+    init(description: String, contents: NSAttributedString, lastReviewed: Date) {
+        self.description = description
+        self.contents = contents
+        self.lastReviewed = lastReviewed
+    }
     
     func save() {
-        let pathToFile = self.userDirectory.appendingPathComponent(description + ".rtf") // move to file manager
+        let userDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let pathToFile = userDirectory.appendingPathComponent(description + ".rtf") // move to file manager
         let writeDocumentAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.rtf]
         do {
             try contents.data(from: NSRange(location: 0, length: contents.length), documentAttributes: writeDocumentAttributes)
@@ -27,12 +43,13 @@ struct Item {
         }
     }
     
-    func load() -> Item {
+    static func load(description: String) -> Item {
         do {
-            let pathToFile: URL = self.userDirectory.appendingPathComponent(description + ".rtf")
+            let userDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let pathToFile: URL = userDirectory.appendingPathComponent(description + ".rtf")
             let loadDocumentOptions = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf]
             let loadedContents = try NSAttributedString(url: pathToFile, options: loadDocumentOptions, documentAttributes: nil)
-            return Item(description: "", contents: loadedContents, lastReviewed: Date())
+            return Item(description: description, contents: loadedContents, lastReviewed: Date())
         } catch let error {
             print("Error \(error)")
         }
@@ -46,7 +63,8 @@ struct Item {
             let savedFiles = try FileManager.default.contentsOfDirectory(at: userDirectory, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
                 .filter{ $0.pathExtension == "rtf" }
             for filePath in savedFiles {
-                listItems[filePath.lastPathComponent] = Item(description: filePath.lastPathComponent, contents: NSAttributedString(), lastReviewed: Date())
+                let filename = (filePath.lastPathComponent as NSString).deletingPathExtension
+                listItems[filename] = Item(description: filename, contents: NSAttributedString(), lastReviewed: Date())
 //                .sorted(by: <#T##((key: String, value: Item), (key: String, value: Item)) throws -> Bool#>)
                 // TODO: get the stored date
             }

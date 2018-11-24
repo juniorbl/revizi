@@ -15,6 +15,7 @@ class MainWindowViewController: NSViewController {
     
     var topics = Topic.topicList()
     let dateFormatter = DateFormatter()
+    var lastSelectedItem = Item()
     // tree example: - NSOutlineView - https://www.youtube.com/watch?v=_SvZiUF-ShM
     // https://www.raywenderlich.com/1201-nsoutlineview-on-macos-tutorial
     
@@ -23,8 +24,8 @@ class MainWindowViewController: NSViewController {
 
         // Do any additional setup after loading the view.
         
-        let item = Item(description: "testing", contents: NSAttributedString(), lastReviewed: Date())
-        mainContent.documentView?.insertText(item.load().contents)
+        lastSelectedItem = Item(description: "testing")
+        mainContent.documentView?.insertText(Item.load(description: lastSelectedItem.description).contents)
         
         dateFormatter.dateStyle = .short
     }
@@ -39,11 +40,20 @@ class MainWindowViewController: NSViewController {
         print("New item clicked")
     }
     
+    @IBAction func itemClicked(_ sender: NSOutlineView) {
+        let clickedItem = sender.item(atRow: sender.clickedRow)
+        if clickedItem is Item {
+            lastSelectedItem = Item(description: (clickedItem as! Item).description, contents: NSAttributedString(), lastReviewed: Date())
+            let itemContents = (mainContent.documentView as! NSTextView)
+            itemContents.insertText(Item.load(description: lastSelectedItem.description).contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
+        }
+    }
+    
     @IBAction func saveContentsAction(_ sender: Any) {
         let contents = (mainContent.documentView as! NSTextView)
         let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
         let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
-        let item = Item(description: "testing", contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
+        let item = Item(description: lastSelectedItem.description, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
         item.save()
     }
 }
