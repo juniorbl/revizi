@@ -10,7 +10,7 @@ import Foundation
 
 struct Item {
     var description: String
-    var contents: Data
+    var contents: NSAttributedString
     var lastReviewed: Date
     
     // move to file manager
@@ -18,22 +18,24 @@ struct Item {
     
     func save() {
         let pathToFile = self.userDirectory.appendingPathComponent(description + ".rtf") // move to file manager
+        let writeDocumentAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.rtf]
         do {
-            try contents.write(to: pathToFile)
+            try contents.data(from: NSRange(location: 0, length: contents.length), documentAttributes: writeDocumentAttributes)
+                .write(to: pathToFile)
         } catch {
             print("Error: \(error)")
         }
     }
     
-    func load() -> NSAttributedString {
+    func load() -> Item {
         do {
             let pathToFile: URL = self.userDirectory.appendingPathComponent(description + ".rtf")
-            return try NSAttributedString(url: pathToFile,
-                                          options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
-                                          documentAttributes: nil)
+            let loadDocumentOptions = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf]
+            let loadedContents = try NSAttributedString(url: pathToFile, options: loadDocumentOptions, documentAttributes: nil)
+            return Item(description: "", contents: loadedContents, lastReviewed: Date())
         } catch let error {
             print("Error \(error)")
         }
-        return NSAttributedString()
+        return Item(description: "", contents: NSAttributedString(), lastReviewed: Date())
     }
 }

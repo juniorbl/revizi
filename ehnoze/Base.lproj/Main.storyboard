@@ -789,7 +789,7 @@
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="saveClicked:" target="XfG-lQ-9wD" id="7wY-KM-q6z"/>
+                                                    <action selector="saveContentsAction:" target="XfG-lQ-9wD" id="HN2-8b-yi8"/>
                                                 </connections>
                                             </button>
                                             <scrollView appearanceType="aqua" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DX3-Lt-dKX">
@@ -804,7 +804,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <size key="minSize" width="744" height="515"/>
-                                                            <size key="maxSize" width="1989" height="10000000"/>
+                                                            <size key="maxSize" width="1991" height="10000000"/>
                                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
                                                     </subviews>
@@ -825,8 +825,8 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="mainContent" destination="DX3-Lt-dKX" id="tCe-MO-64z"/>
                         <outlet property="mainContentView" destination="XQK-AI-eZY" id="V9p-lG-QIU"/>
-                        <outlet property="richText" destination="DX3-Lt-dKX" id="lea-WF-DQW"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

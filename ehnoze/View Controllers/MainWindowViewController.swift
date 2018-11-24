@@ -10,7 +10,7 @@ import Cocoa
 
 class MainWindowViewController: NSViewController {
 
-    @IBOutlet weak var richText: NSScrollView!
+    @IBOutlet weak var mainContent: NSScrollView!
     @IBOutlet weak var mainContentView: NSView!
     
     override func viewDidLoad() {
@@ -18,8 +18,8 @@ class MainWindowViewController: NSViewController {
 
         // Do any additional setup after loading the view.
         
-        let item = Item(description: "testing", contents: Data(), lastReviewed: Date())
-        richText.documentView?.insertText(item.load())
+        let item = Item(description: "testing", contents: NSAttributedString(), lastReviewed: Date())
+        mainContent.documentView?.insertText(item.load().contents)
     }
 
     override var representedObject: Any? {
@@ -32,10 +32,11 @@ class MainWindowViewController: NSViewController {
         print("New item clicked")
     }
     
-    @IBAction func saveClicked(_ sender: Any) {
-        let contents = (richText.documentView as! NSTextView)
-        let rtfContents = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
-        let item = Item(description: "testing", contents: rtfContents ?? Data(), lastReviewed: Date())
+    @IBAction func saveContentsAction(_ sender: Any) {
+        let contents = (mainContent.documentView as! NSTextView)
+        let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
+        let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
+        let item = Item(description: "testing", contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
         item.save()
     }
 }
