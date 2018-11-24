@@ -13,6 +13,9 @@ class MainWindowViewController: NSViewController {
     @IBOutlet weak var mainContent: NSScrollView!
     @IBOutlet weak var mainContentView: NSView!
     
+    // tree example: - NSOutlineView - https://www.youtube.com/watch?v=_SvZiUF-ShM
+    // https://www.raywenderlich.com/1201-nsoutlineview-on-macos-tutorial
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +23,8 @@ class MainWindowViewController: NSViewController {
         
         let item = Item(description: "testing", contents: NSAttributedString(), lastReviewed: Date())
         mainContent.documentView?.insertText(item.load().contents)
+        
+        let savedFiles = Item.retrieveAll()
     }
 
     override var representedObject: Any? {
