@@ -17,7 +17,7 @@ class Topic: NSObject {
     }
     
     static func topicList() -> [Topic] {
-        let savedItems = Item.retrieveAll()
+        let savedItems = Item.listAll()
         let topic = Topic(name: "Some topic name")
         for item in savedItems {
             topic.items.append(item.value)
