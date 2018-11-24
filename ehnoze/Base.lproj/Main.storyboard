@@ -780,6 +780,41 @@
                                     <customView fixedFrame="YES" id="XQK-AI-eZY">
                                         <rect key="frame" x="265" y="0.0" width="759" height="540"/>
                                         <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13P-p6-omv">
+                                                <rect key="frame" x="-5" y="510" width="70" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Mg-Pg-o0n">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="saveClicked:" target="XfG-lQ-9wD" id="7wY-KM-q6z"/>
+                                                </connections>
+                                            </button>
+                                            <scrollView appearanceType="aqua" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DX3-Lt-dKX">
+                                                <rect key="frame" x="0.0" y="0.0" width="759" height="515"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="gjY-OD-dPE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="744" height="515"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textView ambiguous="YES" verticallyResizable="YES" usesFontPanel="YES" usesInspectorBar="YES" findStyle="bar" allowsDocumentBackgroundColorChange="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="AgF-76-35x">
+                                                            <rect key="frame" x="0.0" y="0.0" width="1976" height="515"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <size key="minSize" width="744" height="515"/>
+                                                            <size key="maxSize" width="1989" height="10000000"/>
+                                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        </textView>
+                                                    </subviews>
+                                                </clipView>
+                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="IkR-gq-PQP">
+                                                    <rect key="frame" x="744" y="0.0" width="15" height="515"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                            </scrollView>
+                                        </subviews>
                                     </customView>
                                 </subviews>
                                 <holdingPriorities>
@@ -789,6 +824,10 @@
                             </splitView>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="mainContentView" destination="XQK-AI-eZY" id="V9p-lG-QIU"/>
+                        <outlet property="richText" destination="DX3-Lt-dKX" id="lea-WF-DQW"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
