@@ -18,7 +18,7 @@ class Topic: NSObject {
     
     static func topicList() -> [Topic] {
         let savedItems = Item.listAll()
-        let topic = Topic(name: "Some topic name")
+        let topic = Topic(name: "Arrays and Strings")
         for itemDictionaryEntry in savedItems {
             topic.items.append(itemDictionaryEntry.value)
         }

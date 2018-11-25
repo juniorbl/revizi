@@ -25,8 +25,8 @@ class MainWindowViewController: NSViewController {
 
         // Do any additional setup after loading the view.
         
-        selectedItem = Item(description: "testing")
-        mainContent.documentView?.insertText(Item.load(description: selectedItem.description).contents)
+        selectedItem = Item(name: "testing")
+        mainContent.documentView?.insertText(Item.load(name: selectedItem.name).contents)
         
         dateFormatter.dateStyle = .short
         // dateFormatter.string(from: something)
@@ -45,9 +45,9 @@ class MainWindowViewController: NSViewController {
     @IBAction func itemClicked(_ sender: NSOutlineView) {
         let clickedItem = sender.item(atRow: sender.clickedRow)
         if clickedItem is Item {
-            selectedItem = Item(description: (clickedItem as! Item).description, contents: NSAttributedString(), lastReviewed: Date())
+            selectedItem = Item(name: (clickedItem as! Item).name, contents: NSAttributedString(), lastReviewed: Date())
             let itemContents = (mainContent.documentView as! NSTextView)
-            itemContents.insertText(Item.load(description: selectedItem.description).contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
+            itemContents.insertText(Item.load(name: selectedItem.name).contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
             if let topic = sender.parent(forItem: clickedItem) as? Topic {
                 topicDescriptionLabel.stringValue = topic.name
             }
@@ -58,7 +58,7 @@ class MainWindowViewController: NSViewController {
         let contents = (mainContent.documentView as! NSTextView)
         let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
         let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
-        let item = Item(description: selectedItem.description, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
+        let item = Item(name: selectedItem.name, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
         item.save()
     }
 }
@@ -111,10 +111,10 @@ extension MainWindowViewController: NSOutlineViewDelegate {
                     textField.sizeToFit()
                 }
             } else {
-                // if it's not a date colum, get the cell to display the item description
+                // if it's not a date colum, get the cell to display the item name
                 cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemCell"), owner: self) as? NSTableCellView
                 if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = item.description
+                    textField.stringValue = item.name
                     textField.sizeToFit()
                 }
             }

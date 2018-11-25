@@ -9,23 +9,31 @@
 import Foundation
 
 struct Item {
-    var description: String
+    var name: String
+    var description: String?
     var contents: NSAttributedString
-    var lastReviewed: Date
+    private var lastReviewed: Date
     
     init() {
-        self.description = ""
+        self.name = ""
         self.contents = NSAttributedString()
         self.lastReviewed = Date()
     }
     
-    init(description: String) {
-        self.description = description
+    init(name: String) {
+        self.name = name
         self.contents = NSAttributedString()
         self.lastReviewed = Date()
     }
 
-    init(description: String, contents: NSAttributedString, lastReviewed: Date) {
+    init(name: String, contents: NSAttributedString, lastReviewed: Date) {
+        self.name = name
+        self.contents = contents
+        self.lastReviewed = lastReviewed
+    }
+    
+    init(name: String, description: String, contents: NSAttributedString, lastReviewed: Date) {
+        self.name = name
         self.description = description
         self.contents = contents
         self.lastReviewed = lastReviewed
@@ -33,7 +41,7 @@ struct Item {
     
     func save() {
         let userDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let pathToFile = userDirectory.appendingPathComponent(description + ".rtf") // move to file manager
+        let pathToFile = userDirectory.appendingPathComponent(name + ".rtf") // move to file manager
         let writeDocumentAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.rtf]
         do {
             try contents.data(from: NSRange(location: 0, length: contents.length), documentAttributes: writeDocumentAttributes)
@@ -47,17 +55,17 @@ struct Item {
         return Calendar.current.dateComponents([.day], from: self.lastReviewed, to: Date()).day ?? 0
     }
     
-    static func load(description: String) -> Item {
+    static func load(name: String) -> Item {
         do {
             let userDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let pathToFile: URL = userDirectory.appendingPathComponent(description + ".rtf")
+            let pathToFile: URL = userDirectory.appendingPathComponent(name + ".rtf")
             let loadDocumentOptions = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf]
             let loadedContents = try NSAttributedString(url: pathToFile, options: loadDocumentOptions, documentAttributes: nil)
-            return Item(description: description, contents: loadedContents, lastReviewed: Date())
+            return Item(name: name, contents: loadedContents, lastReviewed: Date())
         } catch let error {
             print("Error \(error)")
         }
-        return Item(description: "", contents: NSAttributedString(), lastReviewed: Date())
+        return Item(name: "", contents: NSAttributedString(), lastReviewed: Date())
     }
     
     static func listAll() -> [String : Item] {
@@ -69,7 +77,7 @@ struct Item {
             for filePath in savedFiles {
                 let filename = (filePath.lastPathComponent as NSString).deletingPathExtension
                 let someDateExample = Date().addingTimeInterval(TimeInterval(exactly: -Int.random(in: 0 ..< 30)*24*60*60)!)
-                listItems[filename] = Item(description: filename, contents: NSAttributedString(), lastReviewed: someDateExample)
+                listItems[filename] = Item(name: filename, contents: NSAttributedString(), lastReviewed: someDateExample)
 //                .sorted(by: <#T##((key: String, value: Item), (key: String, value: Item)) throws -> Bool#>)
                 // TODO: get the stored date
             }
