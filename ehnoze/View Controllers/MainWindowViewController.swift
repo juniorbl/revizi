@@ -12,10 +12,11 @@ class MainWindowViewController: NSViewController {
 
     @IBOutlet weak var mainContent: NSScrollView!
     @IBOutlet weak var mainContentView: NSView!
+    @IBOutlet weak var topicDescriptionLabel: NSTextField!
     
     var topics = Topic.topicList()
     let dateFormatter = DateFormatter()
-    var lastSelectedItem = Item()
+    var selectedItem = Item()
     // tree example: - NSOutlineView - https://www.youtube.com/watch?v=_SvZiUF-ShM
     // https://www.raywenderlich.com/1201-nsoutlineview-on-macos-tutorial
     
@@ -24,8 +25,8 @@ class MainWindowViewController: NSViewController {
 
         // Do any additional setup after loading the view.
         
-        lastSelectedItem = Item(description: "testing")
-        mainContent.documentView?.insertText(Item.load(description: lastSelectedItem.description).contents)
+        selectedItem = Item(description: "testing")
+        mainContent.documentView?.insertText(Item.load(description: selectedItem.description).contents)
         
         dateFormatter.dateStyle = .short
         // dateFormatter.string(from: something)
@@ -44,9 +45,12 @@ class MainWindowViewController: NSViewController {
     @IBAction func itemClicked(_ sender: NSOutlineView) {
         let clickedItem = sender.item(atRow: sender.clickedRow)
         if clickedItem is Item {
-            lastSelectedItem = Item(description: (clickedItem as! Item).description, contents: NSAttributedString(), lastReviewed: Date())
+            selectedItem = Item(description: (clickedItem as! Item).description, contents: NSAttributedString(), lastReviewed: Date())
             let itemContents = (mainContent.documentView as! NSTextView)
-            itemContents.insertText(Item.load(description: lastSelectedItem.description).contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
+            itemContents.insertText(Item.load(description: selectedItem.description).contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
+            if let topic = sender.parent(forItem: clickedItem) as? Topic {
+                topicDescriptionLabel.stringValue = topic.name
+            }
         }
     }
     
@@ -54,7 +58,7 @@ class MainWindowViewController: NSViewController {
         let contents = (mainContent.documentView as! NSTextView)
         let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
         let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
-        let item = Item(description: lastSelectedItem.description, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
+        let item = Item(description: selectedItem.description, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
         item.save()
     }
 }
