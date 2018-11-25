@@ -13,6 +13,7 @@ class MainWindowViewController: NSViewController {
     @IBOutlet weak var mainContent: NSScrollView!
     @IBOutlet weak var mainContentView: NSView!
     @IBOutlet weak var topicDescriptionLabel: NSTextField!
+    @IBOutlet weak var itemNameAndDescriptionLabel: NSTextField!
     
     var topics = Topic.topicList()
     let dateFormatter = DateFormatter()
@@ -47,10 +48,15 @@ class MainWindowViewController: NSViewController {
         if clickedItem is Item {
             selectedItem = Item(name: (clickedItem as! Item).name, contents: NSAttributedString(), lastReviewed: Date())
             let itemContents = (mainContent.documentView as! NSTextView)
-            itemContents.insertText(Item.load(name: selectedItem.name).contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
-            if let topic = sender.parent(forItem: clickedItem) as? Topic {
-                topicDescriptionLabel.stringValue = topic.name
+            let loadedItem = Item.load(name: selectedItem.name)
+            itemContents.insertText(loadedItem.contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
+            let loadedItemName = loadedItem.name
+            let loadedItemDescription = loadedItem.description ?? ""
+            itemNameAndDescriptionLabel.stringValue = loadedItemName + ": " + loadedItemDescription
+            if let parentTopic = sender.parent(forItem: clickedItem) as? Topic {
+                topicDescriptionLabel.stringValue = parentTopic.name
             }
+            
         }
     }
     
