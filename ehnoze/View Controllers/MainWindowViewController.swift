@@ -28,6 +28,7 @@ class MainWindowViewController: NSViewController {
         mainContent.documentView?.insertText(Item.load(description: lastSelectedItem.description).contents)
         
         dateFormatter.dateStyle = .short
+        // dateFormatter.string(from: something)
     }
 
     override var representedObject: Any? {
@@ -102,7 +103,7 @@ extension MainWindowViewController: NSOutlineViewDelegate {
                 // if it's a date colum, get the date cell to display the last reviewed date
                 cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DateCell"), owner: self) as? NSTableCellView
                 if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = dateFormatter.string(from: item.lastReviewed)
+                    textField.stringValue = String(item.numberOfDaysSinceLastReviewed()) + " day(s) ago" // TODO: localize
                     textField.sizeToFit()
                 }
             } else {

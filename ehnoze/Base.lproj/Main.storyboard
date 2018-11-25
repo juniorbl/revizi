@@ -843,7 +843,7 @@
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                                 <tableColumn identifier="DateColumn" width="121" minWidth="40" maxWidth="1000" id="krC-Lp-MrT">
-                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Date reviewed">
+                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Last reviewed">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>

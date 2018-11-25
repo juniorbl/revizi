@@ -43,6 +43,10 @@ struct Item {
         }
     }
     
+    func numberOfDaysSinceLastReviewed() -> Int {
+        return Calendar.current.dateComponents([.day], from: self.lastReviewed, to: Date()).day ?? 0
+    }
+    
     static func load(description: String) -> Item {
         do {
             let userDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -64,7 +68,8 @@ struct Item {
                 .filter{ $0.pathExtension == "rtf" }
             for filePath in savedFiles {
                 let filename = (filePath.lastPathComponent as NSString).deletingPathExtension
-                listItems[filename] = Item(description: filename, contents: NSAttributedString(), lastReviewed: Date())
+                let someDateExample = Date().addingTimeInterval(TimeInterval(exactly: -Int.random(in: 0 ..< 30)*24*60*60)!)
+                listItems[filename] = Item(description: filename, contents: NSAttributedString(), lastReviewed: someDateExample)
 //                .sorted(by: <#T##((key: String, value: Item), (key: String, value: Item)) throws -> Bool#>)
                 // TODO: get the stored date
             }
