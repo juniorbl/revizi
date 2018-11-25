@@ -114,7 +114,23 @@ extension MainWindowViewController: NSOutlineViewDelegate {
                     textField.sizeToFit()
                 }
             }
+            // change color based on how old the last review is
+            if let textField = cellViewFromTopicListTable?.textField {
+                textField.textColor = getTextColour(numberOfDaysSinceLastReviewed: item.numberOfDaysSinceLastReviewed())
+            }
         }
         return cellViewFromTopicListTable
+    }
+    
+    func getTextColour(numberOfDaysSinceLastReviewed: Int) -> NSColor {
+        switch numberOfDaysSinceLastReviewed {
+        // TODO: get values from preferences
+        case 10...20:
+            return NSColor.orange
+        case 20...Int.max:
+            return NSColor.red
+        default:
+            return NSColor.black
+        }
     }
 }
