@@ -10,10 +10,9 @@ import Cocoa
 
 class MainWindowViewController: NSViewController {
 
-    @IBOutlet weak var mainContent: NSScrollView!
-    @IBOutlet weak var mainContentView: NSView!
     @IBOutlet weak var topicDescriptionLabel: NSTextField!
     @IBOutlet weak var itemNameAndDescriptionLabel: NSTextField!
+    @IBOutlet var mainContentText: NSTextView!
     
     var topics = Topic.topicList()
     let dateFormatter = DateFormatter()
@@ -27,7 +26,7 @@ class MainWindowViewController: NSViewController {
         // Do any additional setup after loading the view.
         
         selectedItem = Item(name: "testing")
-        mainContent.documentView?.insertText(Item.load(name: selectedItem.name).contents)
+        mainContentText.textStorage?.setAttributedString(Item.load(name: selectedItem.name).contents)
         
         dateFormatter.dateStyle = .short
         // dateFormatter.string(from: something)
@@ -39,17 +38,20 @@ class MainWindowViewController: NSViewController {
         }
     }
 
-    @IBAction func newItemBtnClicked(_ sender: Any) {
-        print("New item clicked")
+    @IBAction func newItemAction(_ sender: NSButton) {
+        print("New item action")
+    }
+    
+    @IBAction func editItemAction(_ sender: NSButton) {
+        print("Edit item action")
     }
     
     @IBAction func itemClicked(_ sender: NSOutlineView) {
         let clickedItem = sender.item(atRow: sender.clickedRow)
         if clickedItem is Item {
             selectedItem = Item(name: (clickedItem as! Item).name, contents: NSAttributedString(), lastReviewed: Date())
-            let itemContents = (mainContent.documentView as! NSTextView)
             let loadedItem = Item.load(name: selectedItem.name)
-            itemContents.insertText(loadedItem.contents, replacementRange: NSRange(location: 0, length: itemContents.string.count))
+            mainContentText.textStorage?.setAttributedString(loadedItem.contents)
             let loadedItemName = loadedItem.name
             let loadedItemDescription = loadedItem.description ?? ""
             itemNameAndDescriptionLabel.stringValue = loadedItemName + ": " + loadedItemDescription
@@ -60,13 +62,14 @@ class MainWindowViewController: NSViewController {
         }
     }
     
-    @IBAction func saveContentsAction(_ sender: Any) {
-        let contents = (mainContent.documentView as! NSTextView)
-        let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
-        let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
-        let item = Item(name: selectedItem.name, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
-        item.save()
-    }
+    //    TODO: move to the edit item controller
+//    @IBAction func saveContentsAction(_ sender: Any) {
+//        let contents = (mainContent.documentView as! NSTextView)
+//        let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
+//        let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
+//        let item = Item(name: selectedItem.name, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
+//        item.save()
+//    }
 }
 
 // make the view controller the data source of the topic list

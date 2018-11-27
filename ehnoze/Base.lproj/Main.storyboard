@@ -734,7 +734,7 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <connections>
-                                                <action selector="newItemBtnClicked:" target="Oky-zY-oP4" id="NxR-5U-acK"/>
+                                                <action selector="newItemAction:" target="Oky-zY-oP4" id="l3a-QA-zG6"/>
                                             </connections>
                                         </buttonCell>
                                     </button>
@@ -938,37 +938,37 @@
                                                         <rect key="frame" x="0.0" y="166" width="759" height="374"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <scrollView appearanceType="aqua" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DX3-Lt-dKX">
-                                                                <rect key="frame" x="0.0" y="0.0" width="759" height="331"/>
+                                                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eX3-Ar-7T3">
+                                                                <rect key="frame" x="0.0" y="25" width="759" height="349"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="gjY-OD-dPE">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="744" height="331"/>
+                                                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="m4B-OE-A58">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="744" height="349"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textView ambiguous="YES" verticallyResizable="YES" usesFontPanel="YES" usesInspectorBar="YES" findStyle="bar" allowsDocumentBackgroundColorChange="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="AgF-76-35x">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="1232" height="331"/>
+                                                                        <textView ambiguous="YES" editable="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="KCg-4w-0eQ">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="744" height="349"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <size key="minSize" width="744" height="331"/>
-                                                                            <size key="maxSize" width="1991" height="10000000"/>
+                                                                            <size key="minSize" width="744" height="349"/>
+                                                                            <size key="maxSize" width="793" height="10000000"/>
                                                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         </textView>
                                                                     </subviews>
                                                                 </clipView>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="IkR-gq-PQP">
-                                                                    <rect key="frame" x="744" y="0.0" width="15" height="331"/>
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Gda-2h-Tho">
+                                                                    <rect key="frame" x="744" y="0.0" width="15" height="349"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>
                                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13P-p6-omv">
-                                                                <rect key="frame" x="695" y="326" width="70" height="32"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Mg-Pg-o0n">
+                                                                <rect key="frame" x="697" y="-6" width="64" height="32"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                                <buttonCell key="cell" type="push" title="Edit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Mg-Pg-o0n">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="saveContentsAction:" target="XfG-lQ-9wD" id="HN2-8b-yi8"/>
+                                                                    <action selector="editItemAction:" target="XfG-lQ-9wD" id="SxM-6c-BE1"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -991,8 +991,7 @@
                     </view>
                     <connections>
                         <outlet property="itemNameAndDescriptionLabel" destination="O2z-EB-4pH" id="rgL-C5-I6V"/>
-                        <outlet property="mainContent" destination="DX3-Lt-dKX" id="tCe-MO-64z"/>
-                        <outlet property="mainContentView" destination="XQK-AI-eZY" id="V9p-lG-QIU"/>
+                        <outlet property="mainContentText" destination="KCg-4w-0eQ" id="xBt-20-Eqd"/>
                         <outlet property="topicDescriptionLabel" destination="uAq-nz-CpM" id="hXN-rh-0M1"/>
                     </connections>
                 </viewController>
