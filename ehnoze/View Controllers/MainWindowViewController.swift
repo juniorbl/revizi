@@ -43,7 +43,14 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func editItemAction(_ sender: NSButton) {
-        print("Edit item action")
+        let editItemController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Item View Controller") as! NSWindowController
+        if let editItemWindow = editItemController.window {
+            let editItemController = editItemWindow.contentViewController as! EditItemViewController
+            editItemController.itemName = selectedItem.name
+//            editItemController.itemContents = selectedItem.contents
+            NSApplication.shared.runModal(for: editItemWindow)
+            editItemWindow.close()
+        }
     }
     
     @IBAction func itemClicked(_ sender: NSOutlineView) {

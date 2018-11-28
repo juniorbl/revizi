@@ -999,6 +999,69 @@
             </objects>
             <point key="canvasLocation" x="75" y="1186"/>
         </scene>
+        <!--Window Controller-->
+        <scene sceneID="0Op-37-85b">
+            <objects>
+                <windowController storyboardIdentifier="Edit Item View Controller" id="Du6-6h-05h" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="nAR-ps-cAH">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="294" y="313" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+                        <connections>
+                            <outlet property="delegate" destination="Du6-6h-05h" id="n14-Qj-fOt"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="fDl-sq-Hpo" kind="relationship" relationship="window.shadowedContentViewController" id="RE1-Io-NMe"/>
+                    </connections>
+                </windowController>
+                <customObject id="FjO-Pa-cdy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-183" y="1708"/>
+        </scene>
+        <!--Edit Item View Controller-->
+        <scene sceneID="WLM-wi-N0P">
+            <objects>
+                <viewController id="fDl-sq-Hpo" customClass="EditItemViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="825-1G-pWR">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nlr-1j-DWU">
+                                <rect key="frame" x="18" y="233" width="143" height="17"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="iTA-5m-I6E">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="fDl-sq-Hpo" name="value" keyPath="itemName" id="hLA-bq-rHc"/>
+                                </connections>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t0P-Bc-1pw">
+                                <rect key="frame" x="407" y="13" width="59" height="32"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KVY-MY-zXn">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="closeEditItemWindow:" target="fDl-sq-Hpo" id="Rbv-b1-hg6"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="TMX-aw-6tE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="iQX-QO-A1O"/>
+            </objects>
+            <point key="canvasLocation" x="437" y="1702"/>
+        </scene>
     </scenes>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

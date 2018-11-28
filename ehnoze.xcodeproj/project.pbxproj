@@ -11,6 +11,7 @@
 		075CE24F21A0E1BD001A545B /* MainWindowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075CE24E21A0E1BD001A545B /* MainWindowViewController.swift */; };
 		075CE25121A0E1BF001A545B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 075CE25021A0E1BF001A545B /* Assets.xcassets */; };
 		075CE25421A0E1BF001A545B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 075CE25221A0E1BF001A545B /* Main.storyboard */; };
+		07BF0FD621ADFDDB00689359 /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF0FD521ADFDDB00689359 /* EditItemViewController.swift */; };
 		07EA400921A9C1DF007AE7B2 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EA400821A9C1DF007AE7B2 /* Topic.swift */; };
 		07FD3D5E21A7A1D100EEA024 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FD3D5D21A7A1D100EEA024 /* Item.swift */; };
 /* End PBXBuildFile section */
@@ -23,6 +24,7 @@
 		075CE25321A0E1BF001A545B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		075CE25521A0E1BF001A545B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		075CE25E21A0E226001A545B /* ehnoze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ehnoze.entitlements; sourceTree = "<group>"; };
+		07BF0FD521ADFDDB00689359 /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
 		07EA400821A9C1DF007AE7B2 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		07FD3D5D21A7A1D100EEA024 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				075CE24E21A0E1BD001A545B /* MainWindowViewController.swift */,
+				07BF0FD521ADFDDB00689359 /* EditItemViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 			files = (
 				075CE24F21A0E1BD001A545B /* MainWindowViewController.swift in Sources */,
 				07EA400921A9C1DF007AE7B2 /* Topic.swift in Sources */,
+				07BF0FD621ADFDDB00689359 /* EditItemViewController.swift in Sources */,
 				07FD3D5E21A7A1D100EEA024 /* Item.swift in Sources */,
 				075CE24D21A0E1BD001A545B /* AppDelegate.swift in Sources */,
 			);
