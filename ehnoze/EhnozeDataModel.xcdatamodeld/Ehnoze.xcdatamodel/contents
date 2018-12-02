@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Subject" representedClassName="SubjectMO" syncable="YES">
+        <attribute name="contents" attributeType="Binary" syncable="YES"/>
+        <attribute name="lastReviewed" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="parentTopic" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="subjects" inverseEntity="Topic" syncable="YES"/>
+    </entity>
+    <entity name="Topic" representedClassName="TopicMO" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Subject" inverseName="parentTopic" inverseEntity="Subject" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Subject" positionX="-2520.90625" positionY="-2460.6796875" width="128" height="120"/>
+        <element name="Topic" positionX="-2510.1328125" positionY="-2693.34375" width="128" height="90"/>
+    </elements>
+</model>

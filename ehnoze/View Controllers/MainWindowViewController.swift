@@ -13,22 +13,21 @@ class MainWindowViewController: NSViewController {
     @IBOutlet weak var topicDescriptionLabel: NSTextField!
     @IBOutlet weak var itemNameAndDescriptionLabel: NSTextField!
     @IBOutlet var mainContentText: NSTextView!
+    @IBOutlet weak var topicAndSubjectsDisplay: NSOutlineView!
     
-    var topics = Topic.topicList()
+    var topics = TopicMO.fetchAll()
     let dateFormatter = DateFormatter()
     var selectedItem = Item()
-    // tree example: - NSOutlineView - https://www.youtube.com/watch?v=_SvZiUF-ShM
-    // https://www.raywenderlich.com/1201-nsoutlineview-on-macos-tutorial
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        selectedItem = Item(name: "testing")
-        mainContentText.textStorage?.setAttributedString(Item.load(name: selectedItem.name).contents)
-        
-        dateFormatter.dateStyle = .short
+//        selectedItem = Item(name: "testing")
+//        mainContentText.textStorage?.setAttributedString(Item.load(name: selectedItem.name).contents)
+//
+//        dateFormatter.dateStyle = .short
         // dateFormatter.string(from: something)
     }
 
@@ -37,70 +36,66 @@ class MainWindowViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
-    @IBAction func newItemAction(_ sender: NSButton) {
-        print("New item action")
-    }
     
     @IBAction func editItemAction(_ sender: NSButton) {
-        let editItemController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Item View Controller") as! NSWindowController
-        if let editItemWindow = editItemController.window {
-            let editItemController = editItemWindow.contentViewController as! EditItemViewController
-            editItemController.itemName = selectedItem.name
-//            editItemController.itemContents = selectedItem.contents
-            NSApplication.shared.runModal(for: editItemWindow)
-            editItemWindow.close()
-        }
+//        let editItemController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Item View Controller") as! NSWindowController
+//        if let editItemWindow = editItemController.window {
+//            let editItemController = editItemWindow.contentViewController as! EditItemViewController
+//            editItemController.itemName = selectedItem.name
+//            NSApplication.shared.runModal(for: editItemWindow)
+//            editItemWindow.close()
+//        }
     }
     
     @IBAction func itemClicked(_ sender: NSOutlineView) {
-        let clickedItem = sender.item(atRow: sender.clickedRow)
-        if clickedItem is Item {
-            selectedItem = Item(name: (clickedItem as! Item).name, contents: NSAttributedString(), lastReviewed: Date())
-            let loadedItem = Item.load(name: selectedItem.name)
-            mainContentText.textStorage?.setAttributedString(loadedItem.contents)
-            let loadedItemName = loadedItem.name
-            let loadedItemDescription = loadedItem.description ?? ""
-            itemNameAndDescriptionLabel.stringValue = loadedItemName + ": " + loadedItemDescription
-            if let parentTopic = sender.parent(forItem: clickedItem) as? Topic {
-                topicDescriptionLabel.stringValue = parentTopic.name
-            }
-            
-        }
+//        let clickedItem = sender.item(atRow: sender.clickedRow)
+//        if clickedItem is Item {
+//            selectedItem = Item(name: (clickedItem as! Item).name, contents: NSAttributedString(), lastReviewed: Date())
+//            let loadedItem = Item.load(name: selectedItem.name)
+//            mainContentText.textStorage?.setAttributedString(loadedItem.contents)
+//            let loadedItemName = loadedItem.name
+//            let loadedItemDescription = loadedItem.description ?? ""
+//            itemNameAndDescriptionLabel.stringValue = loadedItemName + ": " + loadedItemDescription
+//            if let parentTopic = sender.parent(forItem: clickedItem) as? Topic {
+//                topicDescriptionLabel.stringValue = parentTopic.name
+//            }
+//
+//        }
     }
     
-    //    TODO: move to the edit item controller
-//    @IBAction func saveContentsAction(_ sender: Any) {
-//        let contents = (mainContent.documentView as! NSTextView)
-//        let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
-//        let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
-//        let item = Item(name: selectedItem.name, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
-//        item.save()
-//    }
+    @IBAction func newTopicAction(_ sender: Any?) {
+        let editTopicController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Topic View Controller") as! NSWindowController
+        if let editTopicWindow = editTopicController.window {
+            NSApplication.shared.runModal(for: editTopicWindow)
+            editTopicWindow.close()
+            topics = TopicMO.fetchAll()
+            topicAndSubjectsDisplay.reloadData()
+        }
+    }
 }
 
 // make the view controller the data source of the topic list
 extension MainWindowViewController: NSOutlineViewDataSource {
     // the outline view needs to know how many items it should show
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let topic = item as? Topic {
-            return topic.items.count
+        if let topic = item as? TopicMO {
+            return topic.subjects?.count ?? 0
         }
         return topics.count
     }
     
     // the outline view needs to know which child it should show for a given parent and index
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let topic = item as? Topic {
-            return topic.items[index]
+        if let topic = item as? TopicMO {
+            return topic.subjects?.allObjects[index]
         }
         return topics[index]
     }
     
     // tell it which items can be collapsed or expanded
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        if let topic = item as? Topic {
-            return topic.items.count > 0
+        if let topic = item as? TopicMO {
+            return topic.subjects?.count ?? 0 > 0
         }
         return false
     }
@@ -111,10 +106,10 @@ extension MainWindowViewController: NSOutlineViewDelegate {
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var cellViewFromTopicListTable: NSTableCellView?
-        if let topic = item as? Topic {
+        if let topic = item as? TopicMO {
             cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicCell"), owner: self) as? NSTableCellView
             if let textField = cellViewFromTopicListTable?.textField {
-                textField.stringValue = topic.name
+                textField.stringValue = topic.name ?? ""
                 textField.sizeToFit()
             }
         } else if let item = item as? Item {

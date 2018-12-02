@@ -10,16 +10,24 @@ import Cocoa
 
 class EditItemViewController: NSViewController {
     
-    // TODO: maybe user the Item object instead of the properties of the Item
     @objc dynamic var itemName = String()
-//    @objc dynamic var itemContents = NSAttributedString()
-
+    @IBOutlet weak var itemContents: NSScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
     
     @IBAction func closeEditItemWindow(_ sender: NSButton) {
+        NSApplication.shared.stopModal()
+    }
+    
+    @IBAction func saveContentsAction(_ sender: Any) {
+        let contents = (itemContents.documentView as! NSTextView)
+        let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
+        let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
+        let item = Item(name: itemName, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
+        item.save()
         NSApplication.shared.stopModal()
     }
 }
