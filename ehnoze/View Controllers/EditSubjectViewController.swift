@@ -10,22 +10,30 @@ import Cocoa
 
 class EditSubjectViewController: NSViewController {
     
-    @objc dynamic var itemName = String()
-    @IBOutlet weak var itemContents: NSScrollView!
+//    @objc dynamic var itemName = String()
+    @IBOutlet weak var parentTopicComboBox: NSComboBox!
+    @IBOutlet weak var subjectNotesField: NSTextField!
+    @IBOutlet weak var subjectContentsField: NSScrollView!
+    @IBOutlet weak var subjectNameField: NSTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        loadTopics()
+    }
+    
+    func loadTopics() {
+        parentTopicComboBox.addItems(withObjectValues: TopicMO.fetchAll().map({$0.name ?? ""}))
     }
     
     @IBAction func closeEditItemWindow(_ sender: NSButton) {
         NSApplication.shared.stopModal()
     }
     
-    @IBAction func saveContentsAction(_ sender: Any) {
-        let contents = (itemContents.documentView as! NSTextView)
+    @IBAction func saveSubectAction(_ sender: Any) {
+        let contents = (subjectContentsField.documentView as! NSTextView)
         let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))! as NSData
-        SubjectMO.save(name: "testing 5", contents: rtfContentsData, parentTopic: TopicMO.fetchAll()[2])
+        let selectedTopic = parentTopicComboBox.objectValueOfSelectedItem as! String
+        SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: subjectNotesField.stringValue, parentTopic: TopicMO.fetchBy(name: selectedTopic))
         NSApplication.shared.stopModal()
     }
 }

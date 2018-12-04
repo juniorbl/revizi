@@ -14,6 +14,18 @@ import CoreData
 public class TopicMO: NSManagedObject {
     static private var repository: DataRepository = DataRepository()
     
+    static func fetchBy(name: String) -> TopicMO {
+        let fetchByNameRequest: NSFetchRequest<TopicMO> = self.fetchRequest()
+        fetchByNameRequest.predicate = NSPredicate(format: "name == %@", name)
+        do {
+            let result = try repository.managedContext.fetch(fetchByNameRequest)
+            return result[0]
+        } catch let error as NSError {
+            print("Error while fetching Topic: \(error)")
+            return TopicMO()
+        }
+    }
+    
     static func fetchAll() -> [TopicMO] {
         do {
             return try repository.managedContext.fetch(TopicMO.fetchRequest()) as! [TopicMO]

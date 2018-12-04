@@ -42,8 +42,7 @@ public class SubjectMO: NSManagedObject {
     }
     
     func numberOfDaysSinceLastReviewed() -> Int {
-//        return Calendar.current.dateComponents([.day], from: self.lastReviewed, to: Date()).day ?? 0
-        return 2 // TEMP
+        return Calendar.current.dateComponents([.day], from: self.lastReviewed! as Date, to: Date()).day ?? 0
     }
 }
 
