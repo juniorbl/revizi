@@ -36,7 +36,6 @@ public class TopicMO: NSManagedObject {
 }
 
 extension TopicMO {
-    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<TopicMO> {
         return NSFetchRequest<TopicMO>(entityName: "Topic")
     }
@@ -44,22 +43,18 @@ extension TopicMO {
     @NSManaged public var name: String?
     @NSManaged public var notes: NSData?
     @NSManaged public var subjects: NSSet?
-    
 }
 
-// MARK: Generated accessors for subjects
 extension TopicMO {
+   @objc(addSubjectsObject:)
+   @NSManaged public func addToSubjects(_ value: SubjectMO)
     
-    //    @objc(addSubjectsObject:)
-    //    @NSManaged public func addToSubjects(_ value: SubjectMO)
-    //
-    //    @objc(removeSubjectsObject:)
-    //    @NSManaged public func removeFromSubjects(_ value: SubjectMO)
+   @objc(removeSubjectsObject:)
+   @NSManaged public func removeFromSubjects(_ value: SubjectMO)
     
     @objc(addSubjects:)
     @NSManaged public func addToSubjects(_ values: NSSet)
     
     @objc(removeSubjects:)
     @NSManaged public func removeFromSubjects(_ values: NSSet)
-    
 }

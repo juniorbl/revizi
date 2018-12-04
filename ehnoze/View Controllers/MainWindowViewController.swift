@@ -17,7 +17,8 @@ class MainWindowViewController: NSViewController {
     
     var topics = TopicMO.fetchAll()
     let dateFormatter = DateFormatter()
-    var selectedItem = Item()
+//    var selectedItem = Item()
+//    var selectedSubject = SubjectMO()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,30 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func itemClicked(_ sender: NSOutlineView) {
+        let clickedSubject = sender.item(atRow: sender.clickedRow)
+        if clickedSubject is SubjectMO {
+            let subjectName = (clickedSubject as! SubjectMO).name ?? ""
+            let loadedSubject = SubjectMO.fetchBy(name: subjectName)
+            let loadSubjectOptions = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf]
+            do {
+                let subjectContents = try NSAttributedString(data: loadedSubject.contents as! Data,
+                                                             options: loadSubjectOptions,
+                                                             documentAttributes: nil)
+                mainContentText.textStorage?.setAttributedString(subjectContents)
+                let loadedSubjectName = loadedSubject.name
+                let loadedItemDescription = loadedSubject.description ?? ""
+                itemNameAndDescriptionLabel.stringValue = loadedSubjectName ?? "" + ": " + loadedItemDescription
+                if let parentTopic = sender.parent(forItem: clickedSubject) as? TopicMO {
+                    topicDescriptionLabel.stringValue = parentTopic.name ?? ""
+                }
+            } catch let error as NSError {
+                print("Error while retrieving Subject: \(error)")
+            }
+
+
+
+        }
+        
 //        let clickedItem = sender.item(atRow: sender.clickedRow)
 //        if clickedItem is Item {
 //            selectedItem = Item(name: (clickedItem as! Item).name, contents: NSAttributedString(), lastReviewed: Date())
@@ -68,6 +93,16 @@ class MainWindowViewController: NSViewController {
         if let editTopicWindow = editTopicController.window {
             NSApplication.shared.runModal(for: editTopicWindow)
             editTopicWindow.close()
+            topics = TopicMO.fetchAll()
+            topicAndSubjectsDisplay.reloadData()
+        }
+    }
+    
+    @IBAction func newSubjectAction(_ sender: Any?) {
+        let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Subject View Controller") as! NSWindowController
+        if let editSubjectWindow = editSubjectController.window {
+            NSApplication.shared.runModal(for: editSubjectWindow)
+            editSubjectWindow.close()
             topics = TopicMO.fetchAll()
             topicAndSubjectsDisplay.reloadData()
         }
@@ -112,26 +147,26 @@ extension MainWindowViewController: NSOutlineViewDelegate {
                 textField.stringValue = topic.name ?? ""
                 textField.sizeToFit()
             }
-        } else if let item = item as? Item {
-            // create the columns for the item information
+        } else if let subject = item as? SubjectMO {
+            // create the columns for the subject information
             if (tableColumn?.identifier)!.rawValue == "DateColumn" {
                 // if it's a date colum, get the date cell to display the last reviewed date
                 cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DateCell"), owner: self) as? NSTableCellView
                 if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = String(item.numberOfDaysSinceLastReviewed()) + " day(s) ago" // TODO: localize
+                    textField.stringValue = String(subject.numberOfDaysSinceLastReviewed()) + " day(s) ago" // TODO: localize
                     textField.sizeToFit()
                 }
             } else {
-                // if it's not a date colum, get the cell to display the item name
+                // if it's not a date colum, get the cell to display the subject name
                 cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemCell"), owner: self) as? NSTableCellView
                 if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = item.name
+                    textField.stringValue = subject.name ?? ""
                     textField.sizeToFit()
                 }
             }
             // change color based on how old the last review is
             if let textField = cellViewFromTopicListTable?.textField {
-                textField.textColor = getTextColour(numberOfDaysSinceLastReviewed: item.numberOfDaysSinceLastReviewed())
+                textField.textColor = getTextColour(numberOfDaysSinceLastReviewed: subject.numberOfDaysSinceLastReviewed())
             }
         }
         return cellViewFromTopicListTable

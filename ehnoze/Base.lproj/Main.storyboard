@@ -736,6 +736,9 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
+                                    <connections>
+                                        <action selector="newSubjectAction:" target="Oky-zY-oP4" id="rim-jj-d1y"/>
+                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="3FI-Zv-SvO"/>
                             </allowedToolbarItems>
@@ -1000,8 +1003,8 @@
         <!--Window Controller-->
         <scene sceneID="0Op-37-85b">
             <objects>
-                <windowController storyboardIdentifier="Edit Item View Controller" id="Du6-6h-05h" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="nAR-ps-cAH">
+                <windowController storyboardIdentifier="Edit Subject View Controller" id="Du6-6h-05h" sceneMemberID="viewController">
+                    <window key="window" title="Subject" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="nAR-ps-cAH">
                         <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="294" y="313" width="900" height="500"/>
@@ -1138,10 +1141,10 @@ DQ
             </objects>
             <point key="canvasLocation" x="383" y="2373"/>
         </scene>
-        <!--Edit Item View Controller-->
+        <!--Edit Subject View Controller-->
         <scene sceneID="WLM-wi-N0P">
             <objects>
-                <viewController id="fDl-sq-Hpo" customClass="EditItemViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="fDl-sq-Hpo" customClass="EditSubjectViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="825-1G-pWR">
                         <rect key="frame" x="0.0" y="0.0" width="900" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1157,7 +1160,7 @@ DQ
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="saveContentsAction:" target="fDl-sq-Hpo" id="qch-lf-YRs"/>
+                                    <action selector="saveContentsAction:" target="fDl-sq-Hpo" id="ncc-S2-jJc"/>
                                 </connections>
                             </button>
                             <scrollView appearanceType="aqua" fixedFrame="YES" borderType="line" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bp-kc-7Ce">

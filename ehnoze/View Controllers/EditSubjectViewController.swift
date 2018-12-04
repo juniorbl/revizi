@@ -1,5 +1,5 @@
 //
-//  EditItemViewController.swift
+//  EditItemSubjectController.swift
 //  ehnoze
 //
 //  Created by Carlos on 2018-11-27.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class EditItemViewController: NSViewController {
+class EditSubjectViewController: NSViewController {
     
     @objc dynamic var itemName = String()
     @IBOutlet weak var itemContents: NSScrollView!
@@ -24,10 +24,8 @@ class EditItemViewController: NSViewController {
     
     @IBAction func saveContentsAction(_ sender: Any) {
         let contents = (itemContents.documentView as! NSTextView)
-        let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))
-        let rtfContents = NSAttributedString(rtf: rtfContentsData ?? Data(), documentAttributes: nil)
-        let item = Item(name: itemName, contents: rtfContents ?? NSAttributedString(), lastReviewed: Date())
-        item.save()
+        let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))! as NSData
+        SubjectMO.save(name: "testing 5", contents: rtfContentsData, parentTopic: TopicMO.fetchAll()[2])
         NSApplication.shared.stopModal()
     }
 }
