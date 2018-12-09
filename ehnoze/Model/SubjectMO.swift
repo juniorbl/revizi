@@ -13,7 +13,7 @@ import CoreData
 @objc(SubjectMO)
 public class SubjectMO: NSManagedObject {
     static private var repository: DataRepository = DataRepository()
-    
+        
     static func fetchBy(name: String) -> SubjectMO {
         let fetchByNameRequest: NSFetchRequest<SubjectMO> = self.fetchRequest()
         fetchByNameRequest.predicate = NSPredicate(format: "name == %@", name)
@@ -41,8 +41,38 @@ public class SubjectMO: NSManagedObject {
         }
     }
     
+    static func update() {
+        do {
+            // this assumes that an instance of SubjectMO is already loaded in memory and just call the context to save,
+            // maybe theres's a better way to do this
+            try repository.managedContext.save()
+        } catch let error as NSError {
+            print("Error while updating Subject: \(error)")
+        }
+    }
+    
+    static private func fetchBy(id: NSManagedObjectID) -> SubjectMO {
+        do {
+            let loadedSubject = try repository.managedContext.existingObject(with: id) as! SubjectMO
+            return loadedSubject
+        } catch let error as NSError {
+            print("Error while fetching Subject: \(error)")
+            return SubjectMO()
+        }
+    }
+    
     func numberOfDaysSinceLastReviewed() -> Int {
         return Calendar.current.dateComponents([.day], from: self.lastReviewed! as Date, to: Date()).day ?? 0
+    }
+    
+    func contentsAsString() -> NSAttributedString {
+        let loadSubjectOptions = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf]
+        do {
+            return try NSAttributedString(data: self.contents! as Data, options: loadSubjectOptions, documentAttributes: nil)
+        } catch let error as NSError {
+            print("Error while accessing contents of Subject: \(error)")
+            return NSAttributedString()
+        }
     }
 }
 

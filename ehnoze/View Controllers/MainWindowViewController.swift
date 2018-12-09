@@ -15,10 +15,11 @@ class MainWindowViewController: NSViewController {
     @IBOutlet var mainContentText: NSTextView!
     @IBOutlet weak var topicAndSubjectsDisplay: NSOutlineView!
     
+    let editSubjectController = "Edit Subject View Controller"
+    
     var topics = TopicMO.fetchAll()
     let dateFormatter = DateFormatter()
-//    var selectedItem = Item()
-//    var selectedSubject = SubjectMO()
+    var subjectBeingDisplayed: SubjectMO?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,53 +40,36 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func editItemAction(_ sender: NSButton) {
-//        let editItemController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Item View Controller") as! NSWindowController
-//        if let editItemWindow = editItemController.window {
-//            let editItemController = editItemWindow.contentViewController as! EditItemViewController
-//            editItemController.itemName = selectedItem.name
-//            NSApplication.shared.runModal(for: editItemWindow)
-//            editItemWindow.close()
-//        }
+        let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
+        if let editSubjectWindow = editSubjectController.window {
+            let editSubjectController = editSubjectWindow.contentViewController as! EditSubjectViewController
+//            let selectedSubject = topicAndSubjectsDisplay.item(atRow: topicAndSubjectsDisplay.selectedRow) as! SubjectMO
+            editSubjectController.subjectToEdit = subjectBeingDisplayed
+            NSApplication.shared.runModal(for: editSubjectWindow)
+            editSubjectWindow.close()
+            reloadTopicsAndSubjectsDisplay()
+            
+            let updatedSubjectIndex = topicAndSubjectsDisplay.row(forItem: subjectBeingDisplayed)
+            topicAndSubjectsDisplay.selectRowIndexes(IndexSet(integer: updatedSubjectIndex), byExtendingSelection: false)
+            let subjectNotes = subjectBeingDisplayed?.notes ?? ""
+            itemNameAndDescriptionLabel.stringValue = subjectBeingDisplayed?.name ?? "" + ": " + subjectNotes
+            mainContentText.textStorage?.setAttributedString(subjectBeingDisplayed?.contentsAsString() ?? NSAttributedString())
+        }
     }
     
     @IBAction func itemClicked(_ sender: NSOutlineView) {
-        let clickedSubject = sender.item(atRow: sender.clickedRow)
-        if clickedSubject is SubjectMO {
-            let subjectName = (clickedSubject as! SubjectMO).name ?? ""
+        let selectedSubject = sender.item(atRow: sender.clickedRow)
+        if selectedSubject is SubjectMO {
+            let subjectName = (selectedSubject as! SubjectMO).name ?? ""
             let loadedSubject = SubjectMO.fetchBy(name: subjectName)
-            let loadSubjectOptions = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf]
-            do {
-                let subjectContents = try NSAttributedString(data: loadedSubject.contents as! Data,
-                                                             options: loadSubjectOptions,
-                                                             documentAttributes: nil)
-                mainContentText.textStorage?.setAttributedString(subjectContents)
-                let loadedSubjectName = loadedSubject.name
-                let loadedItemDescription = loadedSubject.description ?? ""
-                itemNameAndDescriptionLabel.stringValue = loadedSubjectName ?? "" + ": " + loadedItemDescription
-                if let parentTopic = sender.parent(forItem: clickedSubject) as? TopicMO {
-                    topicDescriptionLabel.stringValue = parentTopic.name ?? ""
-                }
-            } catch let error as NSError {
-                print("Error while retrieving Subject: \(error)")
+            subjectBeingDisplayed = loadedSubject
+            mainContentText.textStorage?.setAttributedString(loadedSubject.contentsAsString())
+            let subjectNotes = loadedSubject.notes ?? ""
+            itemNameAndDescriptionLabel.stringValue = loadedSubject.name ?? "" + ": " + subjectNotes
+            if let parentTopic = sender.parent(forItem: selectedSubject) as? TopicMO {
+                topicDescriptionLabel.stringValue = parentTopic.name ?? ""
             }
-
-
-
         }
-        
-//        let clickedItem = sender.item(atRow: sender.clickedRow)
-//        if clickedItem is Item {
-//            selectedItem = Item(name: (clickedItem as! Item).name, contents: NSAttributedString(), lastReviewed: Date())
-//            let loadedItem = Item.load(name: selectedItem.name)
-//            mainContentText.textStorage?.setAttributedString(loadedItem.contents)
-//            let loadedItemName = loadedItem.name
-//            let loadedItemDescription = loadedItem.description ?? ""
-//            itemNameAndDescriptionLabel.stringValue = loadedItemName + ": " + loadedItemDescription
-//            if let parentTopic = sender.parent(forItem: clickedItem) as? Topic {
-//                topicDescriptionLabel.stringValue = parentTopic.name
-//            }
-//
-//        }
     }
     
     @IBAction func newTopicAction(_ sender: Any?) {
@@ -93,19 +77,22 @@ class MainWindowViewController: NSViewController {
         if let editTopicWindow = editTopicController.window {
             NSApplication.shared.runModal(for: editTopicWindow)
             editTopicWindow.close()
-            topics = TopicMO.fetchAll()
-            topicAndSubjectsDisplay.reloadData()
+            reloadTopicsAndSubjectsDisplay()
         }
     }
     
     @IBAction func newSubjectAction(_ sender: Any?) {
-        let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Subject View Controller") as! NSWindowController
+        let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
         if let editSubjectWindow = editSubjectController.window {
             NSApplication.shared.runModal(for: editSubjectWindow)
             editSubjectWindow.close()
-            topics = TopicMO.fetchAll()
-            topicAndSubjectsDisplay.reloadData()
+            reloadTopicsAndSubjectsDisplay()
         }
+    }
+    
+    fileprivate func reloadTopicsAndSubjectsDisplay() {
+        topics = TopicMO.fetchAll()
+        topicAndSubjectsDisplay.reloadData()
     }
 }
 
