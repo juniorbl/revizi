@@ -11,14 +11,14 @@ import Cocoa
 class MainWindowViewController: NSViewController {
 
     @IBOutlet weak var topicDescriptionLabel: NSTextField!
-    @IBOutlet weak var itemNameAndDescriptionLabel: NSTextField!
+    @IBOutlet weak var subjectNameAndDescriptionLabel: NSTextField!
     @IBOutlet var mainContentText: NSTextView!
     @IBOutlet weak var topicAndSubjectsDisplay: NSOutlineView!
     
     let editSubjectController = "Edit Subject View Controller"
     
     var topics = TopicMO.fetchAll()
-    let dateFormatter = DateFormatter()
+//    let dateFormatter = DateFormatter()
     var subjectBeingDisplayed: SubjectMO?
     
     override func viewDidLoad() {
@@ -40,20 +40,24 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func editItemAction(_ sender: NSButton) {
-        let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
-        if let editSubjectWindow = editSubjectController.window {
-            let editSubjectController = editSubjectWindow.contentViewController as! EditSubjectViewController
-//            let selectedSubject = topicAndSubjectsDisplay.item(atRow: topicAndSubjectsDisplay.selectedRow) as! SubjectMO
-            editSubjectController.subjectToEdit = subjectBeingDisplayed
-            NSApplication.shared.runModal(for: editSubjectWindow)
-            editSubjectWindow.close()
-            reloadTopicsAndSubjectsDisplay()
-            
-            let updatedSubjectIndex = topicAndSubjectsDisplay.row(forItem: subjectBeingDisplayed)
-            topicAndSubjectsDisplay.selectRowIndexes(IndexSet(integer: updatedSubjectIndex), byExtendingSelection: false)
-            let subjectNotes = subjectBeingDisplayed?.notes ?? ""
-            itemNameAndDescriptionLabel.stringValue = subjectBeingDisplayed?.name ?? "" + ": " + subjectNotes
-            mainContentText.textStorage?.setAttributedString(subjectBeingDisplayed?.contentsAsString() ?? NSAttributedString())
+        if let subjectToEdit = subjectBeingDisplayed {
+            let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
+            if let editSubjectWindow = editSubjectController.window {
+                let editSubjectController = editSubjectWindow.contentViewController as! EditSubjectViewController
+    //            let selectedSubject = topicAndSubjectsDisplay.item(atRow: topicAndSubjectsDisplay.selectedRow) as! SubjectMO
+                editSubjectController.subjectToEdit = subjectToEdit
+                NSApplication.shared.runModal(for: editSubjectWindow)
+                editSubjectWindow.close()
+                reloadTopicsAndSubjectsDisplay()
+                
+                let updatedSubjectIndex = topicAndSubjectsDisplay.row(forItem: subjectToEdit)
+                topicAndSubjectsDisplay.selectRowIndexes(IndexSet(integer: updatedSubjectIndex), byExtendingSelection: false)
+                let subjectNotes = subjectToEdit.notes ?? ""
+                subjectNameAndDescriptionLabel.stringValue = subjectToEdit.name ?? "" + ": " + subjectNotes
+                mainContentText.textStorage?.setAttributedString(subjectToEdit.contentsAsString() )
+            }
+        } else {
+            displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to edit") // TODO localize
         }
     }
     
@@ -65,7 +69,7 @@ class MainWindowViewController: NSViewController {
             subjectBeingDisplayed = loadedSubject
             mainContentText.textStorage?.setAttributedString(loadedSubject.contentsAsString())
             let subjectNotes = loadedSubject.notes ?? ""
-            itemNameAndDescriptionLabel.stringValue = loadedSubject.name ?? "" + ": " + subjectNotes
+            subjectNameAndDescriptionLabel.stringValue = loadedSubject.name ?? "" + ": " + subjectNotes
             if let parentTopic = sender.parent(forItem: selectedSubject) as? TopicMO {
                 topicDescriptionLabel.stringValue = parentTopic.name ?? ""
             }
@@ -87,7 +91,46 @@ class MainWindowViewController: NSViewController {
             NSApplication.shared.runModal(for: editSubjectWindow)
             editSubjectWindow.close()
             reloadTopicsAndSubjectsDisplay()
+            // TODO select the newly added subject, maybe sort the list by last time reviewed, the new one would be the last element
         }
+    }
+    
+    @IBAction func deleteSubjectAction(_ sender: Any?) {
+        if let subjectToDelete = subjectBeingDisplayed {
+            let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the subject '" + (subjectBeingDisplayed?.name)! + "' ?") // TODO localize
+            if userAccepted {
+                SubjectMO.delete(subjectId: subjectToDelete.objectID)
+                subjectBeingDisplayed = nil
+                clearSubjectFields()
+                reloadTopicsAndSubjectsDisplay()
+            }
+        } else {
+            displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to delete") // TODO localize
+        }
+    }
+    
+    fileprivate func displayDialogWith(message: String, informativeText: String = "") {
+        let alert = NSAlert.init()
+        alert.messageText = message
+        alert.informativeText = informativeText
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK") // TODO localize
+        alert.runModal()
+    }
+    
+    fileprivate func displayDialogOkCancel(question: String) -> Bool {
+        let alert = NSAlert.init()
+        alert.messageText = question
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "OK") // TODO localize
+        alert.addButton(withTitle: "Cancel") // TODO localize
+        return alert.runModal() == .alertFirstButtonReturn
+    }
+    
+    fileprivate func clearSubjectFields() {
+        topicDescriptionLabel.stringValue = ""
+        subjectNameAndDescriptionLabel.stringValue = ""
+        mainContentText.textStorage?.setAttributedString(NSAttributedString())
     }
     
     fileprivate func reloadTopicsAndSubjectsDisplay() {

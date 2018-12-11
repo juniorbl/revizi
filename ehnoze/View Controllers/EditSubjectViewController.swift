@@ -47,13 +47,14 @@ class EditSubjectViewController: NSViewController {
     @IBAction func saveSubjectAction(_ sender: Any) {
         let contents = (subjectContentsField.documentView as! NSTextView)
         let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))! as NSData
+        let selectedTopic = parentTopicComboBox.objectValueOfSelectedItem as! String
         if let subjectToUpdate = subjectToEdit {
             subjectToUpdate.name = subjectNameField.stringValue
             subjectToUpdate.notes = subjectNotesField.stringValue
             subjectToUpdate.contents = rtfContentsData
+            subjectToUpdate.parentTopic = TopicMO.fetchBy(name: selectedTopic)
             SubjectMO.update()
         } else {
-            let selectedTopic = parentTopicComboBox.objectValueOfSelectedItem as! String
             SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: subjectNotesField.stringValue, parentTopic: TopicMO.fetchBy(name: selectedTopic))
         }
         NSApplication.shared.stopModal()

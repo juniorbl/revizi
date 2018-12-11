@@ -971,6 +971,17 @@
                                                                     <action selector="editItemAction:" target="XfG-lQ-9wD" id="SxM-6c-BE1"/>
                                                                 </connections>
                                                             </button>
+                                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGB-To-qZe">
+                                                                <rect key="frame" x="612" y="1" width="80" height="32"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                                <buttonCell key="cell" type="push" title="Delete" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ibh-OH-JeX">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <action selector="deleteSubjectAction:" target="XfG-lQ-9wD" id="abM-gh-GUJ"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                     </customView>
                                                 </subviews>
@@ -990,8 +1001,8 @@
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="itemNameAndDescriptionLabel" destination="O2z-EB-4pH" id="rgL-C5-I6V"/>
                         <outlet property="mainContentText" destination="KCg-4w-0eQ" id="xBt-20-Eqd"/>
+                        <outlet property="subjectNameAndDescriptionLabel" destination="O2z-EB-4pH" id="rgL-C5-I6V"/>
                         <outlet property="topicAndSubjectsDisplay" destination="rIN-Af-hk9" id="Lbs-jb-VVp"/>
                         <outlet property="topicDescriptionLabel" destination="uAq-nz-CpM" id="hXN-rh-0M1"/>
                     </connections>
