@@ -52,10 +52,13 @@ class EditSubjectViewController: NSViewController {
             subjectToUpdate.name = subjectNameField.stringValue
             subjectToUpdate.notes = subjectNotesField.stringValue
             subjectToUpdate.contents = rtfContentsData
+            subjectToUpdate.lastReviewed = Date() as NSDate
             subjectToUpdate.parentTopic = TopicMO.fetchBy(name: selectedTopic)
             SubjectMO.update()
         } else {
             SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: subjectNotesField.stringValue, parentTopic: TopicMO.fetchBy(name: selectedTopic))
+             // send a notification passing the name of the new subject
+            NotificationCenter.default.post(name: .newSubject, object: subjectNameField.stringValue)
         }
         NSApplication.shared.stopModal()
     }

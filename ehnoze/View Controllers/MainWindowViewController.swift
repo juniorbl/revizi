@@ -16,21 +16,13 @@ class MainWindowViewController: NSViewController {
     @IBOutlet weak var topicAndSubjectsDisplay: NSOutlineView!
     
     let editSubjectController = "Edit Subject View Controller"
-    
     var topics = TopicMO.fetchAll()
-//    let dateFormatter = DateFormatter()
     var subjectBeingDisplayed: SubjectMO?
     
+    // Do any additional setup after loading the view.
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-//        selectedItem = Item(name: "testing")
-//        mainContentText.textStorage?.setAttributedString(Item.load(name: selectedItem.name).contents)
-//
-//        dateFormatter.dateStyle = .short
-        // dateFormatter.string(from: something)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.selectSubjectNamed(notification:)), name: .newSubject, object: nil)
     }
 
     override var representedObject: Any? {
@@ -44,17 +36,12 @@ class MainWindowViewController: NSViewController {
             let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
             if let editSubjectWindow = editSubjectController.window {
                 let editSubjectController = editSubjectWindow.contentViewController as! EditSubjectViewController
-    //            let selectedSubject = topicAndSubjectsDisplay.item(atRow: topicAndSubjectsDisplay.selectedRow) as! SubjectMO
                 editSubjectController.subjectToEdit = subjectToEdit
                 NSApplication.shared.runModal(for: editSubjectWindow)
                 editSubjectWindow.close()
                 reloadTopicsAndSubjectsDisplay()
-                
-                let updatedSubjectIndex = topicAndSubjectsDisplay.row(forItem: subjectToEdit)
-                topicAndSubjectsDisplay.selectRowIndexes(IndexSet(integer: updatedSubjectIndex), byExtendingSelection: false)
-                let subjectNotes = subjectToEdit.notes ?? ""
-                subjectNameAndDescriptionLabel.stringValue = subjectToEdit.name ?? "" + ": " + subjectNotes
-                mainContentText.textStorage?.setAttributedString(subjectToEdit.contentsAsString() )
+                displaySubject(subjectToEdit)
+                selectSubject(subjectToEdit)
             }
         } else {
             displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to edit") // TODO localize
@@ -65,14 +52,7 @@ class MainWindowViewController: NSViewController {
         let selectedSubject = sender.item(atRow: sender.clickedRow)
         if selectedSubject is SubjectMO {
             let subjectName = (selectedSubject as! SubjectMO).name ?? ""
-            let loadedSubject = SubjectMO.fetchBy(name: subjectName)
-            subjectBeingDisplayed = loadedSubject
-            mainContentText.textStorage?.setAttributedString(loadedSubject.contentsAsString())
-            let subjectNotes = loadedSubject.notes ?? ""
-            subjectNameAndDescriptionLabel.stringValue = loadedSubject.name ?? "" + ": " + subjectNotes
-            if let parentTopic = sender.parent(forItem: selectedSubject) as? TopicMO {
-                topicDescriptionLabel.stringValue = parentTopic.name ?? ""
-            }
+            displaySubject(SubjectMO.fetchBy(name: subjectName))
         }
     }
     
@@ -102,7 +82,7 @@ class MainWindowViewController: NSViewController {
             NSApplication.shared.runModal(for: editSubjectWindow)
             editSubjectWindow.close()
             reloadTopicsAndSubjectsDisplay()
-            // TODO select the newly added subject, maybe sort the list by last time reviewed, the new one would be the last element
+            selectSubject(subjectBeingDisplayed!)
         }
     }
     
@@ -118,6 +98,28 @@ class MainWindowViewController: NSViewController {
         } else {
             displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to delete") // TODO localize
         }
+    }
+    
+    // called when a notification is sent from another controller saying a new subject was created
+    // see viewDidLoad() where the notification is being configured
+    @objc func selectSubjectNamed(notification: NSNotification) {
+        let newlyCreatedSubjectName: String = notification.object as! String
+        reloadTopicsAndSubjectsDisplay()
+        displaySubject(SubjectMO.fetchBy(name: newlyCreatedSubjectName))
+    }
+    
+    fileprivate func selectSubject(_ subject: SubjectMO) {
+        topicAndSubjectsDisplay.expandItem(subject.parentTopic)
+        let subjectIndex = topicAndSubjectsDisplay.row(forItem: subject)
+        topicAndSubjectsDisplay.selectRowIndexes(IndexSet(integer: subjectIndex), byExtendingSelection: false)
+    }
+    
+    fileprivate func displaySubject(_ subjectToDisplay: SubjectMO) {
+        subjectBeingDisplayed = subjectToDisplay
+        let subjectNotes = subjectToDisplay.notes ?? ""
+        subjectNameAndDescriptionLabel.stringValue = subjectToDisplay.name ?? "" + ": " + subjectNotes
+        mainContentText.textStorage?.setAttributedString(subjectToDisplay.contentsAsString())
+        topicDescriptionLabel.stringValue = subjectToDisplay.parentTopic?.name ?? ""
     }
     
     fileprivate func displayDialogWith(message: String, informativeText: String = "") {
@@ -168,7 +170,7 @@ extension MainWindowViewController: NSOutlineViewDataSource {
         return topics[index]
     }
     
-    // tell it which items can be collapsed or expanded
+    // tell which items can be collapsed or expanded
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         if let topic = item as? TopicMO {
             return topic.subjects?.count ?? 0 > 0
@@ -234,4 +236,8 @@ extension MainWindowViewController: NSOutlineViewDelegate {
             return NSColor.black
         }
     }
+}
+
+extension Notification.Name {
+    static let newSubject = Notification.Name("newSubject")
 }
