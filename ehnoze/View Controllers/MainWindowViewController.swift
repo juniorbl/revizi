@@ -76,6 +76,17 @@ class MainWindowViewController: NSViewController {
         }
     }
     
+    @IBAction func topicDoubleClicked(_ sender: NSOutlineView) {
+        let itemClicked = sender.item(atRow: sender.clickedRow)
+        if itemClicked is TopicMO {
+            if sender.isItemExpanded(itemClicked) {
+                sender.collapseItem(itemClicked)
+            } else {
+                sender.expandItem(itemClicked)
+            }
+        }
+    }
+    
     @IBAction func newTopicAction(_ sender: Any?) {
         let editTopicController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Topic View Controller") as! NSWindowController
         if let editTopicWindow = editTopicController.window {
