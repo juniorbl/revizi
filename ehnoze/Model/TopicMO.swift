@@ -14,6 +14,12 @@ import CoreData
 public class TopicMO: NSManagedObject {
     static private var repository: DataRepository = DataRepository()
     
+    var daysSinceLastSubjectReviewed: Int {
+        get {
+            return numberOfDaysSinceLastSubjectReviewed()
+        }
+    }
+    
     static func fetchBy(name: String) -> TopicMO {
         let fetchByNameRequest: NSFetchRequest<TopicMO> = self.fetchRequest()
         fetchByNameRequest.predicate = NSPredicate(format: "name == %@", name)
@@ -28,7 +34,9 @@ public class TopicMO: NSManagedObject {
     
     static func fetchAll() -> [TopicMO] {
         do {
-            return try repository.managedContext.fetch(TopicMO.fetchRequest()) as! [TopicMO]
+            var allTopics = try repository.managedContext.fetch(TopicMO.fetchRequest()) as! [TopicMO]
+            allTopics.sort(by: { $0.daysSinceLastSubjectReviewed > $1.daysSinceLastSubjectReviewed })
+            return allTopics
         } catch {
             print("Error while fetching Topic: \(error)")
             return [TopicMO]()
@@ -45,6 +53,18 @@ public class TopicMO: NSManagedObject {
             print("Error while saving Topic: \(error)")
         }
     }
+    
+    private func numberOfDaysSinceLastSubjectReviewed() -> Int {
+        var lastReviwedSubject: Int = Int.max
+        for subject in subjects ?? NSOrderedSet() {
+            let currentSubject = subject as! SubjectMO
+            let subjectLastReviwedDays = currentSubject.numberOfDaysSinceLastReviewed()
+            if subjectLastReviwedDays < lastReviwedSubject {
+                lastReviwedSubject = subjectLastReviwedDays
+            }
+        }
+        return lastReviwedSubject
+    }
 }
 
 extension TopicMO {
@@ -54,7 +74,7 @@ extension TopicMO {
     
     @NSManaged public var name: String?
     @NSManaged public var notes: NSData?
-    @NSManaged public var subjects: NSSet?
+    @NSManaged public var subjects: NSOrderedSet?
 }
 
 extension TopicMO {

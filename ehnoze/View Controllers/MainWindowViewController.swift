@@ -152,7 +152,7 @@ extension MainWindowViewController: NSOutlineViewDataSource {
     // the outline view needs to know which child it should show for a given parent and index
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let topic = item as? TopicMO {
-            return topic.subjects?.allObjects[index]
+            return topic.subjects?.array[index] ?? ""
         }
         return topics[index]
     }
@@ -172,23 +172,33 @@ extension MainWindowViewController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var cellViewFromTopicListTable: NSTableCellView?
         if let topic = item as? TopicMO {
-            cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicCell"), owner: self) as? NSTableCellView
-            if let textField = cellViewFromTopicListTable?.textField {
-                textField.stringValue = topic.name ?? ""
-                textField.sizeToFit()
+            if (tableColumn?.identifier)!.rawValue == "DateColumn" {
+                // if it's a date colum, get the date cell to display the last reviewed date
+                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicDateCell"), owner: self) as? NSTableCellView
+                if let textField = cellViewFromTopicListTable?.textField {
+                    textField.stringValue = String(topic.daysSinceLastSubjectReviewed) + " day(s) ago" // TODO: localize
+                    textField.sizeToFit()
+                }
+            } else {
+                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicCell"), owner: self) as? NSTableCellView
+                if let textField = cellViewFromTopicListTable?.textField {
+                    textField.stringValue = topic.name ?? ""
+                    textField.sizeToFit()
+                }
             }
+            // TODO set topic backgound color to grey
         } else if let subject = item as? SubjectMO {
             // create the columns for the subject information
             if (tableColumn?.identifier)!.rawValue == "DateColumn" {
                 // if it's a date colum, get the date cell to display the last reviewed date
-                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DateCell"), owner: self) as? NSTableCellView
+                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectDateCell"), owner: self) as? NSTableCellView
                 if let textField = cellViewFromTopicListTable?.textField {
                     textField.stringValue = String(subject.numberOfDaysSinceLastReviewed()) + " day(s) ago" // TODO: localize
                     textField.sizeToFit()
                 }
             } else {
                 // if it's not a date colum, get the cell to display the subject name
-                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemCell"), owner: self) as? NSTableCellView
+                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectCell"), owner: self) as? NSTableCellView
                 if let textField = cellViewFromTopicListTable?.textField {
                     textField.stringValue = subject.name ?? ""
                     textField.sizeToFit()

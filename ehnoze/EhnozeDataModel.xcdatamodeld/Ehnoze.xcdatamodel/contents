@@ -10,7 +10,7 @@
     <entity name="Topic" representedClassName="TopicMO" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="Binary" syncable="YES"/>
-        <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Subject" inverseName="parentTopic" inverseEntity="Subject" syncable="YES"/>
+        <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Subject" inverseName="parentTopic" inverseEntity="Subject" syncable="YES"/>
     </entity>
     <elements>
         <element name="Subject" positionX="-2520.90625" positionY="-2460.6796875" width="128" height="120"/>
