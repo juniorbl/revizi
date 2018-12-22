@@ -16,13 +16,14 @@ class MainWindowViewController: NSViewController {
     @IBOutlet weak var topicAndSubjectsDisplay: NSOutlineView!
     
     let editSubjectController = "Edit Subject View Controller"
-    var topics = TopicMO.fetchAll()
+    var topics = [TopicMO]()
     var subjectBeingDisplayed: SubjectMO?
     
     // Do any additional setup after loading the view.
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.selectSubjectNamed(notification:)), name: .newSubject, object: nil)
+        reloadTopicsAndSubjectsDisplay()
     }
 
     override var representedObject: Any? {
@@ -116,8 +117,7 @@ class MainWindowViewController: NSViewController {
     
     fileprivate func displaySubject(_ subjectToDisplay: SubjectMO) {
         subjectBeingDisplayed = subjectToDisplay
-        let subjectNotes = subjectToDisplay.notes ?? ""
-        subjectNameAndDescriptionLabel.stringValue = subjectToDisplay.name ?? "" + ": " + subjectNotes
+        subjectNameAndDescriptionLabel.stringValue = "\(subjectToDisplay.name ?? ""): \(subjectToDisplay.notes ?? "")"
         mainContentText.textStorage?.setAttributedString(subjectToDisplay.contentsAsString())
         topicDescriptionLabel.stringValue = subjectToDisplay.parentTopic?.name ?? ""
     }
