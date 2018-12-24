@@ -22,7 +22,8 @@ class MainWindowViewController: NSViewController {
     // Do any additional setup after loading the view.
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.selectSubjectNamed(notification:)), name: .newSubject, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .newSubject, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .updatedSubject, object: nil)
         reloadTopicsAndSubjectsDisplay()
     }
 
@@ -34,15 +35,11 @@ class MainWindowViewController: NSViewController {
     
     @IBAction func editItemAction(_ sender: NSButton) {
         if let subjectToEdit = subjectBeingDisplayed {
-            let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
-            if let editSubjectWindow = editSubjectController.window {
+            let editSubjectWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
+            if let editSubjectWindow = editSubjectWindowController.window {
                 let editSubjectController = editSubjectWindow.contentViewController as! EditSubjectViewController
                 editSubjectController.subjectToEdit = subjectToEdit
-                NSApplication.shared.runModal(for: editSubjectWindow)
-                editSubjectWindow.close()
-                reloadTopicsAndSubjectsDisplay()
-                displaySubject(subjectToEdit)
-                selectSubject(subjectToEdit)
+                editSubjectWindowController.showWindow(editSubjectWindow)
             }
         } else {
             displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to edit") // TODO localize
@@ -78,12 +75,9 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func newSubjectAction(_ sender: Any?) {
-        let editSubjectController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
-        if let editSubjectWindow = editSubjectController.window {
-            NSApplication.shared.runModal(for: editSubjectWindow)
-            editSubjectWindow.close()
-            reloadTopicsAndSubjectsDisplay()
-            selectSubject(subjectBeingDisplayed!)
+        let editSubjectWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
+        if let editSubjectWindow = editSubjectWindowController.window {
+            editSubjectWindowController.showWindow(editSubjectWindow)
         }
     }
     
@@ -101,12 +95,14 @@ class MainWindowViewController: NSViewController {
         }
     }
     
-    // called when a notification is sent from another controller saying a new subject was created
+    // called when a notification is sent from another controller saying a new subject was created or updated
     // see viewDidLoad() where the notification is being configured
-    @objc func selectSubjectNamed(notification: NSNotification) {
-        let newlyCreatedSubjectName: String = notification.object as! String
+    @objc func onSubjectCreatedOrUpdated(notification: NSNotification) {
+        let subjectName: String = notification.object as! String
         reloadTopicsAndSubjectsDisplay()
-        displaySubject(SubjectMO.fetchBy(name: newlyCreatedSubjectName))
+        let subjectCreatedOrUpdated: SubjectMO = SubjectMO.fetchBy(name: subjectName)
+        displaySubject(subjectCreatedOrUpdated)
+        selectSubject(subjectCreatedOrUpdated)
     }
     
     fileprivate func selectSubject(_ subject: SubjectMO) {
@@ -240,4 +236,5 @@ extension MainWindowViewController: NSOutlineViewDelegate {
 
 extension Notification.Name {
     static let newSubject = Notification.Name("newSubject")
+    static let updatedSubject = Notification.Name("updatedSubject")
 }

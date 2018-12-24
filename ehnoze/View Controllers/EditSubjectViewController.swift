@@ -41,7 +41,7 @@ class EditSubjectViewController: NSViewController {
     }
     
     @IBAction func closeEditItemWindow(_ sender: NSButton) {
-        NSApplication.shared.stopModal()
+        self.view.window?.close()
     }
     
     @IBAction func saveSubjectAction(_ sender: Any) {
@@ -55,11 +55,11 @@ class EditSubjectViewController: NSViewController {
             subjectToUpdate.lastReviewed = Date() as NSDate
             subjectToUpdate.parentTopic = TopicMO.fetchBy(name: selectedTopic)
             SubjectMO.update()
+            NotificationCenter.default.post(name: .updatedSubject, object: subjectNameField.stringValue)
         } else {
             SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: subjectNotesField.stringValue, parentTopic: TopicMO.fetchBy(name: selectedTopic))
-             // send a notification passing the name of the new subject
             NotificationCenter.default.post(name: .newSubject, object: subjectNameField.stringValue)
         }
-        NSApplication.shared.stopModal()
+        self.view.window?.close()
     }
 }
