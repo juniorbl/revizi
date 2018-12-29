@@ -16,7 +16,7 @@ class EditSubjectViewController: NSViewController {
         }
     }
     @IBOutlet weak var parentTopicComboBox: NSComboBox!
-    @IBOutlet weak var subjectNotesField: NSTextField!
+    @IBOutlet weak var subjectNotesField: NSScrollView!
     @IBOutlet weak var subjectContentsField: NSScrollView!
     @IBOutlet weak var subjectNameField: NSTextField!
     
@@ -34,7 +34,9 @@ class EditSubjectViewController: NSViewController {
             if let subject = subjectToEdit {
                 subjectNameField.stringValue = subject.name ?? "No subject name"
                 parentTopicComboBox.selectItem(withObjectValue: subject.parentTopic?.name)
-                subjectNotesField.stringValue = subject.notes ?? ""
+                if let subjectNotesData = subject.notes {
+                    subjectNotesField.documentView?.insertText(subjectNotesData)
+                }
                 subjectContentsField.documentView?.insertText(subject.contentsAsString())
             }
         }
@@ -47,17 +49,18 @@ class EditSubjectViewController: NSViewController {
     @IBAction func saveSubjectAction(_ sender: Any) {
         let contents = (subjectContentsField.documentView as! NSTextView)
         let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))! as NSData
+        let notesContents = (subjectNotesField.documentView as! NSTextView)
         let selectedTopic = parentTopicComboBox.objectValueOfSelectedItem as! String
         if let subjectToUpdate = subjectToEdit {
             subjectToUpdate.name = subjectNameField.stringValue
-            subjectToUpdate.notes = subjectNotesField.stringValue
+            subjectToUpdate.notes = notesContents.string
             subjectToUpdate.contents = rtfContentsData
             subjectToUpdate.lastReviewed = Date() as NSDate
             subjectToUpdate.parentTopic = TopicMO.fetchBy(name: selectedTopic)
             SubjectMO.update()
             NotificationCenter.default.post(name: .updatedSubject, object: subjectNameField.stringValue)
         } else {
-            SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: subjectNotesField.stringValue, parentTopic: TopicMO.fetchBy(name: selectedTopic))
+            SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: notesContents.string, parentTopic: TopicMO.fetchBy(name: selectedTopic))
             NotificationCenter.default.post(name: .newSubject, object: subjectNameField.stringValue)
         }
         self.view.window?.close()
