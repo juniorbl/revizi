@@ -32,7 +32,7 @@ class EditSubjectViewController: NSViewController {
     func loadSubjectToEdit() {
         if isViewLoaded {
             if let subject = subjectToEdit {
-                subjectNameField.stringValue = subject.name ?? "Error: no subject name"
+                subjectNameField.stringValue = subject.name ?? "No subject name"
                 parentTopicComboBox.selectItem(withObjectValue: subject.parentTopic?.name)
                 subjectNotesField.stringValue = subject.notes ?? ""
                 subjectContentsField.documentView?.insertText(subject.contentsAsString())

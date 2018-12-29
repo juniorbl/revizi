@@ -16,8 +16,10 @@ class MainWindowViewController: NSViewController {
     @IBOutlet weak var topicAndSubjectsDisplay: NSOutlineView!
     
     let editSubjectController = "Edit Subject View Controller"
+    let editTopicController = "Edit Topic View Controller"
     var topics = [TopicMO]()
     var subjectBeingDisplayed: SubjectMO?
+    var lastSelectedTopic: TopicMO?
     
     // Do any additional setup after loading the view.
     override func viewDidLoad() {
@@ -47,10 +49,12 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func itemClicked(_ sender: NSOutlineView) {
-        let selectedSubject = sender.item(atRow: sender.clickedRow)
-        if selectedSubject is SubjectMO {
-            let subjectName = (selectedSubject as! SubjectMO).name ?? ""
+        let selectedItem = sender.item(atRow: sender.clickedRow)
+        if selectedItem is SubjectMO {
+            let subjectName = (selectedItem as! SubjectMO).name ?? ""
             displaySubject(SubjectMO.fetchBy(name: subjectName))
+        } else if selectedItem is TopicMO {
+            lastSelectedTopic = selectedItem as? TopicMO
         }
     }
     
@@ -65,8 +69,37 @@ class MainWindowViewController: NSViewController {
         }
     }
     
+    @IBAction func editTopicAction(_ sender: Any?) {
+        if let topicToEdit = lastSelectedTopic {
+            let editTopicWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editTopicController) as! NSWindowController
+            if let editTopicWindow = editTopicWindowController.window {
+                let editTopicController = editTopicWindow.contentViewController as! EditTopicViewController
+                editTopicController.topicToEdit = topicToEdit
+                NSApplication.shared.runModal(for: editTopicWindow)
+                editTopicWindowController.close()
+                reloadTopicsAndSubjectsDisplay()
+            }
+        } else {
+            displayDialogWith(message: "No topic selected", informativeText: "You need to select a topic to edit") // TODO localize
+        }
+    }
+    
+    @IBAction func deleteTopicAction(_ sender: Any?) {
+        if let topicToEdit = lastSelectedTopic {
+            let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the topic '" + (lastSelectedTopic?.name)! + "' ?",
+                                                     infoText: "All subjects in this topic will be deleted") // TODO localize
+            if userAccepted {
+                TopicMO.delete(topicId: topicToEdit.objectID)
+                lastSelectedTopic = nil
+                reloadTopicsAndSubjectsDisplay()
+            }
+        } else {
+            displayDialogWith(message: "No topic selected", informativeText: "You need to select a topic to delete") // TODO localize
+        }
+    }
+    
     @IBAction func newTopicAction(_ sender: Any?) {
-        let editTopicController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Edit Topic View Controller") as! NSWindowController
+        let editTopicController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editTopicController) as! NSWindowController
         if let editTopicWindow = editTopicController.window {
             NSApplication.shared.runModal(for: editTopicWindow)
             editTopicWindow.close()
@@ -127,10 +160,11 @@ class MainWindowViewController: NSViewController {
         alert.runModal()
     }
     
-    fileprivate func displayDialogOkCancel(question: String) -> Bool {
+    fileprivate func displayDialogOkCancel(question: String, infoText: String = "") -> Bool {
         let alert = NSAlert.init()
         alert.messageText = question
         alert.alertStyle = .warning
+        alert.informativeText = infoText
         alert.addButton(withTitle: "OK") // TODO localize
         alert.addButton(withTitle: "Cancel") // TODO localize
         return alert.runModal() == .alertFirstButtonReturn
@@ -181,44 +215,52 @@ extension MainWindowViewController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var cellViewFromTopicListTable: NSTableCellView?
         if let topic = item as? TopicMO {
-            if (tableColumn?.identifier)!.rawValue == "DateColumn" {
-                // if it's a date colum, get the date cell to display the last reviewed date
-                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicDateCell"), owner: self) as? NSTableCellView
-                if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = String(topic.daysSinceLastSubjectReviewed) + " day(s) ago" // TODO: localize
-                    textField.sizeToFit()
-                }
-            } else {
-                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicCell"), owner: self) as? NSTableCellView
-                if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = topic.name ?? ""
-                    textField.sizeToFit()
-                }
-            }
-            // TODO set topic backgound color to grey
+            createTopicColumn(tableColumn, &cellViewFromTopicListTable, outlineView, topic)
         } else if let subject = item as? SubjectMO {
-            // create the columns for the subject information
-            if (tableColumn?.identifier)!.rawValue == "DateColumn" {
-                // if it's a date colum, get the date cell to display the last reviewed date
-                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectDateCell"), owner: self) as? NSTableCellView
-                if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = String(subject.numberOfDaysSinceLastReviewed()) + " day(s) ago" // TODO: localize
-                    textField.sizeToFit()
-                }
-            } else {
-                // if it's not a date colum, get the cell to display the subject name
-                cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectCell"), owner: self) as? NSTableCellView
-                if let textField = cellViewFromTopicListTable?.textField {
-                    textField.stringValue = subject.name ?? ""
-                    textField.sizeToFit()
-                }
-            }
-            // change color based on how old the last review is
-            if let textField = cellViewFromTopicListTable?.textField {
-                textField.textColor = getTextColour(numberOfDaysSinceLastReviewed: subject.numberOfDaysSinceLastReviewed())
-            }
+            createSubjectColumn(tableColumn, &cellViewFromTopicListTable, outlineView, subject)
         }
         return cellViewFromTopicListTable
+    }
+    
+    fileprivate func createTopicColumn(_ tableColumn: NSTableColumn?, _ cellViewFromTopicListTable: inout NSTableCellView?, _ outlineView: NSOutlineView, _ topic: TopicMO) {
+        // TODO set topic backgound color to grey for topic
+        if (tableColumn?.identifier)!.rawValue == "DateColumn" {
+            // if it's a date colum, get the date cell to display the last reviewed date
+            cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicDateCell"), owner: self) as? NSTableCellView
+            if let textField = cellViewFromTopicListTable?.textField {
+                textField.stringValue = String(topic.daysSinceLastSubjectReviewed) + " day(s) ago" // TODO: localize
+                textField.sizeToFit()
+            }
+        } else {
+            // if it's not a date colum, get the cell to display the topic name
+            cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicCell"), owner: self) as? NSTableCellView
+            if let textField = cellViewFromTopicListTable?.textField {
+                textField.stringValue = topic.name ?? ""
+                textField.sizeToFit()
+            }
+        }
+    }
+    
+    fileprivate func createSubjectColumn(_ tableColumn: NSTableColumn?, _ cellViewFromTopicListTable: inout NSTableCellView?, _ outlineView: NSOutlineView, _ subject: SubjectMO) {
+        if (tableColumn?.identifier)!.rawValue == "DateColumn" {
+            // if it's a date colum, get the date cell to display the last reviewed date
+            cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectDateCell"), owner: self) as? NSTableCellView
+            if let textField = cellViewFromTopicListTable?.textField {
+                textField.stringValue = String(subject.numberOfDaysSinceLastReviewed()) + " day(s) ago" // TODO: localize
+                textField.sizeToFit()
+            }
+        } else {
+            // if it's not a date colum, get the cell to display the subject name
+            cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectCell"), owner: self) as? NSTableCellView
+            if let textField = cellViewFromTopicListTable?.textField {
+                textField.stringValue = subject.name ?? ""
+                textField.sizeToFit()
+            }
+        }
+        // change color based on how old the last review is
+        if let textField = cellViewFromTopicListTable?.textField {
+            textField.textColor = getTextColour(numberOfDaysSinceLastReviewed: subject.numberOfDaysSinceLastReviewed())
+        }
     }
     
     func getTextColour(numberOfDaysSinceLastReviewed: Int) -> NSColor {
