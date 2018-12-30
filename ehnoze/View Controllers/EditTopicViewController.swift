@@ -35,6 +35,12 @@ class EditTopicViewController: NSViewController {
     }
     
     @IBAction func saveTopicAction(_ sender: Any?) {
+        let errorMessage = TopicMO.validate(topicName.stringValue)
+        if errorMessage != nil {
+            displayDialogWith(message: errorMessage!)
+            return
+        }
+        
         let notesTextStorage = (topicNotes.documentView as? NSTextView)?.textStorage
         let notesAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.plain]
         do {
@@ -46,7 +52,7 @@ class EditTopicViewController: NSViewController {
                 topicToUpdate.notes = notesTextStorage?.string.data(using: String.Encoding.utf8) as NSData?
                 TopicMO.update()
             } else {
-                    TopicMO.save(name: topicName.stringValue, notes: notesData)
+                TopicMO.save(name: topicName.stringValue, notes: notesData)
             }
         } catch {
             print("Error while saving Topic \(self.className): \(error)")

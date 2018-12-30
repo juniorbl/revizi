@@ -60,7 +60,7 @@ class EditSubjectViewController: NSViewController {
             SubjectMO.update()
             NotificationCenter.default.post(name: .updatedSubject, object: subjectNameField.stringValue)
         } else {
-            SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: notesContents.string, parentTopic: TopicMO.fetchBy(name: selectedTopic))
+            SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: notesContents.string, parentTopic: TopicMO.fetchBy(name: selectedTopic)!)
             NotificationCenter.default.post(name: .newSubject, object: subjectNameField.stringValue)
         }
         self.view.window?.close()

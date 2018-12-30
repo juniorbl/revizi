@@ -16,6 +16,7 @@
 		075CE24F21A0E1BD001A545B /* MainWindowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075CE24E21A0E1BD001A545B /* MainWindowViewController.swift */; };
 		075CE25121A0E1BF001A545B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 075CE25021A0E1BF001A545B /* Assets.xcassets */; };
 		075CE25421A0E1BF001A545B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 075CE25221A0E1BF001A545B /* Main.storyboard */; };
+		07B3C28421D96314008FB6C6 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B3C28321D96314008FB6C6 /* ViewControllerExtension.swift */; };
 		07BF0FD621ADFDDB00689359 /* EditSubjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		075CE25321A0E1BF001A545B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		075CE25521A0E1BF001A545B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		075CE25E21A0E226001A545B /* ehnoze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ehnoze.entitlements; sourceTree = "<group>"; };
+		07B3C28321D96314008FB6C6 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubjectViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,6 +85,7 @@
 				075CE24E21A0E1BD001A545B /* MainWindowViewController.swift */,
 				07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */,
 				07277AC921B46732003A3346 /* EditTopicViewController.swift */,
+				07B3C28321D96314008FB6C6 /* ViewControllerExtension.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07B3C28421D96314008FB6C6 /* ViewControllerExtension.swift in Sources */,
 				075CE24F21A0E1BD001A545B /* MainWindowViewController.swift in Sources */,
 				07277A9D21B2FDCB003A3346 /* EhnozeDataModel.xcdatamodeld in Sources */,
 				07277ACA21B46732003A3346 /* EditTopicViewController.swift in Sources */,

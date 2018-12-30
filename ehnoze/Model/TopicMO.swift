@@ -20,11 +20,25 @@ public class TopicMO: NSManagedObject {
         }
     }
     
-    static func fetchBy(name: String) -> TopicMO {
+    // TODO duplicated in SubjectMO, move somewhere to be reused
+    static private func fetchBy(id: NSManagedObjectID) -> TopicMO {
+        do {
+            let loadedTopic = try repository.managedContext.existingObject(with: id) as! TopicMO
+            return loadedTopic
+        } catch let error as NSError {
+            print("Error while fetching Topic: \(error)")
+            return TopicMO()
+        }
+    }
+    
+    static func fetchBy(name: String) -> TopicMO? {
         let fetchByNameRequest: NSFetchRequest<TopicMO> = self.fetchRequest()
-        fetchByNameRequest.predicate = NSPredicate(format: "name == %@", name)
+        fetchByNameRequest.predicate = NSPredicate(format: "name ==[c] %@", name)
         do {
             let result = try repository.managedContext.fetch(fetchByNameRequest)
+            if result.isEmpty {
+                return nil
+            }
             return result[0]
         } catch let error as NSError {
             print("Error while fetching Topic: \(error)")
@@ -56,17 +70,6 @@ public class TopicMO: NSManagedObject {
     }
     
     // TODO duplicated in SubjectMO, move somewhere to be reused
-    static private func fetchBy(id: NSManagedObjectID) -> TopicMO {
-        do {
-            let loadedTopic = try repository.managedContext.existingObject(with: id) as! TopicMO
-            return loadedTopic
-        } catch let error as NSError {
-            print("Error while fetching Topic: \(error)")
-            return TopicMO()
-        }
-    }
-    
-    // TODO duplicated in SubjectMO, move somewhere to be reused
     static func update() {
         do {
             // this assumes that an instance of TopicMO is already loaded in memory and just call the context to save,
@@ -86,6 +89,17 @@ public class TopicMO: NSManagedObject {
         } catch let error as NSError {
             print("Error while deleting Topic: \(error)")
         }
+    }
+    
+    static func validate(_ topicName: String) -> String? {
+        let trimmedTopicName = topicName.trimmingCharacters(in: .whitespaces)
+        if trimmedTopicName == "" {
+            return "The topic name cannot be empty" // TODO localize
+        }
+        if TopicMO.fetchBy(name: trimmedTopicName) != nil {
+            return "The topic name already exists" // TODO localize
+        }
+        return nil
     }
     
     private func numberOfDaysSinceLastSubjectReviewed() -> Int {

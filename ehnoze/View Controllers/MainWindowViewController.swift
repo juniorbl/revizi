@@ -151,25 +151,6 @@ class MainWindowViewController: NSViewController {
         topicDescriptionLabel.stringValue = subjectToDisplay.parentTopic?.name ?? ""
     }
     
-    fileprivate func displayDialogWith(message: String, informativeText: String = "") {
-        let alert = NSAlert.init()
-        alert.messageText = message
-        alert.informativeText = informativeText
-        alert.alertStyle = .informational
-        alert.addButton(withTitle: "OK") // TODO localize
-        alert.runModal()
-    }
-    
-    fileprivate func displayDialogOkCancel(question: String, infoText: String = "") -> Bool {
-        let alert = NSAlert.init()
-        alert.messageText = question
-        alert.alertStyle = .warning
-        alert.informativeText = infoText
-        alert.addButton(withTitle: "OK") // TODO localize
-        alert.addButton(withTitle: "Cancel") // TODO localize
-        return alert.runModal() == .alertFirstButtonReturn
-    }
-    
     fileprivate func clearSubjectFields() {
         topicDescriptionLabel.stringValue = ""
         subjectNameAndDescriptionLabel.stringValue = ""
