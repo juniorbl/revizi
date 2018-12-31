@@ -1,5 +1,5 @@
 //
-//  TopicMO+CoreDataClass.swift
+//  TopicMO.swift
 //  ehnoze
 //
 //  Created by Carlos on 2018-12-01.
@@ -12,24 +12,6 @@ import CoreData
 
 @objc(TopicMO)
 public class TopicMO: NSManagedObject {
-    static private var repository: DataRepository = DataRepository()
-    
-    var daysSinceLastSubjectReviewed: Int {
-        get {
-            return numberOfDaysSinceLastSubjectReviewed()
-        }
-    }
-    
-    // TODO duplicated in SubjectMO, move somewhere to be reused
-    static private func fetchBy(id: NSManagedObjectID) -> TopicMO {
-        do {
-            let loadedTopic = try repository.managedContext.existingObject(with: id) as! TopicMO
-            return loadedTopic
-        } catch let error as NSError {
-            print("Error while fetching Topic: \(error)")
-            return TopicMO()
-        }
-    }
     
     static func fetchBy(name: String) -> TopicMO? {
         let fetchByNameRequest: NSFetchRequest<TopicMO> = self.fetchRequest()
@@ -66,28 +48,6 @@ public class TopicMO: NSManagedObject {
             try repository.managedContext.save()
         } catch let error as NSError {
             print("Error while saving Topic: \(error)")
-        }
-    }
-    
-    // TODO duplicated in SubjectMO, move somewhere to be reused
-    static func update() {
-        do {
-            // this assumes that an instance of TopicMO is already loaded in memory and just call the context to save,
-            // maybe theres's a better way to do this
-            try repository.managedContext.save()
-        } catch let error as NSError {
-            print("Error while updating Topic: \(error)")
-        }
-    }
-    
-    // TODO duplicated in SubjectMO, move somewhere to be reused
-    static func delete(topicId: NSManagedObjectID) {
-        do {
-            let topicToDelete = fetchBy(id: topicId)
-            repository.managedContext.delete(topicToDelete)
-            try repository.managedContext.save()
-        } catch let error as NSError {
-            print("Error while deleting Topic: \(error)")
         }
     }
     
@@ -130,6 +90,12 @@ public class TopicMO: NSManagedObject {
             }
         }
         return lastReviwedSubject
+    }
+    
+    var daysSinceLastSubjectReviewed: Int {
+        get {
+            return numberOfDaysSinceLastSubjectReviewed()
+        }
     }
 }
 

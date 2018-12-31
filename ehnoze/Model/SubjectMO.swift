@@ -1,5 +1,5 @@
 //
-//  SubjectMO+CoreDataClass.swift
+//  SubjectMO.swift
 //  ehnoze
 //
 //  Created by Carlos on 2018-12-03.
@@ -12,7 +12,6 @@ import CoreData
 
 @objc(SubjectMO)
 public class SubjectMO: NSManagedObject {
-    static private var repository: DataRepository = DataRepository()
     
     static func save(name: String, contents: NSData, notes: String = "", parentTopic: TopicMO) {
         let entity = NSEntityDescription.entity(forEntityName: "Subject", in: repository.managedContext)!
@@ -26,26 +25,6 @@ public class SubjectMO: NSManagedObject {
             try repository.managedContext.save()
         } catch let error as NSError {
             print("Error while saving Subject: \(error)")
-        }
-    }
-    
-    static func update() {
-        do {
-            // this assumes that an instance of SubjectMO is already loaded in memory and just call the context to save,
-            // maybe theres's a better way to do this
-            try repository.managedContext.save()
-        } catch let error as NSError {
-            print("Error while updating Subject: \(error)")
-        }
-    }
-    
-    static func delete(subjectId: NSManagedObjectID) {
-        do {
-            let subjectToDelete = fetchBy(id: subjectId)
-            repository.managedContext.delete(subjectToDelete)
-            try repository.managedContext.save()
-        } catch let error as NSError {
-            print("Error while deleting Subject: \(error)")
         }
     }
     
@@ -78,19 +57,9 @@ public class SubjectMO: NSManagedObject {
         return nil
     }
     
-    static private func fetchBy(id: NSManagedObjectID) -> SubjectMO {
-        do {
-            let loadedSubject = try repository.managedContext.existingObject(with: id) as! SubjectMO
-            return loadedSubject
-        } catch let error as NSError {
-            print("Error while fetching Subject: \(error)")
-            return SubjectMO()
-        }
-    }
-    
     static func fetchBy(name: String) -> SubjectMO? {
         let fetchByNameRequest: NSFetchRequest<SubjectMO> = self.fetchRequest()
-        fetchByNameRequest.predicate = NSPredicate(format: "name == %@", name)
+        fetchByNameRequest.predicate = NSPredicate(format: "name ==[c] %@", name)
         do {
             let result = try repository.managedContext.fetch(fetchByNameRequest)
             if result.isEmpty {

@@ -89,7 +89,7 @@ class MainWindowViewController: NSViewController {
             let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the topic '" + (lastSelectedTopic?.name)! + "' ?",
                                                      infoText: "All subjects in this topic will be deleted") // TODO localize
             if userAccepted {
-                TopicMO.delete(topicId: topicToEdit.objectID)
+                TopicMO.delete(id: topicToEdit.objectID)
                 lastSelectedTopic = nil
                 reloadTopicsAndSubjectsDisplay()
             }
@@ -118,7 +118,7 @@ class MainWindowViewController: NSViewController {
         if let subjectToDelete = subjectBeingDisplayed {
             let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the subject '" + (subjectBeingDisplayed?.name)! + "' ?") // TODO localize
             if userAccepted {
-                SubjectMO.delete(subjectId: subjectToDelete.objectID)
+                SubjectMO.delete(id: subjectToDelete.objectID)
                 subjectBeingDisplayed = nil
                 clearSubjectFields()
                 reloadTopicsAndSubjectsDisplay()
