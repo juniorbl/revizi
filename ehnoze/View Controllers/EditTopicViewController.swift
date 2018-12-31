@@ -28,30 +28,29 @@ class EditTopicViewController: NSViewController {
             if let topic = topicToEdit {
                 topicName.stringValue = topic.name ?? "No topic name"
                 if let topicNotesData = topic.notes {
-                    topicNotes.documentView?.insertText(String(data: topicNotesData as Data, encoding: String.Encoding.utf8))
+                    topicNotes.documentView?.insertText(String(data: topicNotesData as Data, encoding: String.Encoding.utf8) ?? "")
                 }
             }
         }
     }
     
     @IBAction func saveTopicAction(_ sender: Any?) {
-        let errorMessage = TopicMO.validate(topicName.stringValue)
-        if errorMessage != nil {
-            displayDialogWith(message: errorMessage!)
-            return
-        }
-        
         let notesTextStorage = (topicNotes.documentView as? NSTextView)?.textStorage
         let notesAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.plain]
         do {
             let notesData = try notesTextStorage?.data(
                 from: NSRange(location: 0, length: notesTextStorage?.string.count ?? 0), documentAttributes: notesAttributes) as! NSData
-            
             if let topicToUpdate = topicToEdit {
+                if displayErrorMessageIfInvalid({ TopicMO.validateUpdate(newTopicName: topicName.stringValue, originalTopicName: topicToEdit?.name ?? "") }) {
+                    return
+                }
                 topicToUpdate.name = topicName.stringValue
                 topicToUpdate.notes = notesTextStorage?.string.data(using: String.Encoding.utf8) as NSData?
                 TopicMO.update()
             } else {
+                if displayErrorMessageIfInvalid({ TopicMO.validateCreate(topicName.stringValue) }) {
+                    return
+                }
                 TopicMO.save(name: topicName.stringValue, notes: notesData)
             }
         } catch {

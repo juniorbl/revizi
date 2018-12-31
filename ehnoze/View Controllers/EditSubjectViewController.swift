@@ -47,11 +47,18 @@ class EditSubjectViewController: NSViewController {
     }
     
     @IBAction func saveSubjectAction(_ sender: Any) {
+        if parentTopicComboBox.indexOfSelectedItem == -1 {
+            displayDialogWith(message: "The subject must have a topic") // TODO localize
+            return
+        }
         let contents = (subjectContentsField.documentView as! NSTextView)
         let rtfContentsData = contents.rtf(from: NSRange(location: 0, length: contents.string.count))! as NSData
         let notesContents = (subjectNotesField.documentView as! NSTextView)
         let selectedTopic = parentTopicComboBox.objectValueOfSelectedItem as! String
         if let subjectToUpdate = subjectToEdit {
+            if displayErrorMessageIfInvalid({ SubjectMO.validateUpdate(newSubjectName: subjectNameField.stringValue, originalSubjectName: subjectToEdit?.name ?? "") }) {
+                return
+            }
             subjectToUpdate.name = subjectNameField.stringValue
             subjectToUpdate.notes = notesContents.string
             subjectToUpdate.contents = rtfContentsData
@@ -60,6 +67,9 @@ class EditSubjectViewController: NSViewController {
             SubjectMO.update()
             NotificationCenter.default.post(name: .updatedSubject, object: subjectNameField.stringValue)
         } else {
+            if displayErrorMessageIfInvalid({ SubjectMO.validateCreate(subjectNameField.stringValue) }) {
+                return
+            }
             SubjectMO.save(name: subjectNameField.stringValue, contents: rtfContentsData, notes: notesContents.string, parentTopic: TopicMO.fetchBy(name: selectedTopic)!)
             NotificationCenter.default.post(name: .newSubject, object: subjectNameField.stringValue)
         }

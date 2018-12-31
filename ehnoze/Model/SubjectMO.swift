@@ -49,6 +49,35 @@ public class SubjectMO: NSManagedObject {
         }
     }
     
+    static func validateCreate(_ subjectName: String) -> String? {
+        if validatesAbsenceOf(subjectName) == false {
+            return "The subject name cannot be empty" // TODO localize
+        } else {
+            return validatesUniquenessOf(subjectName)
+        }
+    }
+    
+    static func validateUpdate(newSubjectName: String, originalSubjectName: String) -> String? {
+        if validatesAbsenceOf(newSubjectName) == false {
+            return "The subject name cannot be empty" // TODO localize
+        } else {
+            let trimmedNewSubjectName = newSubjectName.trimmingCharacters(in: .whitespaces)
+            let trimmedOriginalSubjectName = originalSubjectName.trimmingCharacters(in: .whitespaces)
+            if trimmedNewSubjectName.caseInsensitiveCompare(trimmedOriginalSubjectName) != .orderedSame {
+                return validatesUniquenessOf(trimmedNewSubjectName)
+            }
+        }
+        return nil
+    }
+    
+    static private func validatesUniquenessOf(_ name: String) -> String? {
+        let trimmedName = name.trimmingCharacters(in: .whitespaces)
+        if SubjectMO.fetchBy(name: trimmedName) != nil {
+            return "The subject name already exists" // TODO localize
+        }
+        return nil
+    }
+    
     static private func fetchBy(id: NSManagedObjectID) -> SubjectMO {
         do {
             let loadedSubject = try repository.managedContext.existingObject(with: id) as! SubjectMO
@@ -59,11 +88,14 @@ public class SubjectMO: NSManagedObject {
         }
     }
     
-    static func fetchBy(name: String) -> SubjectMO {
+    static func fetchBy(name: String) -> SubjectMO? {
         let fetchByNameRequest: NSFetchRequest<SubjectMO> = self.fetchRequest()
         fetchByNameRequest.predicate = NSPredicate(format: "name == %@", name)
         do {
             let result = try repository.managedContext.fetch(fetchByNameRequest)
+            if result.isEmpty {
+                return nil
+            }
             return result[0]
         } catch let error as NSError {
             print("Error while fetching Subject: \(error)")

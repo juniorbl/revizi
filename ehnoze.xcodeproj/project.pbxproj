@@ -17,6 +17,7 @@
 		075CE25121A0E1BF001A545B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 075CE25021A0E1BF001A545B /* Assets.xcassets */; };
 		075CE25421A0E1BF001A545B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 075CE25221A0E1BF001A545B /* Main.storyboard */; };
 		07B3C28421D96314008FB6C6 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B3C28321D96314008FB6C6 /* ViewControllerExtension.swift */; };
+		07B3C28621DA8261008FB6C6 /* NSManagedObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B3C28521DA8261008FB6C6 /* NSManagedObjectExtension.swift */; };
 		07BF0FD621ADFDDB00689359 /* EditSubjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 		075CE25521A0E1BF001A545B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		075CE25E21A0E226001A545B /* ehnoze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ehnoze.entitlements; sourceTree = "<group>"; };
 		07B3C28321D96314008FB6C6 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		07B3C28521DA8261008FB6C6 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtension.swift; sourceTree = "<group>"; };
 		07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubjectViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +98,7 @@
 				07277ACB21B607F1003A3346 /* SubjectMO.swift */,
 				07277AC321B33121003A3346 /* TopicMO.swift */,
 				07277AC721B4237A003A3346 /* DataRepository.swift */,
+				07B3C28521DA8261008FB6C6 /* NSManagedObjectExtension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -184,6 +187,7 @@
 				07277AC821B4237A003A3346 /* DataRepository.swift in Sources */,
 				07277ACD21B607F1003A3346 /* SubjectMO.swift in Sources */,
 				075CE24D21A0E1BD001A545B /* AppDelegate.swift in Sources */,
+				07B3C28621DA8261008FB6C6 /* NSManagedObjectExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

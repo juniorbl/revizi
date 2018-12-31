@@ -52,7 +52,7 @@ class MainWindowViewController: NSViewController {
         let selectedItem = sender.item(atRow: sender.clickedRow)
         if selectedItem is SubjectMO {
             let subjectName = (selectedItem as! SubjectMO).name ?? ""
-            displaySubject(SubjectMO.fetchBy(name: subjectName))
+            displaySubject(SubjectMO.fetchBy(name: subjectName)!)
         } else if selectedItem is TopicMO {
             lastSelectedTopic = selectedItem as? TopicMO
         }
@@ -133,7 +133,7 @@ class MainWindowViewController: NSViewController {
     @objc func onSubjectCreatedOrUpdated(notification: NSNotification) {
         let subjectName: String = notification.object as! String
         reloadTopicsAndSubjectsDisplay()
-        let subjectCreatedOrUpdated: SubjectMO = SubjectMO.fetchBy(name: subjectName)
+        let subjectCreatedOrUpdated: SubjectMO = SubjectMO.fetchBy(name: subjectName)!
         displaySubject(subjectCreatedOrUpdated)
         selectSubject(subjectCreatedOrUpdated)
     }

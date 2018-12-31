@@ -6,7 +6,6 @@
 //  Copyright © 2018 Carlos Luz. All rights reserved.
 //
 
-import Foundation
 import Cocoa
 
 // functions available to all controllers that extend NSViewController
@@ -29,5 +28,14 @@ extension NSViewController {
         alert.addButton(withTitle: "OK") // TODO localize
         alert.addButton(withTitle: "Cancel") // TODO localize
         return alert.runModal() == .alertFirstButtonReturn
+    }
+    
+    func displayErrorMessageIfInvalid(_ function: () -> String?) -> Bool {
+        let errorMessage = function()
+        if errorMessage != nil {
+            displayDialogWith(message: errorMessage!)
+            return true
+        }
+        return false
     }
 }

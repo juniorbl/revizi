@@ -91,12 +91,30 @@ public class TopicMO: NSManagedObject {
         }
     }
     
-    static func validate(_ topicName: String) -> String? {
-        let trimmedTopicName = topicName.trimmingCharacters(in: .whitespaces)
-        if trimmedTopicName == "" {
+    static func validateCreate(_ topicName: String) -> String? {
+        if validatesAbsenceOf(topicName) == false {
             return "The topic name cannot be empty" // TODO localize
+        } else {
+            return validatesUniquenessOf(topicName)
         }
-        if TopicMO.fetchBy(name: trimmedTopicName) != nil {
+    }
+    
+    static func validateUpdate(newTopicName: String, originalTopicName: String) -> String? {
+        if validatesAbsenceOf(newTopicName) == false {
+            return "The topic name cannot be empty" // TODO localize
+        } else {
+            let trimmedNewTopicName = newTopicName.trimmingCharacters(in: .whitespaces)
+            let trimmedOriginalTopicName = originalTopicName.trimmingCharacters(in: .whitespaces)
+            if trimmedNewTopicName.caseInsensitiveCompare(trimmedOriginalTopicName) != .orderedSame {
+                return validatesUniquenessOf(trimmedNewTopicName)
+            }
+        }
+        return nil
+    }
+    
+    static private func validatesUniquenessOf(_ name: String) -> String? {
+        let trimmedName = name.trimmingCharacters(in: .whitespaces)
+        if TopicMO.fetchBy(name: trimmedName) != nil {
             return "The topic name already exists" // TODO localize
         }
         return nil
