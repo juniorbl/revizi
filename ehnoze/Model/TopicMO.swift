@@ -32,6 +32,12 @@ public class TopicMO: NSManagedObject {
         do {
             var allTopics = try repository.managedContext.fetch(TopicMO.fetchRequest()) as! [TopicMO]
             allTopics.sort(by: { $0.daysSinceLastSubjectReviewed > $1.daysSinceLastSubjectReviewed })
+            // NSOrderedSet doesn't seem to have a way to order by an object property,
+            // and I couldn't find a way to sort during the fetch, so the subjects will be sorted here
+            for topic in allTopics {
+                let sortedSubjects = (topic.subjects?.array as! [SubjectMO]).sorted(by: { $0.numberOfDaysSinceLastReviewed() > $1.numberOfDaysSinceLastReviewed() })
+                topic.subjects = NSOrderedSet(array: sortedSubjects)
+            }
             return allTopics
         } catch {
             print("Error while fetching Topic: \(error)")
