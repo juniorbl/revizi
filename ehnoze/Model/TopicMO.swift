@@ -89,7 +89,7 @@ public class TopicMO: NSManagedObject {
                 lastReviwedSubject = subjectLastReviwedDays
             }
         }
-        return lastReviwedSubject
+        return lastReviwedSubject == Int.max ? 0 : lastReviwedSubject
     }
     
     var daysSinceLastSubjectReviewed: Int {

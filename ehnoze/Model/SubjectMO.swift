@@ -12,6 +12,7 @@ import CoreData
 
 @objc(SubjectMO)
 public class SubjectMO: NSManagedObject {
+    var timerToMarkAsReviewed: Timer?
     
     static func save(name: String, contents: NSData, notes: String = "", parentTopic: TopicMO) {
         let entity = NSEntityDescription.entity(forEntityName: "Subject", in: repository.managedContext)!
@@ -70,6 +71,20 @@ public class SubjectMO: NSManagedObject {
             print("Error while fetching Subject: \(error)")
             return SubjectMO()
         }
+    }
+    
+    func markAsReviewedIn(_ timeInSeconds: Int) {
+        timerToMarkAsReviewed = Timer.scheduledTimer(timeInterval: TimeInterval(timeInSeconds), target: self, selector: #selector(markAsReviewed), userInfo: nil, repeats: false)
+    }
+    
+    @objc fileprivate func markAsReviewed() {
+        lastReviewed = NSDate()
+        SubjectMO.update()
+        NotificationCenter.default.post(name: .updatedSubject, object: name)
+    }
+    
+    func abortMarkingAsReviewedIfTimeIsNotUp() {
+        timerToMarkAsReviewed?.invalidate()
     }
     
     func numberOfDaysSinceLastReviewed() -> Int {
