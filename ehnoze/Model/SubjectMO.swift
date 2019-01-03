@@ -83,6 +83,10 @@ public class SubjectMO: NSManagedObject {
         NotificationCenter.default.post(name: .updatedSubject, object: name)
     }
     
+    public override func prepareForDeletion() {
+        abortMarkingAsReviewedIfTimeIsNotUp()
+    }
+    
     func abortMarkingAsReviewedIfTimeIsNotUp() {
         timerToMarkAsReviewed?.invalidate()
     }
