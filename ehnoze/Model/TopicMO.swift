@@ -45,6 +45,13 @@ public class TopicMO: NSManagedObject {
         }
     }
     
+    func fetchOldestSubjectInTopic() -> SubjectMO {
+        if subjects?.count ?? 0 > 0 {
+            return (self.subjects?.array as! [SubjectMO]).sorted(by: { $0.numberOfDaysSinceLastReviewed() > $1.numberOfDaysSinceLastReviewed() }).first!
+        }
+        return SubjectMO()
+    }
+    
     static func save(name: String, notes: NSData = NSData()) {
         let entity = NSEntityDescription.entity(forEntityName: "Topic", in: repository.managedContext)!
         let newTopic = NSManagedObject(entity: entity, insertInto: repository.managedContext)

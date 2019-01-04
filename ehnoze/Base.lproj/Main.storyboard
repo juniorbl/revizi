@@ -498,12 +498,46 @@
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="3FI-Zv-SvO"/>
+                                <toolbarItem implicitItemIdentifier="5C67A838-A1C2-43FF-A816-2F091CE7FA9B" label="Oldest" paletteLabel="Oldest" image="NSGoRightTemplate" id="im2-Qr-73Q">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="49" height="32"/>
+                                    <size key="maxSize" width="49" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="2xz-TU-sS1">
+                                        <rect key="frame" x="0.0" y="14" width="49" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoRightTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Fq-V5-EGb">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="AA866407-F75F-4C19-9286-1F20FA40C09F" label="Oldest in topic" paletteLabel="Oldest in topic" image="NSGoRightTemplate" id="dN2-iY-16O">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="49" height="32"/>
+                                    <size key="maxSize" width="49" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="yQx-ny-LmO">
+                                        <rect key="frame" x="18" y="14" width="49" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoRightTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lZC-T7-XGH">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="oldestSubjectInTopicAction:" target="Oky-zY-oP4" id="BQh-Od-67M"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="YUe-ft-yc4"/>
+                                <toolbarItem reference="YUe-ft-yc4"/>
+                                <toolbarItem reference="YUe-ft-yc4"/>
                                 <toolbarItem reference="3FI-Zv-SvO"/>
                                 <toolbarItem reference="P8b-vY-ttF"/>
                                 <toolbarItem reference="5B2-d5-fcZ"/>
                                 <toolbarItem reference="3FI-Zv-SvO"/>
+                                <toolbarItem reference="dN2-iY-16O"/>
+                                <toolbarItem reference="im2-Qr-73Q"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -1083,5 +1117,6 @@ Gw
     </scenes>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSGoRightTemplate" width="9" height="12"/>
     </resources>
 </document>

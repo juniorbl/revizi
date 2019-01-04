@@ -51,20 +51,15 @@ class MainWindowViewController: NSViewController {
     @IBAction func itemClicked(_ sender: NSOutlineView) {
         let selectedItem = sender.item(atRow: sender.clickedRow)
         if selectedItem is SubjectMO {
-            // if a new subject is selected before the previous selected subject is marked as reviewed,
-            // the program won't mark the previous subject as reviewed so it will abort its timer
-            let previousSubjectDisplayed = subjectBeingDisplayed
-            previousSubjectDisplayed?.abortMarkingAsReviewedIfTimeIsNotUp()
-            
+            abortReviewTimerOfSubjectBeforeDisplayingAnother()
             let subjectName = (selectedItem as! SubjectMO).name ?? ""
             let selectedSubject: SubjectMO = SubjectMO.fetchBy(name: subjectName)!
             displaySubject(selectedSubject)
-            selectedSubject.markAsReviewedIn(10) // TODO get from preferences
         } else if selectedItem is TopicMO {
             lastSelectedTopic = selectedItem as? TopicMO
         }
     }
-    
+   
     @IBAction func topicDoubleClicked(_ sender: NSOutlineView) {
         let itemClicked = sender.item(atRow: sender.clickedRow)
         if itemClicked is TopicMO {
@@ -135,6 +130,17 @@ class MainWindowViewController: NSViewController {
         }
     }
     
+    @IBAction func oldestSubjectInTopicAction(_ sender: Any?) {
+        if let currentSubject = subjectBeingDisplayed {
+            if let oldestSubjectInTopic = currentSubject.parentTopic?.fetchOldestSubjectInTopic() {
+                displaySubject(oldestSubjectInTopic)
+                selectSubject(oldestSubjectInTopic)
+            }
+        } else {
+            displayDialogWith(message: "No subject selected", informativeText: "Unable to determine the current topic") // TODO localize
+        }
+    }
+    
     // called when a notification is sent from another controller saying a new subject was created or updated
     // see viewDidLoad() where the notification is being configured
     @objc func onSubjectCreatedOrUpdated(notification: NSNotification) {
@@ -152,10 +158,19 @@ class MainWindowViewController: NSViewController {
     }
     
     fileprivate func displaySubject(_ subjectToDisplay: SubjectMO) {
+        abortReviewTimerOfSubjectBeforeDisplayingAnother()
         subjectBeingDisplayed = subjectToDisplay
         subjectNameAndDescriptionLabel.stringValue = "\(subjectToDisplay.name ?? ""): \(subjectToDisplay.notes ?? "")"
         mainContentText.textStorage?.setAttributedString(subjectToDisplay.contentsAsString())
         topicDescriptionLabel.stringValue = subjectToDisplay.parentTopic?.name ?? ""
+        subjectBeingDisplayed?.markAsReviewedIn(10) // TODO get from preferences
+    }
+    
+    // if a new subject is selected before the previous selected subject is marked as reviewed,
+    // the program won't mark the previous subject as reviewed so it will abort its timer
+    fileprivate func abortReviewTimerOfSubjectBeforeDisplayingAnother() {
+        let currentSubjectDisplayed = subjectBeingDisplayed
+        currentSubjectDisplayed?.abortMarkingAsReviewedIfTimeIsNotUp()
     }
     
     fileprivate func clearSubjectFields() {
