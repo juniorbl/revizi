@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ehnoze
+//  revizi
 //
 //  Created by Carlos on 2018-11-17.
 //  Copyright © 2018 Carlos Luz. All rights reserved.
@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: "EhnozeDataModel")
+        let container = NSPersistentContainer(name: "ReviziDataModel")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error {
                 // Replace this implementation with code to handle the error appropriately.

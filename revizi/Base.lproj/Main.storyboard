@@ -12,11 +12,11 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="ehnoze" id="1Xt-HY-uBw">
+                            <menuItem title="revizi" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="ehnoze" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="revizi" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About ehnoze" id="5kV-Vb-QxS">
+                                        <menuItem title="About revizi" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -30,7 +30,7 @@
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                                        <menuItem title="Hide ehnoze" keyEquivalent="h" id="Olw-nP-bQN">
+                                        <menuItem title="Hide revizi" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="PnN-Uc-m68"/>
                                             </connections>
@@ -48,7 +48,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                                        <menuItem title="Quit ehnoze" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit revizi" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
@@ -418,7 +418,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="ehnoze Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="revizi Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
                                             </connections>
@@ -432,7 +432,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ehnoze" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="revizi" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -442,7 +442,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Ehnoze" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="ehnozeMainWindow" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Revizi" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="reviziMainWindow" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1024" height="540"/>
@@ -555,7 +555,7 @@
         <!--Main Window View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="MainWindowViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="MainWindowViewController" customModule="revizi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="540"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -873,7 +873,7 @@
         <!--Edit Topic View Controller-->
         <scene sceneID="3hn-j4-eGL">
             <objects>
-                <viewController id="dRh-gm-lh0" customClass="EditTopicViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dRh-gm-lh0" customClass="EditTopicViewController" customModule="revizi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="lD3-dp-BYi">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -969,7 +969,7 @@ DQ
         <!--Edit Subject View Controller-->
         <scene sceneID="WLM-wi-N0P">
             <objects>
-                <viewController id="fDl-sq-Hpo" customClass="EditSubjectViewController" customModule="ehnoze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="fDl-sq-Hpo" customClass="EditSubjectViewController" customModule="revizi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="825-1G-pWR">
                         <rect key="frame" x="0.0" y="0.0" width="900" height="550"/>
                         <autoresizingMask key="autoresizingMask"/>

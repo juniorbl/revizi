@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07277A9D21B2FDCB003A3346 /* EhnozeDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07277A9B21B2FDCB003A3346 /* EhnozeDataModel.xcdatamodeld */; };
+		07277A9D21B2FDCB003A3346 /* ReviziDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07277A9B21B2FDCB003A3346 /* ReviziDataModel.xcdatamodeld */; };
 		07277AC521B33121003A3346 /* TopicMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07277AC321B33121003A3346 /* TopicMO.swift */; };
 		07277AC821B4237A003A3346 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07277AC721B4237A003A3346 /* DataRepository.swift */; };
 		07277ACA21B46732003A3346 /* EditTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07277AC921B46732003A3346 /* EditTopicViewController.swift */; };
@@ -27,13 +27,13 @@
 		07277AC721B4237A003A3346 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		07277AC921B46732003A3346 /* EditTopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTopicViewController.swift; sourceTree = "<group>"; };
 		07277ACB21B607F1003A3346 /* SubjectMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectMO.swift; sourceTree = "<group>"; };
-		075CE24921A0E1BD001A545B /* ehnoze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ehnoze.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		075CE24921A0E1BD001A545B /* revizi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = revizi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		075CE24C21A0E1BD001A545B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		075CE24E21A0E1BD001A545B /* MainWindowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewController.swift; sourceTree = "<group>"; };
 		075CE25021A0E1BF001A545B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		075CE25321A0E1BF001A545B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		075CE25521A0E1BF001A545B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		075CE25E21A0E226001A545B /* ehnoze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ehnoze.entitlements; sourceTree = "<group>"; };
+		075CE25E21A0E226001A545B /* revizi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = revizi.entitlements; sourceTree = "<group>"; };
 		07B3C28321D96314008FB6C6 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		07B3C28521DA8261008FB6C6 /* NSManagedObjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtension.swift; sourceTree = "<group>"; };
 		07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubjectViewController.swift; sourceTree = "<group>"; };
@@ -53,7 +53,7 @@
 		075CE24021A0E1BD001A545B = {
 			isa = PBXGroup;
 			children = (
-				075CE24B21A0E1BD001A545B /* ehnoze */,
+				075CE24B21A0E1BD001A545B /* revizi */,
 				075CE24A21A0E1BD001A545B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,24 +61,24 @@
 		075CE24A21A0E1BD001A545B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				075CE24921A0E1BD001A545B /* ehnoze.app */,
+				075CE24921A0E1BD001A545B /* revizi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		075CE24B21A0E1BD001A545B /* ehnoze */ = {
+		075CE24B21A0E1BD001A545B /* revizi */ = {
 			isa = PBXGroup;
 			children = (
-				075CE25E21A0E226001A545B /* ehnoze.entitlements */,
+				075CE25E21A0E226001A545B /* revizi.entitlements */,
 				075CE25521A0E1BF001A545B /* Info.plist */,
 				075CE24C21A0E1BD001A545B /* AppDelegate.swift */,
 				075CE25C21A0E1E4001A545B /* View Controllers */,
 				07FD3D5C21A7A18500EEA024 /* Model */,
 				075CE25021A0E1BF001A545B /* Assets.xcassets */,
 				075CE25221A0E1BF001A545B /* Main.storyboard */,
-				07277A9B21B2FDCB003A3346 /* EhnozeDataModel.xcdatamodeld */,
+				07277A9B21B2FDCB003A3346 /* ReviziDataModel.xcdatamodeld */,
 			);
-			path = ehnoze;
+			path = revizi;
 			sourceTree = "<group>";
 		};
 		075CE25C21A0E1E4001A545B /* View Controllers */ = {
@@ -106,9 +106,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		075CE24821A0E1BD001A545B /* ehnoze */ = {
+		075CE24821A0E1BD001A545B /* revizi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "ehnoze" */;
+			buildConfigurationList = 075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "revizi" */;
 			buildPhases = (
 				075CE24521A0E1BD001A545B /* Sources */,
 				075CE24621A0E1BD001A545B /* Frameworks */,
@@ -118,9 +118,9 @@
 			);
 			dependencies = (
 			);
-			name = ehnoze;
+			name = revizi;
 			productName = ehnoze;
-			productReference = 075CE24921A0E1BD001A545B /* ehnoze.app */;
+			productReference = 075CE24921A0E1BD001A545B /* revizi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -143,7 +143,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "ehnoze" */;
+			buildConfigurationList = 075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "revizi" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -156,7 +156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				075CE24821A0E1BD001A545B /* ehnoze */,
+				075CE24821A0E1BD001A545B /* revizi */,
 			);
 		};
 /* End PBXProject section */
@@ -180,7 +180,7 @@
 			files = (
 				07B3C28421D96314008FB6C6 /* ViewControllerExtension.swift in Sources */,
 				075CE24F21A0E1BD001A545B /* MainWindowViewController.swift in Sources */,
-				07277A9D21B2FDCB003A3346 /* EhnozeDataModel.xcdatamodeld in Sources */,
+				07277A9D21B2FDCB003A3346 /* ReviziDataModel.xcdatamodeld in Sources */,
 				07277ACA21B46732003A3346 /* EditTopicViewController.swift in Sources */,
 				07BF0FD621ADFDDB00689359 /* EditSubjectViewController.swift in Sources */,
 				07277AC521B33121003A3346 /* TopicMO.swift in Sources */,
@@ -324,15 +324,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ehnoze/ehnoze.entitlements;
+				CODE_SIGN_ENTITLEMENTS = revizi/revizi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/ehnoze/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/revizi/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.ehnoze;
+				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.revizi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -342,15 +342,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ehnoze/ehnoze.entitlements;
+				CODE_SIGN_ENTITLEMENTS = revizi/revizi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/ehnoze/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/revizi/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.ehnoze;
+				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.revizi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -359,7 +359,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "ehnoze" */ = {
+		075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "revizi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				075CE25721A0E1BF001A545B /* Debug */,
@@ -368,7 +368,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "ehnoze" */ = {
+		075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "revizi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				075CE25A21A0E1BF001A545B /* Debug */,
@@ -380,13 +380,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		07277A9B21B2FDCB003A3346 /* EhnozeDataModel.xcdatamodeld */ = {
+		07277A9B21B2FDCB003A3346 /* ReviziDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				07277A9C21B2FDCB003A3346 /* Ehnoze.xcdatamodel */,
 			);
 			currentVersion = 07277A9C21B2FDCB003A3346 /* Ehnoze.xcdatamodel */;
-			path = EhnozeDataModel.xcdatamodeld;
+			path = ReviziDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
