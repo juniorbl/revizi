@@ -510,6 +510,9 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
+                                    <connections>
+                                        <action selector="oldestSubjectOverallAction:" target="Oky-zY-oP4" id="zTe-Gu-L7R"/>
+                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="AA866407-F75F-4C19-9286-1F20FA40C09F" label="Oldest in topic" paletteLabel="Oldest in topic" image="NSGoRightTemplate" id="dN2-iY-16O">
                                     <nil key="toolTip"/>

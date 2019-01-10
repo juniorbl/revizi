@@ -73,6 +73,15 @@ public class SubjectMO: NSManagedObject {
         }
     }
     
+    static func fetchOldestSubjectOverall() -> SubjectMO? {
+        let allTopics = TopicMO.fetchAll()
+        if !allTopics.isEmpty {
+            // since the topics are already sorted by rewied date, we can simply get the oldest subject of the first topic
+            return allTopics.first?.fetchOldestSubjectInTopic()
+        }
+        return nil
+    }
+    
     func markAsReviewedIn(_ timeInSeconds: Int) {
         timerToMarkAsReviewed = Timer.scheduledTimer(timeInterval: TimeInterval(timeInSeconds), target: self, selector: #selector(markAsReviewed), userInfo: nil, repeats: false)
     }

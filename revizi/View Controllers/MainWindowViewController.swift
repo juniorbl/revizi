@@ -141,6 +141,15 @@ class MainWindowViewController: NSViewController {
         }
     }
     
+    @IBAction func oldestSubjectOverallAction(_ sender: Any?) {
+        if let oldestSubjectOverall = SubjectMO.fetchOldestSubjectOverall() {
+            displaySubject(oldestSubjectOverall)
+            selectSubject(oldestSubjectOverall)
+        } else {
+            displayDialogWith(message: "No subject found", informativeText: "Unable to find the oldest subject") // TODO localize
+        }
+    }
+    
     // called when a notification is sent from another controller saying a new subject was created or updated
     // see viewDidLoad() where the notification is being configured
     @objc func onSubjectCreatedOrUpdated(notification: NSNotification) {
