@@ -10,15 +10,16 @@ import Cocoa
 
 class EditSubjectViewController: NSViewController {
     
+    @IBOutlet weak var parentTopicComboBox: NSComboBox!
+    @IBOutlet weak var subjectNotesField: NSScrollView!
+    @IBOutlet weak var subjectContentsField: NSScrollView!
+    @IBOutlet weak var subjectNameField: NSTextField!
+
     var subjectToEdit: SubjectMO? {
         didSet { // called every time subjectToEdit changes
             loadSubjectToEdit()
         }
     }
-    @IBOutlet weak var parentTopicComboBox: NSComboBox!
-    @IBOutlet weak var subjectNotesField: NSScrollView!
-    @IBOutlet weak var subjectContentsField: NSScrollView!
-    @IBOutlet weak var subjectNameField: NSTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()

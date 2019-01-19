@@ -151,7 +151,7 @@ class MainWindowViewController: NSViewController {
         }
     }
     
-    // called when a notification is sent from another controller saying a new subject was created or updated
+    // called when a notification is sent from another controller saying a new subject has been created or updated
     // see viewDidLoad() where the notification is being configured
     @objc func onSubjectCreatedOrUpdated(notification: NSNotification) {
         let subjectName: String = notification.object as! String

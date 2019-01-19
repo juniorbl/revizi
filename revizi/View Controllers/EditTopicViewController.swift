@@ -10,13 +10,14 @@ import Cocoa
 
 class EditTopicViewController: NSViewController {
     
+    @IBOutlet weak var topicName: NSTextField!
+    @IBOutlet weak var topicNotes: NSScrollView!
+    
     var topicToEdit: TopicMO? {
         didSet { // called every time topicToEdit changes
             loadTopicToEdit()
         }
     }
-    @IBOutlet weak var topicName: NSTextField!
-    @IBOutlet weak var topicNotes: NSScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
