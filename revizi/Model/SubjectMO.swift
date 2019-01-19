@@ -13,6 +13,7 @@ import CoreData
 @objc(SubjectMO)
 public class SubjectMO: NSManagedObject {
     var timerToMarkAsReviewed: Timer?
+    var preferences = Preferences()
     
     static func save(name: String, contents: NSData, notes: String = "", parentTopic: TopicMO) {
         let entity = NSEntityDescription.entity(forEntityName: "Subject", in: repository.managedContext)!
@@ -30,32 +31,11 @@ public class SubjectMO: NSManagedObject {
     }
     
     static func validateCreate(_ subjectName: String) -> String? {
-        if validatesAbsenceOf(subjectName) == false {
-            return "The subject name cannot be empty" // TODO localize
-        } else {
-            return validatesUniquenessOf(subjectName)
-        }
+        return validateCreate(subjectName, "subject name", validationFunction: SubjectMO.fetchBy(name:), forElementName: "subject")
     }
     
     static func validateUpdate(newSubjectName: String, originalSubjectName: String) -> String? {
-        if validatesAbsenceOf(newSubjectName) == false {
-            return "The subject name cannot be empty" // TODO localize
-        } else {
-            let trimmedNewSubjectName = newSubjectName.trimmingCharacters(in: .whitespaces)
-            let trimmedOriginalSubjectName = originalSubjectName.trimmingCharacters(in: .whitespaces)
-            if trimmedNewSubjectName.caseInsensitiveCompare(trimmedOriginalSubjectName) != .orderedSame {
-                return validatesUniquenessOf(trimmedNewSubjectName)
-            }
-        }
-        return nil
-    }
-    
-    static private func validatesUniquenessOf(_ name: String) -> String? {
-        let trimmedName = name.trimmingCharacters(in: .whitespaces)
-        if SubjectMO.fetchBy(name: trimmedName) != nil {
-            return "The subject name already exists" // TODO localize
-        }
-        return nil
+        return validateUpdate(newSubjectName, originalSubjectName, "subject name", validationFunction: SubjectMO.fetchBy(name:), forElementName: "subject")
     }
     
     static func fetchBy(name: String) -> SubjectMO? {
@@ -82,11 +62,12 @@ public class SubjectMO: NSManagedObject {
         return nil
     }
     
-    func markAsReviewedIn(_ timeInSeconds: Int) {
-        timerToMarkAsReviewed = Timer.scheduledTimer(timeInterval: TimeInterval(timeInSeconds), target: self, selector: #selector(markAsReviewed), userInfo: nil, repeats: false)
+    func markAsReviewed() {
+        timerToMarkAsReviewed = Timer.scheduledTimer(
+            timeInterval: preferences.selectedTimeToMarkAsReviewedInSeconds, target: self, selector: #selector(updateWithNewLastReviewedDate), userInfo: nil, repeats: false)
     }
     
-    @objc fileprivate func markAsReviewed() {
+    @objc fileprivate func updateWithNewLastReviewedDate() {
         lastReviewed = NSDate()
         SubjectMO.update()
         NotificationCenter.default.post(name: .updatedSubject, object: name)

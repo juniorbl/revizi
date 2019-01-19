@@ -20,6 +20,7 @@ class MainWindowViewController: NSViewController {
     var topics = [TopicMO]()
     var subjectBeingDisplayed: SubjectMO?
     var lastSelectedTopic: TopicMO?
+    var preferences = Preferences()
     
     // Do any additional setup after loading the view.
     override func viewDidLoad() {
@@ -172,7 +173,7 @@ class MainWindowViewController: NSViewController {
         subjectNameAndDescriptionLabel.stringValue = "\(subjectToDisplay.name ?? ""): \(subjectToDisplay.notes ?? "")"
         mainContentText.textStorage?.setAttributedString(subjectToDisplay.contentsAsString())
         topicDescriptionLabel.stringValue = subjectToDisplay.parentTopic?.name ?? ""
-        subjectBeingDisplayed?.markAsReviewedIn(10) // TODO get from preferences
+        subjectBeingDisplayed?.markAsReviewed()
     }
     
     // if a new subject is selected before the previous selected subject is marked as reviewed,

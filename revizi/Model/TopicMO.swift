@@ -65,32 +65,11 @@ public class TopicMO: NSManagedObject {
     }
     
     static func validateCreate(_ topicName: String) -> String? {
-        if validatesAbsenceOf(topicName) == false {
-            return "The topic name cannot be empty" // TODO localize
-        } else {
-            return validatesUniquenessOf(topicName)
-        }
+        return validateCreate(topicName, "topic name", validationFunction: TopicMO.fetchBy(name:), forElementName: "topic")
     }
     
     static func validateUpdate(newTopicName: String, originalTopicName: String) -> String? {
-        if validatesAbsenceOf(newTopicName) == false {
-            return "The topic name cannot be empty" // TODO localize
-        } else {
-            let trimmedNewTopicName = newTopicName.trimmingCharacters(in: .whitespaces)
-            let trimmedOriginalTopicName = originalTopicName.trimmingCharacters(in: .whitespaces)
-            if trimmedNewTopicName.caseInsensitiveCompare(trimmedOriginalTopicName) != .orderedSame {
-                return validatesUniquenessOf(trimmedNewTopicName)
-            }
-        }
-        return nil
-    }
-    
-    static private func validatesUniquenessOf(_ name: String) -> String? {
-        let trimmedName = name.trimmingCharacters(in: .whitespaces)
-        if TopicMO.fetchBy(name: trimmedName) != nil {
-            return "The topic name already exists" // TODO localize
-        }
-        return nil
+        return validateUpdate(newTopicName, originalTopicName, "topic name", validationFunction: TopicMO.fetchBy(name:), forElementName: "topic")
     }
     
     private func numberOfDaysSinceLastSubjectReviewed() -> Int {

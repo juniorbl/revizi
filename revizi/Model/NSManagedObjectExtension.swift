@@ -42,11 +42,40 @@ extension NSManagedObject {
         }
     }
     
-    static func validatesAbsenceOf(_ value: String) -> Bool {
+    static func validateCreate(_ value: String, _ valueName: String, validationFunction: (String) -> NSManagedObject?, forElementName: String) -> String? {
+        if validatesAbsenceOf(value) == false {
+            return "The \(valueName) cannot be empty" // TODO localize
+        } else {
+            return validatesUniquenessOf(value, validationFunction: validationFunction, forElementName: forElementName)
+        }
+    }
+    
+    static func validateUpdate(_ newValue: String, _ originalValue: String, _ valueName: String, validationFunction: (String) -> NSManagedObject?, forElementName: String) -> String? {
+        if validatesAbsenceOf(newValue) == false {
+            return "The \(valueName) cannot be empty" // TODO localize
+        } else {
+            let trimmedNewValue = newValue.trimmingCharacters(in: .whitespaces)
+            let trimmedOriginalValue = originalValue.trimmingCharacters(in: .whitespaces)
+            if trimmedNewValue.caseInsensitiveCompare(trimmedOriginalValue) != .orderedSame {
+                return validatesUniquenessOf(trimmedNewValue, validationFunction: validationFunction, forElementName: forElementName)
+            }
+        }
+        return nil
+    }
+    
+    fileprivate static func validatesAbsenceOf(_ value: String) -> Bool {
         let trimmedValue = value.trimmingCharacters(in: .whitespaces)
         if trimmedValue == "" {
             return false
         }
         return true
+    }
+    
+    fileprivate static func validatesUniquenessOf(_ value: String, validationFunction: (String) -> NSManagedObject?, forElementName: String) -> String? {
+        let trimmedValue = value.trimmingCharacters(in: .whitespaces)
+        if validationFunction(trimmedValue) != nil {
+            return "The \(forElementName) name already exists" // TODO localize
+        }
+        return nil
     }
 }
