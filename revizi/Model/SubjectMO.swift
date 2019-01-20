@@ -56,14 +56,9 @@ public class SubjectMO: NSManagedObject {
     static func fetchOldestSubjectOverall() -> SubjectMO? {
         let allTopics = TopicMO.fetchAll()
         if !allTopics.isEmpty {
-            var oldestSubjectOverall: SubjectMO?
-            for topic in allTopics {
-                let oldestInTopic = topic.fetchOldestSubjectInTopic()
-                if oldestSubjectOverall?.sinceLastReviewedIn(.hour) ?? Int.min < oldestInTopic.sinceLastReviewedIn(.hour) {
-                    oldestSubjectOverall = oldestInTopic
-                }
-            }
-            return oldestSubjectOverall
+            return allTopics.map({ $0.fetchOldestSubjectInTopic() })
+                            .sorted(by: { $0.sinceLastReviewedIn(.hour) > $1.sinceLastReviewedIn(.hour) })
+                            .first
         }
         return nil
     }
