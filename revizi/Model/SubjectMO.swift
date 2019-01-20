@@ -56,8 +56,14 @@ public class SubjectMO: NSManagedObject {
     static func fetchOldestSubjectOverall() -> SubjectMO? {
         let allTopics = TopicMO.fetchAll()
         if !allTopics.isEmpty {
-            // since the topics are already sorted by rewied date, we can simply get the oldest subject of the first topic
-            return allTopics.first?.fetchOldestSubjectInTopic()
+            var oldestSubjectOverall: SubjectMO?
+            for topic in allTopics {
+                let oldestInTopic = topic.fetchOldestSubjectInTopic()
+                if oldestSubjectOverall?.sinceLastReviewedIn(.hour) ?? Int.min < oldestInTopic.sinceLastReviewedIn(.hour) {
+                    oldestSubjectOverall = oldestInTopic
+                }
+            }
+            return oldestSubjectOverall
         }
         return nil
     }
@@ -81,8 +87,12 @@ public class SubjectMO: NSManagedObject {
         timerToMarkAsReviewed?.invalidate()
     }
     
-    func numberOfDaysSinceLastReviewed() -> Int {
-        return Calendar.current.dateComponents([.day], from: self.lastReviewed! as Date, to: Date()).day ?? 0
+    func sinceLastReviewedIn(_ dateComponent: Calendar.Component) -> Int {
+        let dateDifference = Calendar.current.dateComponents([dateComponent], from: self.lastReviewed! as Date, to: Date())
+        if dateComponent == .hour {
+            return dateDifference.hour ?? 0
+        }
+        return dateDifference.day ?? 0
     }
     
     func contentsAsString() -> NSAttributedString {

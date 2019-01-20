@@ -259,7 +259,7 @@ extension MainWindowViewController: NSOutlineViewDelegate {
             // if it's a date colum, get the date cell to display the last reviewed date
             cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectDateCell"), owner: self) as? NSTableCellView
             if let textField = cellViewFromTopicListTable?.textField {
-                textField.stringValue = String(subject.numberOfDaysSinceLastReviewed()) + " day(s) ago" // TODO: localize
+                textField.stringValue = String(subject.sinceLastReviewedIn(.day)) + " day(s) ago" // TODO: localize
                 textField.sizeToFit()
             }
         } else {
@@ -270,13 +270,12 @@ extension MainWindowViewController: NSOutlineViewDelegate {
                 textField.sizeToFit()
             }
         }
-        // change color based on how old the last review is
         if let textField = cellViewFromTopicListTable?.textField {
-            textField.textColor = getTextColour(numberOfDaysSinceLastReviewed: subject.numberOfDaysSinceLastReviewed())
+            textField.textColor = getTextColourBasedOnLastReviewAge(numberOfDaysSinceLastReviewed: subject.sinceLastReviewedIn(.day))
         }
     }
     
-    func getTextColour(numberOfDaysSinceLastReviewed: Int) -> NSColor {
+    func getTextColourBasedOnLastReviewAge(numberOfDaysSinceLastReviewed: Int) -> NSColor {
         switch numberOfDaysSinceLastReviewed {
         // TODO: get values from preferences
         case 10...20:
