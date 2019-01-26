@@ -457,7 +457,6 @@
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="N3K-Uq-5dy"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="Qmg-BF-hKb"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Vmk-I9-1SF"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="YUe-ft-yc4"/>
                                 <toolbarItem implicitItemIdentifier="0C0238FD-2F67-44EC-83EE-2E12AC88A92D" label="Topic" paletteLabel="Topic" image="NSAddTemplate" id="P8b-vY-ttF">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="41" height="28"/>
@@ -473,17 +472,6 @@
                                     <connections>
                                         <action selector="newTopicAction:" target="Oky-zY-oP4" id="oGV-2x-x0t"/>
                                     </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="4BCF4230-5236-4D3F-90B4-DE24EA438BD4" label="Custom View" paletteLabel="Custom View" sizingBehavior="auto" id="e48-OG-dV0">
-                                    <nil key="toolTip"/>
-                                    <button key="view" verticalHuggingPriority="750" id="p3J-9j-axX">
-                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AMT-gp-kxk">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="B29F7CD4-A1D9-4825-AF1C-2AB068F6B804" label="Subject" paletteLabel="Subject" image="NSAddTemplate" id="5B2-d5-fcZ">
                                     <nil key="toolTip"/>
@@ -534,17 +522,44 @@
                                         <action selector="oldestSubjectInTopicAction:" target="Oky-zY-oP4" id="BQh-Od-67M"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="C29152DA-5D79-4220-96D2-D71FBF11B53D" label="Remove" paletteLabel="Remove" image="NSRemoveTemplate" sizingBehavior="auto" id="beG-jO-Ls3">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="WaC-Or-Vs8">
+                                        <rect key="frame" x="1" y="14" width="47" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="y6C-mY-LwY">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="deleteSubjectAction:" target="Oky-zY-oP4" id="aBE-7z-XPt"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="F24B8227-D4AF-46ED-88EE-14EEB9AB32FF" label="Edit" paletteLabel="Edit" image="NSActionTemplate" sizingBehavior="auto" id="m9C-nQ-V9A">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="J4h-Hm-ecj">
+                                        <rect key="frame" x="0.0" y="14" width="55" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSActionTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eeo-F9-88a">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="editItemAction:" target="Oky-zY-oP4" id="CI5-iL-KGY"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="YUe-ft-yc4"/>
-                                <toolbarItem reference="YUe-ft-yc4"/>
-                                <toolbarItem reference="YUe-ft-yc4"/>
+                                <toolbarItem reference="im2-Qr-73Q"/>
+                                <toolbarItem reference="dN2-iY-16O"/>
                                 <toolbarItem reference="3FI-Zv-SvO"/>
                                 <toolbarItem reference="P8b-vY-ttF"/>
                                 <toolbarItem reference="5B2-d5-fcZ"/>
                                 <toolbarItem reference="3FI-Zv-SvO"/>
-                                <toolbarItem reference="dN2-iY-16O"/>
-                                <toolbarItem reference="im2-Qr-73Q"/>
+                                <toolbarItem reference="m9C-nQ-V9A"/>
+                                <toolbarItem reference="beG-jO-Ls3"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -851,49 +866,27 @@ DQ
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <scrollView fixedFrame="YES" borderType="line" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eX3-Ar-7T3">
-                                                                <rect key="frame" x="0.0" y="37" width="759" height="337"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="759" height="374"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="m4B-OE-A58">
-                                                                    <rect key="frame" x="1" y="1" width="742" height="335"/>
+                                                                    <rect key="frame" x="1" y="1" width="742" height="372"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView ambiguous="YES" editable="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="KCg-4w-0eQ">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="742" height="335"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="742" height="372"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <size key="minSize" width="742" height="335"/>
+                                                                            <size key="minSize" width="742" height="372"/>
                                                                             <size key="maxSize" width="793" height="10000000"/>
                                                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         </textView>
                                                                     </subviews>
                                                                 </clipView>
                                                                 <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Gda-2h-Tho">
-                                                                    <rect key="frame" x="743" y="1" width="15" height="335"/>
+                                                                    <rect key="frame" x="743" y="1" width="15" height="372"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>
-                                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13P-p6-omv">
-                                                                <rect key="frame" x="692" y="1" width="64" height="32"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                                <buttonCell key="cell" type="push" title="Edit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Mg-Pg-o0n">
-                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <action selector="editItemAction:" target="XfG-lQ-9wD" id="SxM-6c-BE1"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGB-To-qZe">
-                                                                <rect key="frame" x="612" y="1" width="80" height="32"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                                <buttonCell key="cell" type="push" title="Delete" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ibh-OH-JeX">
-                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <action selector="deleteSubjectAction:" target="XfG-lQ-9wD" id="abM-gh-GUJ"/>
-                                                                </connections>
-                                                            </button>
                                                         </subviews>
                                                     </customView>
                                                 </subviews>
@@ -1214,7 +1207,9 @@ Gw
         </scene>
     </scenes>
     <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSGoRightTemplate" width="9" height="12"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
 </document>
