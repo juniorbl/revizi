@@ -29,7 +29,7 @@
 		07277AC721B4237A003A3346 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		07277AC921B46732003A3346 /* EditTopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTopicViewController.swift; sourceTree = "<group>"; };
 		07277ACB21B607F1003A3346 /* SubjectMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectMO.swift; sourceTree = "<group>"; };
-		075CE24921A0E1BD001A545B /* revizi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = revizi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		075CE24921A0E1BD001A545B /* Revizi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Revizi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		075CE24C21A0E1BD001A545B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		075CE24E21A0E1BD001A545B /* MainWindowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewController.swift; sourceTree = "<group>"; };
 		075CE25021A0E1BF001A545B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 		075CE24A21A0E1BD001A545B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				075CE24921A0E1BD001A545B /* revizi.app */,
+				075CE24921A0E1BD001A545B /* Revizi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,9 +112,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		075CE24821A0E1BD001A545B /* revizi */ = {
+		075CE24821A0E1BD001A545B /* Revizi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "revizi" */;
+			buildConfigurationList = 075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "Revizi" */;
 			buildPhases = (
 				075CE24521A0E1BD001A545B /* Sources */,
 				075CE24621A0E1BD001A545B /* Frameworks */,
@@ -124,9 +124,9 @@
 			);
 			dependencies = (
 			);
-			name = revizi;
+			name = Revizi;
 			productName = ehnoze;
-			productReference = 075CE24921A0E1BD001A545B /* revizi.app */;
+			productReference = 075CE24921A0E1BD001A545B /* Revizi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -149,7 +149,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "revizi" */;
+			buildConfigurationList = 075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "Revizi" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -162,7 +162,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				075CE24821A0E1BD001A545B /* revizi */,
+				075CE24821A0E1BD001A545B /* Revizi */,
 			);
 		};
 /* End PBXProject section */
@@ -367,7 +367,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "revizi" */ = {
+		075CE24421A0E1BD001A545B /* Build configuration list for PBXProject "Revizi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				075CE25721A0E1BF001A545B /* Debug */,
@@ -376,7 +376,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "revizi" */ = {
+		075CE25921A0E1BF001A545B /* Build configuration list for PBXNativeTarget "Revizi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				075CE25A21A0E1BF001A545B /* Debug */,
