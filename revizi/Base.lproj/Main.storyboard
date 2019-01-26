@@ -457,14 +457,14 @@
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="N3K-Uq-5dy"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="Qmg-BF-hKb"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Vmk-I9-1SF"/>
-                                <toolbarItem implicitItemIdentifier="0C0238FD-2F67-44EC-83EE-2E12AC88A92D" label="Topic" paletteLabel="Topic" image="NSAddTemplate" id="P8b-vY-ttF">
+                                <toolbarItem implicitItemIdentifier="0C0238FD-2F67-44EC-83EE-2E12AC88A92D" label="Topic" paletteLabel="Topic" image="NSTouchBarFolderCopyToTemplate" id="P8b-vY-ttF">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="41" height="28"/>
                                     <size key="maxSize" width="41" height="28"/>
                                     <button key="view" verticalHuggingPriority="750" id="8wv-lk-bzQ">
                                         <rect key="frame" x="0.0" y="14" width="41" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7rB-LL-ed8">
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSTouchBarFolderCopyToTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7rB-LL-ed8">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -473,14 +473,14 @@
                                         <action selector="newTopicAction:" target="Oky-zY-oP4" id="oGV-2x-x0t"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="B29F7CD4-A1D9-4825-AF1C-2AB068F6B804" label="Subject" paletteLabel="Subject" image="NSAddTemplate" id="5B2-d5-fcZ">
+                                <toolbarItem implicitItemIdentifier="B29F7CD4-A1D9-4825-AF1C-2AB068F6B804" label="Subject" paletteLabel="Subject" image="NSTouchBarNewFolderTemplate" id="5B2-d5-fcZ">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="41" height="28"/>
                                     <size key="maxSize" width="41" height="28"/>
                                     <button key="view" verticalHuggingPriority="750" id="9mO-2c-Btx">
                                         <rect key="frame" x="3" y="14" width="41" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSAddTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7gn-eh-5vF">
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSTouchBarNewFolderTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7gn-eh-5vF">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -506,14 +506,14 @@
                                         <action selector="oldestSubjectOverallAction:" target="Oky-zY-oP4" id="zTe-Gu-L7R"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="AA866407-F75F-4C19-9286-1F20FA40C09F" label="Oldest in topic" paletteLabel="Oldest in topic" image="NSGoRightTemplate" id="dN2-iY-16O">
+                                <toolbarItem implicitItemIdentifier="AA866407-F75F-4C19-9286-1F20FA40C09F" label="Oldest in topic" paletteLabel="Oldest in topic" image="NSTouchBarGoForwardTemplate" id="dN2-iY-16O">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="49" height="32"/>
                                     <size key="maxSize" width="49" height="32"/>
                                     <button key="view" verticalHuggingPriority="750" id="yQx-ny-LmO">
                                         <rect key="frame" x="18" y="14" width="49" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoRightTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lZC-T7-XGH">
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSTouchBarGoForwardTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lZC-T7-XGH">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -522,12 +522,12 @@
                                         <action selector="oldestSubjectInTopicAction:" target="Oky-zY-oP4" id="BQh-Od-67M"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="C29152DA-5D79-4220-96D2-D71FBF11B53D" label="Remove" paletteLabel="Remove" image="NSRemoveTemplate" sizingBehavior="auto" id="beG-jO-Ls3">
+                                <toolbarItem implicitItemIdentifier="C29152DA-5D79-4220-96D2-D71FBF11B53D" label="Remove" paletteLabel="Remove" image="NSTouchBarDeleteTemplate" sizingBehavior="auto" id="beG-jO-Ls3">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" id="WaC-Or-Vs8">
                                         <rect key="frame" x="1" y="14" width="47" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="y6C-mY-LwY">
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSTouchBarDeleteTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="y6C-mY-LwY">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1208,8 +1208,10 @@ Gw
     </scenes>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSGoRightTemplate" width="9" height="12"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
+        <image name="NSTouchBarDeleteTemplate" width="15" height="30"/>
+        <image name="NSTouchBarFolderCopyToTemplate" width="26" height="30"/>
+        <image name="NSTouchBarGoForwardTemplate" width="10" height="30"/>
+        <image name="NSTouchBarNewFolderTemplate" width="28" height="30"/>
     </resources>
 </document>
