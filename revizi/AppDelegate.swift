@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        print(self.persistentContainer.persistentStoreCoordinator.persistentStores)
+//        print(self.persistentContainer.persistentStoreCoordinator.persistentStores)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

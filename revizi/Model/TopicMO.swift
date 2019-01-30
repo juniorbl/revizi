@@ -45,11 +45,11 @@ public class TopicMO: NSManagedObject {
         }
     }
     
-    func fetchOldestSubjectInTopic() -> SubjectMO {
+    func fetchOldestSubjectInTopic() -> SubjectMO? {
         if subjects?.count ?? 0 > 0 {
             return (self.subjects?.array as! [SubjectMO]).sorted(by: { $0.sinceLastReviewedIn(.hour) > $1.sinceLastReviewedIn(.hour) }).first!
         }
-        return SubjectMO()
+        return nil
     }
     
     static func save(name: String, notes: NSData = NSData()) {

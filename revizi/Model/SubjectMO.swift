@@ -30,6 +30,13 @@ public class SubjectMO: NSManagedObject {
         }
     }
     
+    // Note: remove this method if make available open source
+    static func hasReachedLimitNumberFreeSubjects() -> Bool {
+        let maxFreeSubjectsCount = 15
+        let totalSubjectsCount = TopicMO.fetchAll().map({ $0.subjects?.count ?? 0 }).reduce(0, +)
+        return totalSubjectsCount >= maxFreeSubjectsCount
+    }
+    
     static func validateCreate(_ subjectName: String) -> String? {
         return validateCreate(subjectName, "subject name", validationFunction: SubjectMO.fetchBy(name:), forElementName: "subject")
     }
@@ -56,7 +63,7 @@ public class SubjectMO: NSManagedObject {
     static func fetchOldestSubjectOverall() -> SubjectMO? {
         let allTopics = TopicMO.fetchAll()
         if !allTopics.isEmpty {
-            return allTopics.map({ $0.fetchOldestSubjectInTopic() })
+            return allTopics.compactMap({ $0.fetchOldestSubjectInTopic() })
                             .sorted(by: { $0.sinceLastReviewedIn(.hour) > $1.sinceLastReviewedIn(.hour) })
                             .first
         }
