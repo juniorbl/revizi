@@ -21,24 +21,26 @@ class MainWindowViewController: NSViewController {
     var subjectBeingDisplayed: SubjectMO?
     var lastSelectedTopic: TopicMO?
     var preferences = Preferences()
-    var alreadyPaidForUnlimitedSubjects = false
+    // Note: remove this variables if make available open source
+    var purchasedUnlimitedSubjects = false
     var priceUnlimitedSubjects: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadUnlimitedSubjectsPrice()
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .newSubject, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .updatedSubject, object: nil)
         reloadTopicsAndSubjectsDisplay()
-        loadUnlimitedSubjectsPrice()
     }
     
+    // Note: remove this method if make available open source
     fileprivate func loadUnlimitedSubjectsPrice() {
-        if !hasAlreadyPaidForUnlimitedSubjects() {
+        purchasedUnlimitedSubjects = UnlimitedSubjects.store.isProductPurchased(UnlimitedSubjects.unlimitedSubjectsProductId)
+        if !purchasedUnlimitedSubjects {
             UnlimitedSubjects.store.fetchAvailableProducts{ [weak self] success, availableProducts in
                 guard let self = self else { return }
                 if success {
                     for product in availableProducts! {
-                        // TODO convert to other currencies
                         let numberFormatter = NumberFormatter()
                         numberFormatter.numberStyle = .currency
                         numberFormatter.locale = product.priceLocale
@@ -47,11 +49,6 @@ class MainWindowViewController: NSViewController {
                 }
             }
         }
-    }
-    
-    fileprivate func hasAlreadyPaidForUnlimitedSubjects() -> Bool {
-        // TODO if did not already payed +++++++++++++++++++++++++++
-        return alreadyPaidForUnlimitedSubjects
     }
 
     override var representedObject: Any? {
@@ -135,12 +132,11 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func newSubjectAction(_ sender: Any?) {
-        if !alreadyPaidForUnlimitedSubjects && SubjectMO.hasReachedLimitNumberFreeSubjects() {
+        if !purchasedUnlimitedSubjects && SubjectMO.hasReachedLimitNumberFreeSubjects() {
             // Note: remove this logic if make available open source
             let storeWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Store View Controller") as! NSWindowController
             if let storeWindow = storeWindowController.window {
                 let storeController = storeWindow.contentViewController as! StoreViewController
-                storeController.displaySubjectLimitMessage = true
                 storeController.unlimitedSubjectsPrice = priceUnlimitedSubjects
                 NSApplication.shared.runModal(for: storeWindow)
                 storeWindowController.close()

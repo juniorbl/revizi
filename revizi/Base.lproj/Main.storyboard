@@ -591,7 +591,7 @@ DQ
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TOH-vp-Q4J">
                                 <rect key="frame" x="121" y="156" width="238" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" id="56Q-XD-BSf">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Maximum free subject count reached" id="56Q-XD-BSf">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -640,7 +640,6 @@ Gw
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="limitReachedLabel" destination="TOH-vp-Q4J" id="Kvj-8E-kGB"/>
                         <outlet property="priceLabel" destination="TsU-BF-rcO" id="Mzk-n1-NBX"/>
                         <outlet property="reviziIcon" destination="PNi-Eq-Zyl" id="DWE-rW-ccx"/>
                     </connections>

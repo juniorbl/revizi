@@ -13,10 +13,22 @@ public typealias ProductsRequestCompletionHandler = (_ success: Bool, _ availabl
 class StoreHelper: NSObject {
     fileprivate var productsRequest: SKProductsRequest?
     fileprivate var productIDs: Set<String>?
+    private var purchasedProductIDs: Set<String> = []
     private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
     
     init(productIds: Set<String>) {
         self.productIDs = productIds
+        // TODO implement in-app receipt validation in a later version
+        for productId in productIds {
+            let purchased = UserDefaults.standard.bool(forKey: productId)
+            if purchased {
+                purchasedProductIDs.insert(productId)
+                print("Previously purchased: \(productId)")
+            } else {
+                print("Not purchased: \(productId)")
+            }
+        }
+        super.init()
     }
     
     func fetchAvailableProducts(completionHandler: @escaping ProductsRequestCompletionHandler) {
@@ -30,6 +42,10 @@ class StoreHelper: NSObject {
         productsRequest = SKProductsRequest(productIdentifiers: productIDs!)
         productsRequest!.delegate = self
         productsRequest!.start()
+    }
+    
+    func isProductPurchased(_ productId: String) -> Bool {
+        return purchasedProductIDs.contains(productId)
     }
 }
 
