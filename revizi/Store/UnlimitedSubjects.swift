@@ -10,4 +10,7 @@ struct UnlimitedSubjects {
     public static let unlimitedSubjectsProductId = "net.carlosluz.revizi.unlimitedsubjects"
     private static let productIDs: Set<String> = [unlimitedSubjectsProductId]
     public static let store = StoreHelper(productIds: productIDs)
+    
+    // TODO remove if make open source
+    public static let purchasedProductKeyname = "revizi_unlimited_subs_purchased"
 }

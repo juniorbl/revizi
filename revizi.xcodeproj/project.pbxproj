@@ -45,6 +45,7 @@
 		07BE63DA21EA8C120037ED4B /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		07BE63DC21F3B1ED0037ED4B /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubjectViewController.swift; sourceTree = "<group>"; };
+		07D282142203B2E2006B6B22 /* Revizi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Revizi-Bridging-Header.h"; sourceTree = "<group>"; };
 		07E74DEE21FCEECB008C2B42 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		07E74DF021FFE30C008C2B42 /* UnlimitedSubjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlimitedSubjects.swift; sourceTree = "<group>"; };
 		07E74DF821FFF271008C2B42 /* StoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreHelper.swift; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		075CE24B21A0E1BD001A545B /* revizi */ = {
 			isa = PBXGroup;
 			children = (
+				07D282142203B2E2006B6B22 /* Revizi-Bridging-Header.h */,
 				075CE25E21A0E226001A545B /* revizi.entitlements */,
 				075CE25521A0E1BF001A545B /* Info.plist */,
 				075CE24C21A0E1BD001A545B /* AppDelegate.swift */,
@@ -381,6 +383,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.revizi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "revizi/Revizi-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -403,6 +406,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.revizi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "revizi/Revizi-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;

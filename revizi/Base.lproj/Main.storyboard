@@ -604,6 +604,9 @@ DQ
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="buyUnlimitedSubjects:" target="szu-8B-BG5" id="fep-HF-gm6"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1sU-Ub-NOp">
                                 <rect key="frame" x="14" y="13" width="82" height="32"/>

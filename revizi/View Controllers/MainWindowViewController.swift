@@ -30,6 +30,7 @@ class MainWindowViewController: NSViewController {
         loadUnlimitedSubjectsPrice()
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .newSubject, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .updatedSubject, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onProductPurchased(notification:)), name: .StoreHelperPurchaseNotification, object: nil)
         reloadTopicsAndSubjectsDisplay()
     }
     
@@ -192,6 +193,12 @@ class MainWindowViewController: NSViewController {
         let subjectCreatedOrUpdated: SubjectMO = SubjectMO.fetchBy(name: subjectName)!
         displaySubject(subjectCreatedOrUpdated)
         selectSubject(subjectCreatedOrUpdated)
+    }
+    
+    // called when a notification is sent from another controller saying that an in-app product has been purchased
+    // see viewDidLoad() where the notification is being configured
+    @objc func onProductPurchased(notification: NSNotification) {
+        purchasedUnlimitedSubjects = true
     }
     
     fileprivate func selectSubject(_ subject: SubjectMO) {

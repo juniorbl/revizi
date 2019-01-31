@@ -20,15 +20,15 @@ class StoreHelper: NSObject {
         self.productIDs = productIds
         // TODO implement in-app receipt validation in a later version
         for productId in productIds {
-            let purchased = UserDefaults.standard.bool(forKey: productId)
+            // for now before the implementation of receipt validation, just for another layer of protections since the user properties can be modified,
+            // get the hash value of the value saved and compare with the hash value of the unlimited subjects key name
+            let purchased = UserDefaults.standard.string(forKey: sha256(value: productId)) == sha256(value: UnlimitedSubjects.purchasedProductKeyname)
             if purchased {
                 purchasedProductIDs.insert(productId)
-                print("Previously purchased: \(productId)")
-            } else {
-                print("Not purchased: \(productId)")
             }
         }
         super.init()
+        SKPaymentQueue.default().add(self)
     }
     
     func fetchAvailableProducts(completionHandler: @escaping ProductsRequestCompletionHandler) {
@@ -47,6 +47,11 @@ class StoreHelper: NSObject {
     func isProductPurchased(_ productId: String) -> Bool {
         return purchasedProductIDs.contains(productId)
     }
+    
+    public func buyProduct(_ product: SKProduct) {
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.default().add(payment)
+    }
 }
 
 extension StoreHelper: SKProductsRequestDelegate {
@@ -57,7 +62,6 @@ extension StoreHelper: SKProductsRequestDelegate {
             clearRequestAndHandler()
         } else {
             productsRequestCompletionHandler?(false, nil)
-            print("No products found")
         }
     }
     
@@ -72,155 +76,86 @@ extension StoreHelper: SKProductsRequestDelegate {
     }
 }
 
+extension StoreHelper: SKPaymentTransactionObserver {
+    public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                complete(transaction: transaction)
+                break
+            case .failed:
+                fail(transaction: transaction)
+                break
+            case .restored:
+                restore(transaction: transaction)
+                break
+            case .deferred:
+                break
+            case .purchasing:
+                break
+            }
+        }
+    }
+    
+    private func complete(transaction: SKPaymentTransaction) {
+        deliverPurchaseNotificationFor(productId: transaction.payment.productIdentifier)
+        SKPaymentQueue.default().finishTransaction(transaction)
+    }
+    
+    private func restore(transaction: SKPaymentTransaction) {
+        guard let productId = transaction.original?.payment.productIdentifier else { return }
+        
+        deliverPurchaseNotificationFor(productId: productId)
+        SKPaymentQueue.default().finishTransaction(transaction)
+    }
+    
+    private func fail(transaction: SKPaymentTransaction) {
+        if let transactionError = transaction.error as NSError?,
+            let localizedDescription = transaction.error?.localizedDescription,
+            transactionError.code != SKError.paymentCancelled.rawValue {
+            NSLog("Transaction Error: \(localizedDescription)")
+        }
+        
+        SKPaymentQueue.default().finishTransaction(transaction)
+    }
+    
+    private func deliverPurchaseNotificationFor(productId: String?) {
+        guard let purchasedProductId = productId else { return }
+        
+        purchasedProductIDs.insert(purchasedProductId)
+        // for now, hashing the product id and a value specific to unlimited subjects before saving
+        UserDefaults.standard.set(sha256(value: UnlimitedSubjects.purchasedProductKeyname), forKey: sha256(value: purchasedProductId))
+        NotificationCenter.default.post(name: .StoreHelperPurchaseNotification, object: purchasedProductId)
+    }
+}
 
+extension Notification.Name {
+    static let StoreHelperPurchaseNotification = Notification.Name("StoreHelperPurchaseNotification")
+}
 
-//import StoreKit
-//
-//public typealias ProductIdentifier = String
-//public typealias ProductsRequestCompletionHandler = (_ success: Bool, _ products: [SKProduct]?) -> Void
-//
-//extension Notification.Name {
-//    static let IAPHelperPurchaseNotification = Notification.Name("IAPHelperPurchaseNotification")
-//}
-//
-//open class StoreHelper: NSObject  {
-//
-//    private let productIdentifiers: Set<ProductIdentifier>
-//    private var purchasedProductIdentifiers: Set<ProductIdentifier> = []
-//    private var productsRequest: SKProductsRequest?
-//    private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
-//
-//    public init(productIds: Set<ProductIdentifier>) {
-//        productIdentifiers = productIds
-//        for productIdentifier in productIds {
-//            let purchased = UserDefaults.standard.bool(forKey: productIdentifier)
-//            if purchased {
-//                purchasedProductIdentifiers.insert(productIdentifier)
-//                print("Previously purchased: \(productIdentifier)")
-//            } else {
-//                print("Not purchased: \(productIdentifier)")
-//            }
-//        }
-//        super.init()
-//
-//        SKPaymentQueue.default().add(self)
-//    }
-//}
-//
-//// MARK: - StoreKit API
-//
-//extension StoreHelper {
-//
-//    public func requestProducts(_ completionHandler: @escaping ProductsRequestCompletionHandler) {
-//        productsRequest?.cancel()
-//        productsRequestCompletionHandler = completionHandler
-//
-//        productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers)
-//        productsRequest!.delegate = self
-//        productsRequest!.start()
-//    }
-//
-//    public func buyProduct(_ product: SKProduct) {
-//        print("Buying \(product.productIdentifier)...")
-//        let payment = SKPayment(product: product)
-//        SKPaymentQueue.default().add(payment)
-//    }
-//
-//    public func isProductPurchased(_ productIdentifier: ProductIdentifier) -> Bool {
-//        return purchasedProductIdentifiers.contains(productIdentifier)
-//    }
-//
-//    public class func canMakePayments() -> Bool {
-//        return SKPaymentQueue.canMakePayments()
-//    }
-//
-//    public func restorePurchases() {
-//        SKPaymentQueue.default().restoreCompletedTransactions()
-//    }
-//}
-//
-//// MARK: - SKProductsRequestDelegate
-//
-//extension StoreHelper: SKProductsRequestDelegate {
-//
-//    public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-//        print("Loaded list of products...")
-//        let products = response.products
-//        productsRequestCompletionHandler?(true, products)
-//        clearRequestAndHandler()
-//
-//        for p in products {
-//            print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
-//        }
-//    }
-//
-//    public func request(_ request: SKRequest, didFailWithError error: Error) {
-//        print("Failed to load list of products.")
-//        print("Error: \(error.localizedDescription)")
-//        productsRequestCompletionHandler?(false, nil)
-//        clearRequestAndHandler()
-//    }
-//
-//    private func clearRequestAndHandler() {
-//        productsRequest = nil
-//        productsRequestCompletionHandler = nil
-//    }
-//}
-//
-//// MARK: - SKPaymentTransactionObserver
-//
-//extension StoreHelper: SKPaymentTransactionObserver {
-//
-//    public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-//        for transaction in transactions {
-//            switch (transaction.transactionState) {
-//            case .purchased:
-//                complete(transaction: transaction)
-//                break
-//            case .failed:
-//                fail(transaction: transaction)
-//                break
-//            case .restored:
-//                restore(transaction: transaction)
-//                break
-//            case .deferred:
-//                break
-//            case .purchasing:
-//                break
-//            }
-//        }
-//    }
-//
-//    private func complete(transaction: SKPaymentTransaction) {
-//        print("complete...")
-//        deliverPurchaseNotificationFor(identifier: transaction.payment.productIdentifier)
-//        SKPaymentQueue.default().finishTransaction(transaction)
-//    }
-//
-//    private func restore(transaction: SKPaymentTransaction) {
-//        guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
-//
-//        print("restore... \(productIdentifier)")
-//        deliverPurchaseNotificationFor(identifier: productIdentifier)
-//        SKPaymentQueue.default().finishTransaction(transaction)
-//    }
-//
-//    private func fail(transaction: SKPaymentTransaction) {
-//        print("fail...")
-//        if let transactionError = transaction.error as NSError?,
-//            let localizedDescription = transaction.error?.localizedDescription,
-//            transactionError.code != SKError.paymentCancelled.rawValue {
-//            print("Transaction Error: \(localizedDescription)")
-//        }
-//
-//        SKPaymentQueue.default().finishTransaction(transaction)
-//    }
-//
-//    private func deliverPurchaseNotificationFor(identifier: String?) {
-//        guard let identifier = identifier else { return }
-//
-//        purchasedProductIdentifiers.insert(identifier)
-//        UserDefaults.standard.set(true, forKey: identifier)
-//        NotificationCenter.default.post(name: .IAPHelperPurchaseNotification, object: identifier)
-//    }
-//}
+// the functions below is to get a sha hash value for a given string
+func sha256(value: String) -> String{
+    if let stringData = value.data(using: String.Encoding.utf8) {
+        return hexStringFromData(input: digest(input: stringData as NSData))
+    }
+    return ""
+}
+
+private func digest(input : NSData) -> NSData {
+    let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
+    var hash = [UInt8](repeating: 0, count: digestLength)
+    CC_SHA256(input.bytes, UInt32(input.length), &hash)
+    return NSData(bytes: hash, length: digestLength)
+}
+
+private  func hexStringFromData(input: NSData) -> String {
+    var bytes = [UInt8](repeating: 0, count: input.length)
+    input.getBytes(&bytes, length: input.length)
+    
+    var hexString = ""
+    for byte in bytes {
+        hexString += String(format:"%02x", UInt8(byte))
+    }
+    
+    return hexString
+}

@@ -26,6 +26,21 @@ class StoreViewController: NSViewController {
         reviziIcon.image = NSImage(named: .reviziLogo)
     }
     
+    @IBAction func buyUnlimitedSubjects(_ sender: Any) {
+        UnlimitedSubjects.store.fetchAvailableProducts{ [weak self] success, availableProducts in
+            guard let self = self else { return }
+            if success {
+                if availableProducts?.count == 1 { // hard coded, as of january 2019 there's only one in-app product and there's no plan to add more
+                    for product in availableProducts! {
+                        UnlimitedSubjects.store.buyProduct(product)
+                        NSApplication.shared.stopModal()
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
     @IBAction func closeEditTopicWindowAction(_ sender: NSButton) {
         NSApplication.shared.stopModal()
     }
