@@ -650,6 +650,7 @@ Gw
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="buyButton" destination="1gy-7m-g3D" id="jsv-Fc-g5R"/>
                         <outlet property="priceLabel" destination="TsU-BF-rcO" id="Mzk-n1-NBX"/>
                         <outlet property="reviziIcon" destination="PNi-Eq-Zyl" id="DWE-rW-ccx"/>
                     </connections>

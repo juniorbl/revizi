@@ -12,12 +12,21 @@ class StoreViewController: NSViewController {
     
     @IBOutlet weak var reviziIcon: NSImageView!
     @IBOutlet weak var priceLabel: NSTextField!
+    @IBOutlet weak var buyButton: NSButton!
     
     var unlimitedSubjectsPrice: String? {
         didSet { // called every time unlimitedSubjectsPrice changes
             if isViewLoaded {
                 priceLabel.stringValue = unlimitedSubjectsPrice ?? ""
+                verifyPermissionToMakePayments()
             }
+        }
+    }
+    
+    private func verifyPermissionToMakePayments() {
+        if !StoreHelper.canMakePayments() {
+            buyButton.isEnabled = false
+            priceLabel.stringValue = "Not available" // TODO localize
         }
     }
     
