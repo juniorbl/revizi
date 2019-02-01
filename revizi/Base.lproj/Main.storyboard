@@ -29,6 +29,13 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
+                                        <menuItem title="Restore Purchase" id="aYY-lQ-Z3V">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="restorePurchaseAction:" target="Ady-hI-5gd" id="OYd-K9-agR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="GH6-JU-2s2"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
@@ -579,11 +586,11 @@ DQ
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="w4j-iH-F9o"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Bz-Q9-RK6">
-                                <rect key="frame" x="18" y="89" width="442" height="58"/>
+                                <rect key="frame" x="18" y="78" width="442" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" allowsUndo="NO" id="QZr-7v-tVn">
                                     <font key="font" metaFont="system"/>
-                                    <string key="title">If you feel Revizi is useful to you, consider unlocking unlimited subjects, you will be able to create as many subjects as you want and support the continuous development of Revizi.</string>
+                                    <string key="title">If you feel Revizi is useful to you, consider unlocking unlimited subjects, you will be able to create as many subjects as you want and support the continuous development of Revizi. If you already purchased it, you can restore it by going to the menu item: Revizi &gt; Restore Purchase.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -623,16 +630,16 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TsU-BF-rcO">
-                                <rect key="frame" x="248" y="64" width="88" height="17"/>
+                                <rect key="frame" x="248" y="53" width="195" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" id="FaT-k0-6gr">
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" placeholderString="Connecting to App Store..." id="FaT-k0-6gr">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZLf-if-xNu">
-                                <rect key="frame" x="121" y="64" width="123" height="17"/>
+                                <rect key="frame" x="121" y="53" width="123" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Unlimited subjects" id="K8w-zh-VZS">
                                     <font key="font" metaFont="system"/>

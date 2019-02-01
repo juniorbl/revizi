@@ -52,6 +52,10 @@ class StoreHelper: NSObject {
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)
     }
+    
+    public func restorePurchases() {
+        SKPaymentQueue.default().restoreCompletedTransactions()
+    }
 }
 
 extension StoreHelper: SKProductsRequestDelegate {

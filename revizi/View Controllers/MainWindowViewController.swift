@@ -151,6 +151,11 @@ class MainWindowViewController: NSViewController {
         }
     }
     
+    // Note: remove this method if make available open source, and remove the menu item
+    @IBAction func restorePurchaseAction(_ sender: Any?) {
+        UnlimitedSubjects.store.restorePurchases()
+    }
+    
     @IBAction func deleteSubjectAction(_ sender: Any?) {
         if let subjectToDelete = subjectBeingDisplayed {
             let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the subject '" + (subjectBeingDisplayed?.name)! + "' ?") // TODO localize
