@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import os
 
 @objc(SubjectMO)
 public class SubjectMO: NSManagedObject {
@@ -26,7 +27,8 @@ public class SubjectMO: NSManagedObject {
         do {
             try repository.managedContext.save()
         } catch let error as NSError {
-            print("Error while saving Subject: \(error)")
+//            let errorMessage: StaticString = "Error while saving Subject: %ld", error
+            os_log("Error while saving Subject: %s", error)
         }
     }
     
@@ -55,7 +57,7 @@ public class SubjectMO: NSManagedObject {
             }
             return result[0]
         } catch let error as NSError {
-            print("Error while fetching Subject: \(error)")
+            os_log("Error while fetching Subject: %s", error)
             return SubjectMO()
         }
     }
@@ -102,7 +104,7 @@ public class SubjectMO: NSManagedObject {
         do {
             return try NSAttributedString(data: self.contents! as Data, options: loadSubjectOptions, documentAttributes: nil)
         } catch let error as NSError {
-            print("Error while accessing contents of Subject: \(error)")
+            os_log("Error while accessing contents of Subject: %s", error)
             return NSAttributedString()
         }
     }

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os
 
 class EditTopicViewController: NSViewController {
     
@@ -54,8 +55,8 @@ class EditTopicViewController: NSViewController {
                 }
                 TopicMO.save(name: topicName.stringValue, notes: notesData)
             }
-        } catch {
-            print("Error while saving Topic \(self.className): \(error)")
+        } catch let error as NSError {
+            os_log("Error while saving Topic: %s", error)
         }
         NSApplication.shared.stopModal()
     }

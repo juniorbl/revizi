@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import os
 
 extension NSManagedObject {
     
@@ -17,7 +18,7 @@ extension NSManagedObject {
             let loadedModel = try repository.managedContext.existingObject(with: id)
             return loadedModel
         } catch let error as NSError {
-            print("Error while fetching: \(error)")
+            os_log("Error while fetching: %s", error)
             return NSManagedObject()
         }
     }
@@ -28,7 +29,7 @@ extension NSManagedObject {
             // maybe theres's a better way to do this
             try repository.managedContext.save()
         } catch let error as NSError {
-            print("Error while updating: \(error)")
+            os_log("Error while updating: %s", error)
         }
     }
     
@@ -38,7 +39,7 @@ extension NSManagedObject {
             repository.managedContext.delete(objectToDelete)
             try repository.managedContext.save()
         } catch let error as NSError {
-            print("Error while deleting: \(error)")
+            os_log("Error while deleting: %s", error)
         }
     }
     

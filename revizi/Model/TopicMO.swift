@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import os
 
 @objc(TopicMO)
 public class TopicMO: NSManagedObject {
@@ -23,7 +24,7 @@ public class TopicMO: NSManagedObject {
             }
             return result[0]
         } catch let error as NSError {
-            print("Error while fetching Topic: \(error)")
+            os_log("Error while fetching Topic: %s", error)
             return TopicMO()
         }
     }
@@ -39,8 +40,8 @@ public class TopicMO: NSManagedObject {
                 topic.subjects = NSOrderedSet(array: sortedSubjects)
             }
             return allTopics
-        } catch {
-            print("Error while fetching Topic: \(error)")
+        } catch let error as NSError {
+            os_log("Error while fetching Topic: %s", error)
             return [TopicMO]()
         }
     }
@@ -60,7 +61,7 @@ public class TopicMO: NSManagedObject {
         do {
             try repository.managedContext.save()
         } catch let error as NSError {
-            print("Error while saving Topic: \(error)")
+            os_log("Error while saving Topic: %s", error)
         }
     }
     
