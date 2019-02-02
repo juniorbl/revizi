@@ -290,6 +290,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Topic" id="GEO-Iw-cKr">
                                     <items>
+                                        <menuItem title="New" id="V5o-UI-KhH">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="newTopicAction:" target="Ady-hI-5gd" id="Unf-uo-Ttu"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Edit" id="QQd-WX-LYs">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -300,6 +306,30 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="deleteTopicAction:" target="Ady-hI-5gd" id="1q4-v9-3jL"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Subject" id="BVv-Lt-Rj0">
+                                <menu key="submenu" title="Subject" id="8lm-ic-dyW">
+                                    <items>
+                                        <menuItem title="New" id="hih-Q9-rb7">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="newSubjectAction:" target="Ady-hI-5gd" id="K94-Z1-c4f"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Edit" id="Hqr-aW-fYs">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="editItemAction:" target="Ady-hI-5gd" id="d8y-RT-Nvt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Delete" id="zwI-X7-6X1">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="deleteSubjectAction:" target="Ady-hI-5gd" id="Qgu-wS-zx3"/>
                                             </connections>
                                         </menuItem>
                                     </items>
