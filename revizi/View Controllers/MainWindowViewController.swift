@@ -2,8 +2,7 @@
 //  ViewController.swift
 //  revizi
 //
-//  Created by Carlos on 2018-11-17.
-//  Copyright © 2018 Carlos Luz. All rights reserved.
+//  Created by Carlos Luz on 2018-11-17.
 //
 
 import Cocoa
@@ -21,35 +20,12 @@ class MainWindowViewController: NSViewController {
     var subjectBeingDisplayed: SubjectMO?
     var lastSelectedTopic: TopicMO?
     var preferences = Preferences()
-    // Note: remove this variables if make available open source
-    var purchasedUnlimitedSubjects = false
-    var priceUnlimitedSubjects: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadUnlimitedSubjectsPrice()
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .newSubject, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSubjectCreatedOrUpdated(notification:)), name: .updatedSubject, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onProductPurchased(notification:)), name: .StoreHelperPurchaseNotification, object: nil)
         reloadTopicsAndSubjectsDisplay()
-    }
-    
-    // Note: remove this method if make available open source
-    fileprivate func loadUnlimitedSubjectsPrice() {
-        purchasedUnlimitedSubjects = UnlimitedSubjects.store.isProductPurchased(UnlimitedSubjects.unlimitedSubjectsProductId)
-        if !purchasedUnlimitedSubjects {
-            UnlimitedSubjects.store.fetchAvailableProducts{ [weak self] success, availableProducts in
-                guard let self = self else { return }
-                if success {
-                    for product in availableProducts! {
-                        let numberFormatter = NumberFormatter()
-                        numberFormatter.numberStyle = .currency
-                        numberFormatter.locale = product.priceLocale
-                        self.priceUnlimitedSubjects = numberFormatter.string(from: product.price)
-                    }
-                }
-            }
-        }
     }
 
     override var representedObject: Any? {
@@ -67,7 +43,7 @@ class MainWindowViewController: NSViewController {
                 editSubjectWindowController.showWindow(editSubjectWindow)
             }
         } else {
-            displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to edit") // TODO localize
+            displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to edit")
         }
     }
     
@@ -105,21 +81,21 @@ class MainWindowViewController: NSViewController {
                 reloadTopicsAndSubjectsDisplay()
             }
         } else {
-            displayDialogWith(message: "No topic selected", informativeText: "You need to select a topic to edit") // TODO localize
+            displayDialogWith(message: "No topic selected", informativeText: "You need to select a topic to edit")
         }
     }
     
     @IBAction func deleteTopicAction(_ sender: Any?) {
         if let topicToEdit = lastSelectedTopic {
             let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the topic '" + (lastSelectedTopic?.name)! + "' ?",
-                                                     infoText: "All subjects in this topic will be deleted") // TODO localize
+                                                     infoText: "All subjects in this topic will be deleted")
             if userAccepted {
                 TopicMO.delete(id: topicToEdit.objectID)
                 lastSelectedTopic = nil
                 reloadTopicsAndSubjectsDisplay()
             }
         } else {
-            displayDialogWith(message: "No topic selected", informativeText: "You need to select a topic to delete") // TODO localize
+            displayDialogWith(message: "No topic selected", informativeText: "You need to select a topic to delete")
         }
     }
     
@@ -133,32 +109,15 @@ class MainWindowViewController: NSViewController {
     }
     
     @IBAction func newSubjectAction(_ sender: Any?) {
-        if !purchasedUnlimitedSubjects && SubjectMO.hasReachedLimitNumberFreeSubjects() {
-            // Note: remove this logic if make available open source
-            let storeWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "Store View Controller") as! NSWindowController
-            if let storeWindow = storeWindowController.window {
-                let storeController = storeWindow.contentViewController as! StoreViewController
-                storeController.unlimitedSubjectsPrice = priceUnlimitedSubjects
-                NSApplication.shared.runModal(for: storeWindow)
-                storeWindowController.close()
-                reloadTopicsAndSubjectsDisplay()
-            }
-        } else {
-            let editSubjectWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
-            if let editSubjectWindow = editSubjectWindowController.window {
-                editSubjectWindowController.showWindow(editSubjectWindow)
-            }
+        let editSubjectWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: self.editSubjectController) as! NSWindowController
+        if let editSubjectWindow = editSubjectWindowController.window {
+            editSubjectWindowController.showWindow(editSubjectWindow)
         }
-    }
-    
-    // Note: remove this method if make available open source, and remove the menu item
-    @IBAction func restorePurchaseAction(_ sender: Any?) {
-        UnlimitedSubjects.store.restorePurchases()
     }
     
     @IBAction func deleteSubjectAction(_ sender: Any?) {
         if let subjectToDelete = subjectBeingDisplayed {
-            let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the subject '" + (subjectBeingDisplayed?.name)! + "' ?") // TODO localize
+            let userAccepted = displayDialogOkCancel(question: "Are you sure you want to delete the subject '" + (subjectBeingDisplayed?.name)! + "' ?")
             if userAccepted {
                 SubjectMO.delete(id: subjectToDelete.objectID)
                 subjectBeingDisplayed = nil
@@ -166,7 +125,7 @@ class MainWindowViewController: NSViewController {
                 reloadTopicsAndSubjectsDisplay()
             }
         } else {
-            displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to delete") // TODO localize
+            displayDialogWith(message: "No subject selected", informativeText: "You need to select a subject to delete")
         }
     }
     
@@ -177,7 +136,7 @@ class MainWindowViewController: NSViewController {
                 selectSubject(oldestSubjectInTopic)
             }
         } else {
-            displayDialogWith(message: "No subject selected", informativeText: "Unable to determine the current topic") // TODO localize
+            displayDialogWith(message: "No subject selected", informativeText: "Unable to determine the current topic")
         }
     }
     
@@ -186,7 +145,7 @@ class MainWindowViewController: NSViewController {
             displaySubject(oldestSubjectOverall)
             selectSubject(oldestSubjectOverall)
         } else {
-            displayDialogWith(message: "No subject found", informativeText: "Unable to find the oldest subject") // TODO localize
+            displayDialogWith(message: "No subject found", informativeText: "Unable to find the oldest subject")
         }
     }
     
@@ -198,12 +157,6 @@ class MainWindowViewController: NSViewController {
         let subjectCreatedOrUpdated: SubjectMO = SubjectMO.fetchBy(name: subjectName)!
         displaySubject(subjectCreatedOrUpdated)
         selectSubject(subjectCreatedOrUpdated)
-    }
-    
-    // called when a notification is sent from another controller saying that an in-app product has been purchased
-    // see viewDidLoad() where the notification is being configured
-    @objc func onProductPurchased(notification: NSNotification) {
-        purchasedUnlimitedSubjects = true
     }
     
     fileprivate func selectSubject(_ subject: SubjectMO) {

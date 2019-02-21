@@ -29,13 +29,6 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
-                                        <menuItem title="Restore Purchase" id="aYY-lQ-Z3V">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="restorePurchaseAction:" target="Ady-hI-5gd" id="OYd-K9-agR"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="GH6-JU-2s2"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
@@ -581,113 +574,6 @@ DQ
                 <customObject id="pb4-rg-RRD" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="841" y="511"/>
-        </scene>
-        <!--Window Controller-->
-        <scene sceneID="Hdp-ee-8AW">
-            <objects>
-                <windowController storyboardIdentifier="Store View Controller" id="ZJ6-kh-AH5" sceneMemberID="viewController">
-                    <window key="window" title="Consider Supporting Revizi" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="JGm-40-n4O">
-                        <windowStyleMask key="styleMask" titled="YES"/>
-                        <rect key="contentRect" x="294" y="313" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-                        <connections>
-                            <outlet property="delegate" destination="ZJ6-kh-AH5" id="IeR-ed-RhN"/>
-                        </connections>
-                    </window>
-                    <connections>
-                        <segue destination="szu-8B-BG5" kind="relationship" relationship="window.shadowedContentViewController" id="Hpc-zZ-MTl"/>
-                    </connections>
-                </windowController>
-                <customObject id="IJj-Gi-Lwn" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="881" y="869"/>
-        </scene>
-        <!--Store View Controller-->
-        <scene sceneID="G8V-pa-RfU">
-            <objects>
-                <viewController id="szu-8B-BG5" customClass="StoreViewController" customModule="Revizi" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="xhn-dh-4OM">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PNi-Eq-Zyl">
-                                <rect key="frame" x="208" y="186" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="w4j-iH-F9o"/>
-                            </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Bz-Q9-RK6">
-                                <rect key="frame" x="18" y="78" width="442" height="69"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" allowsUndo="NO" id="QZr-7v-tVn">
-                                    <font key="font" metaFont="system"/>
-                                    <string key="title">If you feel Revizi is useful to you, consider unlocking unlimited subjects, you will be able to create as many subjects as you want and support the continuous development of Revizi. If you already purchased it, you can restore it by going to the menu item: Revizi &gt; Restore Purchase.</string>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TOH-vp-Q4J">
-                                <rect key="frame" x="121" y="156" width="238" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Maximum free subject count reached" id="56Q-XD-BSf">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1gy-7m-g3D">
-                                <rect key="frame" x="401" y="13" width="63" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Buy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fML-f8-Os4">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="buyUnlimitedSubjects:" target="szu-8B-BG5" id="fep-HF-gm6"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1sU-Ub-NOp">
-                                <rect key="frame" x="14" y="13" width="82" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tPM-yH-hJS">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="closeEditTopicWindowAction:" target="szu-8B-BG5" id="a0u-CH-Ueb"/>
-                                </connections>
-                            </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TsU-BF-rcO">
-                                <rect key="frame" x="248" y="53" width="195" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" placeholderString="Connecting to App Store..." id="FaT-k0-6gr">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZLf-if-xNu">
-                                <rect key="frame" x="121" y="53" width="123" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Unlimited subjects" id="K8w-zh-VZS">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                    </view>
-                    <connections>
-                        <outlet property="buyButton" destination="1gy-7m-g3D" id="jsv-Fc-g5R"/>
-                        <outlet property="priceLabel" destination="TsU-BF-rcO" id="Mzk-n1-NBX"/>
-                        <outlet property="reviziIcon" destination="PNi-Eq-Zyl" id="DWE-rW-ccx"/>
-                    </connections>
-                </viewController>
-                <customObject id="51u-bl-pGD" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1463" y="869"/>
         </scene>
         <!--Main Window View Controller-->
         <scene sceneID="hIz-AP-VOD">

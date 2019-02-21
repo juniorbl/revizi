@@ -2,8 +2,7 @@
 //  Preferences.swift
 //  revizi
 //
-//  Created by Carlos on 2019-01-19.
-//  Copyright © 2019 Carlos Luz. All rights reserved.
+//  Created by Carlos Luz on 2019-01-19.
 //
 
 import Foundation

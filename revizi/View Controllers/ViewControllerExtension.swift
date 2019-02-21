@@ -2,8 +2,7 @@
 //  ViewControllerExtension.swift
 //  revizi
 //
-//  Created by Carlos on 2018-12-30.
-//  Copyright © 2018 Carlos Luz. All rights reserved.
+//  Created by Carlos Luz on 2018-12-30.
 //
 
 import Cocoa
@@ -16,7 +15,7 @@ extension NSViewController {
         alert.messageText = message
         alert.informativeText = informativeText
         alert.alertStyle = .informational
-        alert.addButton(withTitle: "OK") // TODO localize
+        alert.addButton(withTitle: "OK")
         alert.runModal()
     }
     
@@ -25,8 +24,8 @@ extension NSViewController {
         alert.messageText = question
         alert.alertStyle = .warning
         alert.informativeText = infoText
-        alert.addButton(withTitle: "OK") // TODO localize
-        alert.addButton(withTitle: "Cancel") // TODO localize
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
         return alert.runModal() == .alertFirstButtonReturn
     }
     

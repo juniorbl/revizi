@@ -2,9 +2,7 @@
 //  SubjectMO.swift
 //  revizi
 //
-//  Created by Carlos on 2018-12-03.
-//  Copyright © 2018 Carlos Luz. All rights reserved.
-//
+//  Created by Carlos Luz on 2018-12-03.
 //
 
 import Foundation
@@ -27,16 +25,8 @@ public class SubjectMO: NSManagedObject {
         do {
             try repository.managedContext.save()
         } catch let error as NSError {
-//            let errorMessage: StaticString = "Error while saving Subject: %ld", error
             os_log("Error while saving Subject: %s", error)
         }
-    }
-    
-    // Note: remove this method if make available open source
-    static func hasReachedLimitNumberFreeSubjects() -> Bool {
-        let maxFreeSubjectsCount = 15
-        let totalSubjectsCount = TopicMO.fetchAll().map({ $0.subjects?.count ?? 0 }).reduce(0, +)
-        return totalSubjectsCount >= maxFreeSubjectsCount
     }
     
     static func validateCreate(_ subjectName: String) -> String? {

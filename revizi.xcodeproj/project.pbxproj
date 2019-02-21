@@ -21,10 +21,6 @@
 		07BE63DB21EA8C120037ED4B /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE63DA21EA8C120037ED4B /* PreferencesViewController.swift */; };
 		07BE63DD21F3B1ED0037ED4B /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE63DC21F3B1ED0037ED4B /* Preferences.swift */; };
 		07BF0FD621ADFDDB00689359 /* EditSubjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */; };
-		07E74DEF21FCEECB008C2B42 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E74DEE21FCEECB008C2B42 /* StoreKit.framework */; };
-		07E74DF121FFE30C008C2B42 /* UnlimitedSubjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E74DF021FFE30C008C2B42 /* UnlimitedSubjects.swift */; };
-		07E74DF921FFF271008C2B42 /* StoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E74DF821FFF271008C2B42 /* StoreHelper.swift */; };
-		07E74DFB220117D2008C2B42 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E74DFA220117D2008C2B42 /* StoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,11 +41,6 @@
 		07BE63DA21EA8C120037ED4B /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		07BE63DC21F3B1ED0037ED4B /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		07BF0FD521ADFDDB00689359 /* EditSubjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubjectViewController.swift; sourceTree = "<group>"; };
-		07D282142203B2E2006B6B22 /* Revizi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Revizi-Bridging-Header.h"; sourceTree = "<group>"; };
-		07E74DEE21FCEECB008C2B42 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		07E74DF021FFE30C008C2B42 /* UnlimitedSubjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlimitedSubjects.swift; sourceTree = "<group>"; };
-		07E74DF821FFF271008C2B42 /* StoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreHelper.swift; sourceTree = "<group>"; };
-		07E74DFA220117D2008C2B42 /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +48,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07E74DEF21FCEECB008C2B42 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,7 +59,6 @@
 			children = (
 				075CE24B21A0E1BD001A545B /* revizi */,
 				075CE24A21A0E1BD001A545B /* Products */,
-				07E74DED21FCEECB008C2B42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,13 +73,11 @@
 		075CE24B21A0E1BD001A545B /* revizi */ = {
 			isa = PBXGroup;
 			children = (
-				07D282142203B2E2006B6B22 /* Revizi-Bridging-Header.h */,
 				075CE25E21A0E226001A545B /* revizi.entitlements */,
 				075CE25521A0E1BF001A545B /* Info.plist */,
 				075CE24C21A0E1BD001A545B /* AppDelegate.swift */,
 				075CE25C21A0E1E4001A545B /* View Controllers */,
 				07FD3D5C21A7A18500EEA024 /* Model */,
-				07E74DF321FFE441008C2B42 /* Store */,
 				075CE25021A0E1BF001A545B /* Assets.xcassets */,
 				075CE25221A0E1BF001A545B /* Main.storyboard */,
 				07277A9B21B2FDCB003A3346 /* ReviziDataModel.xcdatamodeld */,
@@ -108,24 +95,6 @@
 				07BE63DA21EA8C120037ED4B /* PreferencesViewController.swift */,
 			);
 			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		07E74DED21FCEECB008C2B42 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				07E74DEE21FCEECB008C2B42 /* StoreKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		07E74DF321FFE441008C2B42 /* Store */ = {
-			isa = PBXGroup;
-			children = (
-				07E74DF021FFE30C008C2B42 /* UnlimitedSubjects.swift */,
-				07E74DF821FFF271008C2B42 /* StoreHelper.swift */,
-				07E74DFA220117D2008C2B42 /* StoreViewController.swift */,
-			);
-			path = Store;
 			sourceTree = "<group>";
 		};
 		07FD3D5C21A7A18500EEA024 /* Model */ = {
@@ -174,7 +143,7 @@
 						CreatedOnToolsVersion = 10.1;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -218,12 +187,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07E74DF121FFE30C008C2B42 /* UnlimitedSubjects.swift in Sources */,
 				07B3C28421D96314008FB6C6 /* ViewControllerExtension.swift in Sources */,
 				075CE24F21A0E1BD001A545B /* MainWindowViewController.swift in Sources */,
-				07E74DF921FFF271008C2B42 /* StoreHelper.swift in Sources */,
 				07BE63DD21F3B1ED0037ED4B /* Preferences.swift in Sources */,
-				07E74DFB220117D2008C2B42 /* StoreViewController.swift in Sources */,
 				07277A9D21B2FDCB003A3346 /* ReviziDataModel.xcdatamodeld in Sources */,
 				07277ACA21B46732003A3346 /* EditTopicViewController.swift in Sources */,
 				07BF0FD621ADFDDB00689359 /* EditSubjectViewController.swift in Sources */,
@@ -371,7 +337,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = revizi/revizi.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = YCH8U3GS83;
 				INFOPLIST_FILE = "$(SRCROOT)/revizi/Info.plist";
@@ -383,7 +349,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.revizi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "revizi/Revizi-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -394,7 +360,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = revizi/revizi.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = YCH8U3GS83;
 				INFOPLIST_FILE = "$(SRCROOT)/revizi/Info.plist";
@@ -406,7 +372,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.carlosluz.revizi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "revizi/Revizi-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;

@@ -2,8 +2,7 @@
 //  EditItemSubjectController.swift
 //  revizi
 //
-//  Created by Carlos on 2018-11-27.
-//  Copyright © 2018 Carlos Luz. All rights reserved.
+//  Created by Carlos Luz on 2018-11-27.
 //
 
 import Cocoa
@@ -49,7 +48,7 @@ class EditSubjectViewController: NSViewController {
     
     @IBAction func saveSubjectAction(_ sender: Any) {
         if parentTopicComboBox.indexOfSelectedItem == -1 {
-            displayDialogWith(message: "The subject must have a topic") // TODO localize
+            displayDialogWith(message: "The subject must have a topic")
             return
         }
         let contents = (subjectContentsField.documentView as! NSTextView)

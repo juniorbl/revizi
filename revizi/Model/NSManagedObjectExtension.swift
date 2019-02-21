@@ -2,8 +2,7 @@
 //  NSManagedObjectExtension.swift
 //  revizi
 //
-//  Created by Carlos on 2018-12-31.
-//  Copyright © 2018 Carlos Luz. All rights reserved.
+//  Created by Carlos Luz on 2018-12-31.
 //
 
 import Cocoa
@@ -45,7 +44,7 @@ extension NSManagedObject {
     
     static func validateCreate(_ value: String, _ valueName: String, validationFunction: (String) -> NSManagedObject?, forElementName: String) -> String? {
         if validatesAbsenceOf(value) == false {
-            return "The \(valueName) cannot be empty" // TODO localize
+            return "The \(valueName) cannot be empty"
         } else {
             return validatesUniquenessOf(value, validationFunction: validationFunction, forElementName: forElementName)
         }
@@ -53,7 +52,7 @@ extension NSManagedObject {
     
     static func validateUpdate(_ newValue: String, _ originalValue: String, _ valueName: String, validationFunction: (String) -> NSManagedObject?, forElementName: String) -> String? {
         if validatesAbsenceOf(newValue) == false {
-            return "The \(valueName) cannot be empty" // TODO localize
+            return "The \(valueName) cannot be empty"
         } else {
             let trimmedNewValue = newValue.trimmingCharacters(in: .whitespaces)
             let trimmedOriginalValue = originalValue.trimmingCharacters(in: .whitespaces)
@@ -75,7 +74,7 @@ extension NSManagedObject {
     fileprivate static func validatesUniquenessOf(_ value: String, validationFunction: (String) -> NSManagedObject?, forElementName: String) -> String? {
         let trimmedValue = value.trimmingCharacters(in: .whitespaces)
         if validationFunction(trimmedValue) != nil {
-            return "The \(forElementName) name already exists" // TODO localize
+            return "\(forElementName) already exists"
         }
         return nil
     }

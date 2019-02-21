@@ -2,8 +2,7 @@
 //  EditTopicViewController.swift
 //  revizi
 //
-//  Created by Carlos on 2018-12-02.
-//  Copyright © 2018 Carlos Luz. All rights reserved.
+//  Created by Carlos Luz on 2018-12-02.
 //
 
 import Cocoa

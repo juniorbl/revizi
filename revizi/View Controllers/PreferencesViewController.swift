@@ -2,8 +2,7 @@
 //  PreferencesViewController.swift
 //  revizi
 //
-//  Created by Carlos on 2019-01-12.
-//  Copyright © 2019 Carlos Luz. All rights reserved.
+//  Created by Carlos Luz on 2019-01-12.
 //
 
 import Cocoa
