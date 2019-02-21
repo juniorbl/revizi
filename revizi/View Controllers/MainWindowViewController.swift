@@ -239,7 +239,7 @@ extension MainWindowViewController: NSOutlineViewDelegate {
             // if it's a date colum, get the date cell to display the last reviewed date
             cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TopicDateCell"), owner: self) as? NSTableCellView
             if let textField = cellViewFromTopicListTable?.textField {
-                textField.stringValue = String(topic.daysSinceLastSubjectReviewed) + " day(s) ago" // TODO: localize
+                textField.stringValue = String(topic.daysSinceLastSubjectReviewed) + " day(s) ago"
                 textField.sizeToFit()
             }
         } else {
@@ -257,7 +257,7 @@ extension MainWindowViewController: NSOutlineViewDelegate {
             // if it's a date colum, get the date cell to display the last reviewed date
             cellViewFromTopicListTable = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SubjectDateCell"), owner: self) as? NSTableCellView
             if let textField = cellViewFromTopicListTable?.textField {
-                textField.stringValue = String(subject.sinceLastReviewedIn(.day)) + " day(s) ago" // TODO: localize
+                textField.stringValue = String(subject.sinceLastReviewedIn(.day)) + " day(s) ago"
                 textField.sizeToFit()
             }
         } else {
